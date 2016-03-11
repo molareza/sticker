@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="emoji_people">People</string>
+    <string name="emoji_nature">Nature</string>
+    <string name="emoji_objects">Objects</string>
+    <string name="emoji_cars">Cars</string>
+    <string name="emoji_punctuation">Punctuation</string>
+    <string name="emoji_backspace">Backspace</string>
+</resources>

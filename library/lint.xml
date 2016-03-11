@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <!-- Do not care about this for the moment -->
+    <issue id="IconMissingDensityFolder" severity="ignore"/>
+
+</lint>
