@@ -1,6 +1,7 @@
 # Emoji
 
 [![Build Status](https://travis-ci.org/vanniktech/Emoji.svg?branch=master)](https://travis-ci.org/vanniktech/Emoji?branch=master)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Emoji-green.svg?style=true)](https://android-arsenal.com/details/1/3287)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 A simple library to add Emoji support to your Android Application. In a PopupWindow Emojis can be chosen. In order to edit and display text with Emojis this library provides public APIs: [`EmojiEditText`](library/src/main/java/com/vanniktech/emoji/EmojiEditText.java) & [`EmojiTextView`](library/src/main/java/com/vanniktech/emoji/EmojiTextView.java).
