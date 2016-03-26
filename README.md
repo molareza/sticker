@@ -1,6 +1,7 @@
 # Emoji
 
 [![Build Status](https://travis-ci.org/vanniktech/Emoji.svg?branch=master)](https://travis-ci.org/vanniktech/Emoji?branch=master)
+[![Codecov](https://codecov.io/github/vanniktech/Emoji/coverage.svg?branch=master)](https://codecov.io/github/vanniktech/Emoji?branch=master)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Emoji-green.svg?style=true)](https://android-arsenal.com/details/1/3287)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
