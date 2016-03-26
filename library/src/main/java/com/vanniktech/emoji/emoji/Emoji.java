@@ -13,10 +13,6 @@ public final class Emoji implements Serializable {
         return new Emoji(Character.toString(ch));
     }
 
-    public static Emoji fromChars(final String chars) {
-        return new Emoji(chars);
-    }
-
     private static String newString(final int codePoint) {
         if (Character.charCount(codePoint) == 1) {
             return String.valueOf(codePoint);

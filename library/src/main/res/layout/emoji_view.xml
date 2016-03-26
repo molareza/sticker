@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/emoji_people"
-            android:src="@drawable/emoji_category_people"/>
+            android:src="@drawable/emoji_people"/>
 
         <ImageButton
             android:id="@+id/emojis_tab_1_nature"
@@ -29,34 +29,52 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/emoji_nature"
-            android:src="@drawable/emoji_category_nature"/>
+            android:src="@drawable/emoji_nature"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_2_objects"
+            android:id="@+id/emojis_tab_2_food"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/emoji_objects"
-            android:src="@drawable/emoji_category_objects"/>
+            android:contentDescription="@string/emoji_food"
+            android:src="@drawable/emoji_food"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_3_cars"
+            android:id="@+id/emojis_tab_3_sport"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/emoji_sport"
+            android:src="@drawable/emoji_sport"/>
+
+        <ImageButton
+            android:id="@+id/emojis_tab_4_cars"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/emoji_cars"
-            android:src="@drawable/emoji_category_cars"/>
+            android:src="@drawable/emoji_cars"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_4_punctuation"
+            android:id="@+id/emojis_tab_5_electronics"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/emoji_punctuation"
-            android:src="@drawable/emoji_category_punctuation"/>
+            android:contentDescription="@string/emoji_electronics"
+            android:src="@drawable/emoji_electronics"/>
+
+        <ImageButton
+            android:id="@+id/emojis_tab_6_symbols"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/emoji_symbols"
+            android:src="@drawable/emoji_symbols"/>
 
         <ImageButton
             android:id="@+id/emojis_backspace"

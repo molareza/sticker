@@ -1,8 +1,8 @@
 package com.vanniktech.emoji.emoji;
 
-import org.junit.Test;
-
 import com.pushtorefresh.private_constructor_checker.PrivateConstructorChecker;
+
+import org.junit.Test;
 
 public class SymbolsTest {
     @Test
