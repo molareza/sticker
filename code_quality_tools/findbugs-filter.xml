@@ -27,4 +27,9 @@
         <Class name="~.*\$\$Lambda\$.*"/>
     </Match>
 
+    <!-- Ignore this since we require API 19 for that -->
+    <Match>
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_COMPARE"/>
+    </Match>
+
 </FindBugsFilter>

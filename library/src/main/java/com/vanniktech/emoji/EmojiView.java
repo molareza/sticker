@@ -1,5 +1,9 @@
 package com.vanniktech.emoji;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -23,35 +27,32 @@ import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickedListener;
 import com.vanniktech.emoji.listeners.RepeatListener;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @SuppressLint("ViewConstructor")
 final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListener {
-    private static final int PEOPLE_INDEX = 0;
-    private static final int NATURE_INDEX = 1;
-    private static final int FOOD_INDEX = 2;
-    private static final int SPORT_INDEX = 3;
-    private static final int CARS_INDEX = 4;
-    private static final int ELECTRONICS_INDEX = 5;
-    private static final int SYMBOLS_INDEX = 6;
+    private static final int RECENT_INDEX = 0;
+    private static final int PEOPLE_INDEX = 1;
+    private static final int NATURE_INDEX = 2;
+    private static final int FOOD_INDEX = 3;
+    private static final int SPORT_INDEX = 4;
+    private static final int CARS_INDEX = 5;
+    private static final int ELECTRONICS_INDEX = 6;
+    private static final int SYMBOLS_INDEX = 7;
 
     private static final long INITIAL_INTERVAL = TimeUnit.SECONDS.toMillis(1) / 2;
     private static final int NORMAL_INTERVAL = 50;
 
-    @ColorInt
-    private final int themeAccentColor;
-
-    @Nullable
-    private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
+    @ColorInt private final int themeAccentColor;
+    @Nullable private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
     private int emojiTabLastSelectedIndex = -1;
+
     private final ImageView[] emojiTabs;
 
-    EmojiView(final Context context, final OnEmojiClickedListener onEmojiClickedListener) {
+    private RecentEmojiGridView recentGridView;
+
+    EmojiView(final Context context, final OnEmojiClickedListener onEmojiClickedListener, @NonNull final RecentEmoji recentEmoji) {
         super(context);
 
         View.inflate(context, R.layout.emoji_view, this);
@@ -59,18 +60,19 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
         final ViewPager emojisPager = (ViewPager) findViewById(R.id.emojis_pager);
         emojisPager.addOnPageChangeListener(this);
 
-        final List<EmojiGridView> views = getViews(context, onEmojiClickedListener);
+        final List<FrameLayout> views = getViews(context, onEmojiClickedListener, recentEmoji);
         final EmojiPagerAdapter emojisAdapter = new EmojiPagerAdapter(views);
         emojisPager.setAdapter(emojisAdapter);
 
         emojiTabs = new ImageView[SYMBOLS_INDEX + 1];
-        emojiTabs[PEOPLE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_0_people);
-        emojiTabs[NATURE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_1_nature);
-        emojiTabs[FOOD_INDEX] = (ImageView) findViewById(R.id.emojis_tab_2_food);
-        emojiTabs[SPORT_INDEX] = (ImageView) findViewById(R.id.emojis_tab_3_sport);
-        emojiTabs[CARS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_4_cars);
-        emojiTabs[ELECTRONICS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_5_electronics);
-        emojiTabs[SYMBOLS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_6_symbols);
+        emojiTabs[RECENT_INDEX] = (ImageView) findViewById(R.id.emojis_tab_0_recent);
+        emojiTabs[PEOPLE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_1_people);
+        emojiTabs[NATURE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_2_nature);
+        emojiTabs[FOOD_INDEX] = (ImageView) findViewById(R.id.emojis_tab_3_food);
+        emojiTabs[SPORT_INDEX] = (ImageView) findViewById(R.id.emojis_tab_4_sport);
+        emojiTabs[CARS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_5_cars);
+        emojiTabs[ELECTRONICS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_6_electronics);
+        emojiTabs[SYMBOLS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_7_symbols);
 
         handleOnClicks(emojisPager);
 
@@ -87,8 +89,8 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
         themeAccentColor = value.data;
 
-        emojisPager.setCurrentItem(PEOPLE_INDEX);
-        onPageSelected(PEOPLE_INDEX);
+        emojisPager.setCurrentItem(RECENT_INDEX);
+        onPageSelected(RECENT_INDEX);
     }
 
     @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC_ANON", justification = "Do not care in this one")
@@ -109,7 +111,8 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
     }
 
     @NonNull
-    private List<EmojiGridView> getViews(final Context context, @Nullable final OnEmojiClickedListener onEmojiClickedListener) {
+    private List<FrameLayout> getViews(final Context context, @Nullable final OnEmojiClickedListener onEmojiClickedListener, @NonNull final RecentEmoji recentEmoji) {
+        recentGridView = new RecentEmojiGridView(context, recentEmoji).init(onEmojiClickedListener);
         final EmojiGridView peopleGridView = new EmojiGridView(context).init(People.DATA, onEmojiClickedListener);
         final EmojiGridView natureGridView = new EmojiGridView(context).init(Nature.DATA, onEmojiClickedListener);
         final EmojiGridView foodGridView = new EmojiGridView(context).init(Food.DATA, onEmojiClickedListener);
@@ -117,13 +120,18 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
         final EmojiGridView carsGridView = new EmojiGridView(context).init(Cars.DATA, onEmojiClickedListener);
         final EmojiGridView electronicsGridView = new EmojiGridView(context).init(Electronics.DATA, onEmojiClickedListener);
         final EmojiGridView symbolsGridView = new EmojiGridView(context).init(Symbols.DATA, onEmojiClickedListener);
-        return Arrays.asList(peopleGridView, natureGridView, foodGridView, sportGridView, carsGridView, electronicsGridView, symbolsGridView);
+        return Arrays.asList(recentGridView, peopleGridView, natureGridView, foodGridView, sportGridView, carsGridView, electronicsGridView, symbolsGridView);
     }
 
     @Override
     public void onPageSelected(final int i) {
         if (emojiTabLastSelectedIndex != i) {
+            if (i == RECENT_INDEX) {
+                recentGridView.invalidateEmojis();
+            }
+
             switch (i) {
+                case RECENT_INDEX:
                 case PEOPLE_INDEX:
                 case NATURE_INDEX:
                 case FOOD_INDEX:
