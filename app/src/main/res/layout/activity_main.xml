@@ -29,7 +29,7 @@
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
-            android:src="@drawable/emoji_category_people"
+            android:src="@drawable/emoji_people"
             tools:ignore="ContentDescription"/>
 
         <com.vanniktech.emoji.EmojiEditText

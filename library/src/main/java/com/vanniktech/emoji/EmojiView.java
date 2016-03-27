@@ -1,9 +1,5 @@
 package com.vanniktech.emoji;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -16,34 +12,44 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.vanniktech.emoji.emoji.Cars;
+import com.vanniktech.emoji.emoji.Electronics;
+import com.vanniktech.emoji.emoji.Food;
 import com.vanniktech.emoji.emoji.Nature;
-import com.vanniktech.emoji.emoji.Objects;
 import com.vanniktech.emoji.emoji.People;
-import com.vanniktech.emoji.emoji.Places;
+import com.vanniktech.emoji.emoji.Sport;
 import com.vanniktech.emoji.emoji.Symbols;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickedListener;
 import com.vanniktech.emoji.listeners.RepeatListener;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @SuppressLint("ViewConstructor")
 final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListener {
-    private static final int                        PEOPLE_INDEX              = 0;
-    private static final int                        NATURE_INDEX              = 1;
-    private static final int                        OBJECTS_INDEX             = 2;
-    private static final int                        CARS_INDEX                = 3;
-    private static final int                        PUNCTUATION_INDEX         = 4;
+    private static final int PEOPLE_INDEX = 0;
+    private static final int NATURE_INDEX = 1;
+    private static final int FOOD_INDEX = 2;
+    private static final int SPORT_INDEX = 3;
+    private static final int CARS_INDEX = 4;
+    private static final int ELECTRONICS_INDEX = 5;
+    private static final int SYMBOLS_INDEX = 6;
 
-    private static final long                       INITIAL_INTERVAL          = TimeUnit.SECONDS.toMillis(1) / 2;
-    private static final int                        NORMAL_INTERVAL           = 50;
+    private static final long INITIAL_INTERVAL = TimeUnit.SECONDS.toMillis(1) / 2;
+    private static final int NORMAL_INTERVAL = 50;
 
-    @ColorInt private final int                     themeAccentColor;
+    @ColorInt
+    private final int themeAccentColor;
 
-    @Nullable private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
+    @Nullable
+    private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
-    private int                                     emojiTabLastSelectedIndex = -1;
-    private final ImageView[]                       emojiTabs;
+    private int emojiTabLastSelectedIndex = -1;
+    private final ImageView[] emojiTabs;
 
     EmojiView(final Context context, final OnEmojiClickedListener onEmojiClickedListener) {
         super(context);
@@ -57,12 +63,14 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
         final EmojiPagerAdapter emojisAdapter = new EmojiPagerAdapter(views);
         emojisPager.setAdapter(emojisAdapter);
 
-        emojiTabs = new ImageView[PUNCTUATION_INDEX + 1];
+        emojiTabs = new ImageView[SYMBOLS_INDEX + 1];
         emojiTabs[PEOPLE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_0_people);
         emojiTabs[NATURE_INDEX] = (ImageView) findViewById(R.id.emojis_tab_1_nature);
-        emojiTabs[OBJECTS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_2_objects);
-        emojiTabs[CARS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_3_cars);
-        emojiTabs[PUNCTUATION_INDEX] = (ImageView) findViewById(R.id.emojis_tab_4_punctuation);
+        emojiTabs[FOOD_INDEX] = (ImageView) findViewById(R.id.emojis_tab_2_food);
+        emojiTabs[SPORT_INDEX] = (ImageView) findViewById(R.id.emojis_tab_3_sport);
+        emojiTabs[CARS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_4_cars);
+        emojiTabs[ELECTRONICS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_5_electronics);
+        emojiTabs[SYMBOLS_INDEX] = (ImageView) findViewById(R.id.emojis_tab_6_symbols);
 
         handleOnClicks(emojisPager);
 
@@ -104,10 +112,12 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
     private List<EmojiGridView> getViews(final Context context, @Nullable final OnEmojiClickedListener onEmojiClickedListener) {
         final EmojiGridView peopleGridView = new EmojiGridView(context).init(People.DATA, onEmojiClickedListener);
         final EmojiGridView natureGridView = new EmojiGridView(context).init(Nature.DATA, onEmojiClickedListener);
-        final EmojiGridView objectsGridView = new EmojiGridView(context).init(Objects.DATA, onEmojiClickedListener);
-        final EmojiGridView lacesGridView = new EmojiGridView(context).init(Places.DATA, onEmojiClickedListener);
+        final EmojiGridView foodGridView = new EmojiGridView(context).init(Food.DATA, onEmojiClickedListener);
+        final EmojiGridView sportGridView = new EmojiGridView(context).init(Sport.DATA, onEmojiClickedListener);
+        final EmojiGridView carsGridView = new EmojiGridView(context).init(Cars.DATA, onEmojiClickedListener);
+        final EmojiGridView electronicsGridView = new EmojiGridView(context).init(Electronics.DATA, onEmojiClickedListener);
         final EmojiGridView symbolsGridView = new EmojiGridView(context).init(Symbols.DATA, onEmojiClickedListener);
-        return Arrays.asList(peopleGridView, natureGridView, objectsGridView, lacesGridView, symbolsGridView);
+        return Arrays.asList(peopleGridView, natureGridView, foodGridView, sportGridView, carsGridView, electronicsGridView, symbolsGridView);
     }
 
     @Override
@@ -116,9 +126,11 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
             switch (i) {
                 case PEOPLE_INDEX:
                 case NATURE_INDEX:
-                case OBJECTS_INDEX:
+                case FOOD_INDEX:
+                case SPORT_INDEX:
                 case CARS_INDEX:
-                case PUNCTUATION_INDEX:
+                case ELECTRONICS_INDEX:
+                case SYMBOLS_INDEX:
                     if (emojiTabLastSelectedIndex >= 0 && emojiTabLastSelectedIndex < emojiTabs.length) {
                         emojiTabs[emojiTabLastSelectedIndex].setSelected(false);
                         emojiTabs[emojiTabLastSelectedIndex].clearColorFilter();
