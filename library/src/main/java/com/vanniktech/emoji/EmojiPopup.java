@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -24,29 +25,32 @@ import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
 
 public final class EmojiPopup {
-    private static final int                        MIN_KEYBOARD_HEIGHT = 100;
+    private static final int MIN_KEYBOARD_HEIGHT = 100;
 
-    private final EmojiEditText                     emojiEditText;
-    private final View                              rootView;
-    private final Context                           context;
+    private final EmojiEditText emojiEditText;
+    private final View rootView;
+    private final Context context;
 
-    private int                                     keyBoardHeight;
-    private boolean                                 isPendingOpen;
-    private boolean                                 isKeyboardOpen;
+    private int keyBoardHeight;
+    private boolean isPendingOpen;
+    private boolean isKeyboardOpen;
 
-    @Nullable private OnEmojiPopupShownListener     onEmojiPopupShownListener;
-    @Nullable private OnSoftKeyboardCloseListener   onSoftKeyboardCloseListener;
-    @Nullable private OnSoftKeyboardOpenListener    onSoftKeyboardOpenListener;
+    @Nullable private OnEmojiPopupShownListener onEmojiPopupShownListener;
+    @Nullable private OnSoftKeyboardCloseListener onSoftKeyboardCloseListener;
+    @Nullable private OnSoftKeyboardOpenListener onSoftKeyboardOpenListener;
     @Nullable private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
-    @Nullable private OnEmojiClickedListener        onEmojiClickedListener;
-    @Nullable private OnEmojiPopupDismissListener   onEmojiPopupDismissListener;
+    @Nullable private OnEmojiClickedListener onEmojiClickedListener;
+    @Nullable private OnEmojiPopupDismissListener onEmojiPopupDismissListener;
 
-    private final PopupWindow                       popupWindow;
+    @NonNull private final RecentEmoji recentEmoji;
 
-    private EmojiPopup(final View rootView, final EmojiEditText emojiEditText) {
+    private final PopupWindow popupWindow;
+
+    private EmojiPopup(final View rootView, final EmojiEditText emojiEditText, @Nullable final RecentEmoji recent) {
         this.context = rootView.getContext();
         this.rootView = rootView;
         this.emojiEditText = emojiEditText;
+        this.recentEmoji = recent != null ? recent : new RecentEmojiManager(context);
 
         popupWindow = new PopupWindow(context);
         popupWindow.setBackgroundDrawable(new BitmapDrawable(context.getResources(), (Bitmap) null)); // To avoid borders & overdraw
@@ -55,12 +59,13 @@ public final class EmojiPopup {
             @Override
             public void onEmojiClicked(final Emoji emoji) {
                 emojiEditText.input(emoji);
+                recentEmoji.addEmoji(emoji);
 
                 if (onEmojiClickedListener != null) {
                     onEmojiClickedListener.onEmojiClicked(emoji);
                 }
             }
-        });
+        }, this.recentEmoji);
 
         emojiView.setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
             @Override
@@ -130,6 +135,7 @@ public final class EmojiPopup {
 
     public void dismiss() {
         popupWindow.dismiss();
+        recentEmoji.persist();
     }
 
     private void setSizeForSoftKeyboard() {
@@ -164,10 +170,12 @@ public final class EmojiPopup {
                         isPendingOpen = false;
                     }
                 } else {
-                    isKeyboardOpen = false;
+                    if (isKeyboardOpen) {
+                        isKeyboardOpen = false;
 
-                    if (onSoftKeyboardCloseListener != null) {
-                        onSoftKeyboardCloseListener.onKeyboardClose();
+                        if (onSoftKeyboardCloseListener != null) {
+                            onSoftKeyboardCloseListener.onKeyboardClose();
+                        }
                     }
                 }
             }
@@ -197,14 +205,16 @@ public final class EmojiPopup {
             return new Builder(rootView);
         }
 
-        private final View                              rootView;
+        private final View rootView;
 
-        @Nullable private OnEmojiPopupShownListener     onEmojiPopupShownListener;
-        @Nullable private OnSoftKeyboardCloseListener   onSoftKeyboardCloseListener;
-        @Nullable private OnSoftKeyboardOpenListener    onSoftKeyboardOpenListener;
+        @Nullable private OnEmojiPopupShownListener onEmojiPopupShownListener;
+        @Nullable private OnSoftKeyboardCloseListener onSoftKeyboardCloseListener;
+        @Nullable private OnSoftKeyboardOpenListener onSoftKeyboardOpenListener;
         @Nullable private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
-        @Nullable private OnEmojiClickedListener        onEmojiClickedListener;
-        @Nullable private OnEmojiPopupDismissListener   onEmojiPopupDismissListener;
+        @Nullable private OnEmojiClickedListener onEmojiClickedListener;
+        @Nullable private OnEmojiPopupDismissListener onEmojiPopupDismissListener;
+
+        @Nullable private RecentEmoji recentEmoji;
 
         private Builder(final View rootView) {
             this.rootView = rootView;
@@ -240,8 +250,18 @@ public final class EmojiPopup {
             return this;
         }
 
+        /**
+         * allows you to pass your own implementation of recent emojis. If not provided the default one ({@link RecentEmojiManager} will be used
+         * 
+         * @since 0.2.0
+         */
+        public Builder setRecentEmoji(@Nullable final RecentEmoji recent) {
+            this.recentEmoji = recent;
+            return this;
+        }
+
         public EmojiPopup build(final EmojiEditText emojiEditText) {
-            final EmojiPopup emojiPopup = new EmojiPopup(rootView, emojiEditText);
+            final EmojiPopup emojiPopup = new EmojiPopup(rootView, emojiEditText, recentEmoji);
             emojiPopup.onSoftKeyboardCloseListener = onSoftKeyboardCloseListener;
             emojiPopup.onEmojiClickedListener = onEmojiClickedListener;
             emojiPopup.onSoftKeyboardOpenListener = onSoftKeyboardOpenListener;

@@ -14,7 +14,16 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/emojis_tab_0_people"
+            android:id="@+id/emojis_tab_0_recent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/emoji_recent"
+            android:src="@drawable/emoji_recent"/>
+
+        <ImageButton
+            android:id="@+id/emojis_tab_1_people"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -23,7 +32,7 @@
             android:src="@drawable/emoji_people"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_1_nature"
+            android:id="@+id/emojis_tab_2_nature"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -32,7 +41,7 @@
             android:src="@drawable/emoji_nature"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_2_food"
+            android:id="@+id/emojis_tab_3_food"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -41,7 +50,7 @@
             android:src="@drawable/emoji_food"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_3_sport"
+            android:id="@+id/emojis_tab_4_sport"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -50,7 +59,7 @@
             android:src="@drawable/emoji_sport"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_4_cars"
+            android:id="@+id/emojis_tab_5_cars"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -59,7 +68,7 @@
             android:src="@drawable/emoji_cars"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_5_electronics"
+            android:id="@+id/emojis_tab_6_electronics"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -68,7 +77,7 @@
             android:src="@drawable/emoji_electronics"/>
 
         <ImageButton
-            android:id="@+id/emojis_tab_6_symbols"
+            android:id="@+id/emojis_tab_7_symbols"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

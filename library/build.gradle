@@ -25,6 +25,9 @@ dependencies {
     provided rootProject.ext.findbugsAnnotations
 
     testCompile rootProject.ext.testing.junit
+    testCompile rootProject.ext.testing.mockito
+    testCompile rootProject.ext.testing.assertJ
+    testCompile rootProject.ext.testing.robolectric
     testCompile rootProject.ext.testing.privateConstructor
 }
 
