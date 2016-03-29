@@ -17,7 +17,7 @@ A simple library to add Emoji support to your Android app. In a PopupWindow Emoj
 
 ```groovy
 compile 'com.vanniktech:emoji:0.2.0'
-compile 'com.vanniktech:emoji:0.2.0-SNAPSHOT'
+compile 'com.vanniktech:emoji:0.3.0-SNAPSHOT'
 ```
 
 Modules are located on [Maven Central](https://oss.sonatype.org/#nexus-search;gav~com.vanniktech~emoji~~~).
