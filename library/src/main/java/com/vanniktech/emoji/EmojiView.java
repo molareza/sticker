@@ -89,8 +89,9 @@ final class EmojiView extends FrameLayout implements ViewPager.OnPageChangeListe
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
         themeAccentColor = value.data;
 
-        emojisPager.setCurrentItem(RECENT_INDEX);
-        onPageSelected(RECENT_INDEX);
+        final int startIndex = recentGridView.numberOfRecentEmojis() > 0 ? RECENT_INDEX : PEOPLE_INDEX;
+        emojisPager.setCurrentItem(startIndex);
+        onPageSelected(startIndex);
     }
 
     @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC_ANON", justification = "Do not care in this one")

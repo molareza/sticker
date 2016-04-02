@@ -39,4 +39,8 @@ final class RecentEmojiGridView extends FrameLayout {
     public void invalidateEmojis() {
         emojiArrayAdapter.updateEmojis(recentEmojis.getRecentEmojis());
     }
+
+    public int numberOfRecentEmojis() {
+        return emojiArrayAdapter.getCount();
+    }
 }

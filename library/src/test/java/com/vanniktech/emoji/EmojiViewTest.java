@@ -26,15 +26,15 @@ public class EmojiViewTest {
 
     @Test
     public void onPageSelectedRecentShouldUpdateRecentEmojis() {
-        verify(recentEmoji, times(2)).getRecentEmojis(); // During init phase it is called
+        verify(recentEmoji, times(1)).getRecentEmojis(); // During init phase it is called
 
         emojiView.onPageSelected(2);
-        verify(recentEmoji, times(2)).getRecentEmojis(); // Should not be called again
+        verify(recentEmoji, times(1)).getRecentEmojis(); // Should not be called again
 
         emojiView.onPageSelected(0);
-        verify(recentEmoji, times(3)).getRecentEmojis(); // Should be to update view
+        verify(recentEmoji, times(2)).getRecentEmojis(); // Should be to update view
 
         emojiView.onPageSelected(0);
-        verify(recentEmoji, times(3)).getRecentEmojis(); // Should not update again
+        verify(recentEmoji, times(2)).getRecentEmojis(); // Should not update again
     }
 }
