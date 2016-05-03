@@ -1,7 +1,10 @@
 # Change Log
 
-Version 0.3.0 *(In development)*
+Version 0.3.0 *(2016-05-03)*
 --------------------------------
+
+- Remove Global Layout listener when dismissing the popup. Fixes \#22 [\#24](https://github.com/vanniktech/Emoji/pull/24) ([vanniktech](https://github.com/vanniktech))
+- Show People category first when no recent emojis are present [\#16](https://github.com/vanniktech/Emoji/pull/16) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.2.0 *(2016-03-29)*
 --------------------------------
