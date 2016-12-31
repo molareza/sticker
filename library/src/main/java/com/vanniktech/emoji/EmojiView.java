@@ -6,11 +6,13 @@ import android.graphics.PorterDuff;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.vanniktech.emoji.emoji.Cars;
 import com.vanniktech.emoji.emoji.Electronics;
 import com.vanniktech.emoji.emoji.Emoji;
@@ -22,14 +24,13 @@ import com.vanniktech.emoji.emoji.Symbols;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickedListener;
 import com.vanniktech.emoji.listeners.RepeatListener;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @SuppressLint("ViewConstructor")
 final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeListener {
-    private static final int BACKGROUND_COLOR = 0xffeceff1;
-
     private static final int RECENT_INDEX = 0;
     private static final int PEOPLE_INDEX = 1;
     private static final int NATURE_INDEX = 2;
@@ -43,12 +44,13 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
     private static final int NORMAL_INTERVAL = 50;
 
     @ColorInt private final int themeAccentColor;
-    @Nullable OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
-
-    private int emojiTabLastSelectedIndex = -1;
+    @ColorInt private final int themeIconColor;
 
     private final ImageView[] emojiTabs;
 
+    @Nullable OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
+
+    private int emojiTabLastSelectedIndex = -1;
     private RecentEmojiGridView recentGridView;
 
     EmojiView(final Context context, final OnEmojiClickedListener onEmojiClickedListener, @NonNull final RecentEmoji recentEmoji) {
@@ -57,7 +59,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         View.inflate(context, R.layout.emoji_view, this);
 
         setOrientation(VERTICAL);
-        setBackgroundColor(BACKGROUND_COLOR);
+        setBackgroundColor(ContextCompat.getColor(context, R.color.emoji_background));
 
         final ViewPager emojisPager = (ViewPager) findViewById(R.id.emojis_pager);
         emojisPager.addOnPageChangeListener(this);
@@ -87,9 +89,13 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
             }
         }));
 
+        themeIconColor = ContextCompat.getColor(context, R.color.emoji_icons);
+
         final TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
         themeAccentColor = value.data;
+
+        tintIcons();
 
         final int startIndex = recentGridView.numberOfRecentEmojis() > 0 ? RECENT_INDEX : PEOPLE_INDEX;
         emojisPager.setCurrentItem(startIndex);
@@ -100,6 +106,14 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         for (int i = 0; i < emojiTabs.length; i++) {
             emojiTabs[i].setOnClickListener(new EmojiTabsClickListener(emojisPager, i));
         }
+    }
+
+    private void tintIcons() {
+        for (final ImageView emojiTab : emojiTabs) {
+            emojiTab.setColorFilter(themeIconColor, PorterDuff.Mode.SRC_IN);
+        }
+
+        ((ImageView) findViewById(R.id.emojis_backspace)).setColorFilter(themeIconColor, PorterDuff.Mode.SRC_IN);
     }
 
     public void setOnEmojiBackspaceClickListener(@Nullable final OnEmojiBackspaceClickListener onEmojiBackspaceClickListener) {
@@ -145,7 +159,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
                 case SYMBOLS_INDEX:
                     if (emojiTabLastSelectedIndex >= 0 && emojiTabLastSelectedIndex < emojiTabs.length) {
                         emojiTabs[emojiTabLastSelectedIndex].setSelected(false);
-                        emojiTabs[emojiTabLastSelectedIndex].clearColorFilter();
+                        emojiTabs[emojiTabLastSelectedIndex].setColorFilter(themeIconColor, PorterDuff.Mode.SRC_IN);
                     }
 
                     emojiTabs[i].setSelected(true);
