@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
   @Override public boolean onOptionsItemSelected(final MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.show_dialog:
+        MainDialog.show(this);
+        return true;
       case R.id.variantIos:
         EmojiManager.install(new IosEmojiProvider());
         recreate();
@@ -144,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         })
         .setOnSoftKeyboardCloseListener(new OnSoftKeyboardCloseListener() {
           @Override public void onKeyboardClose() {
-            emojiPopup.dismiss();
+            Log.d(TAG, "Closed soft keyboard");
           }
         })
         .build(editText);

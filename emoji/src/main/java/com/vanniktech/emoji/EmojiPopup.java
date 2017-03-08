@@ -1,19 +1,17 @@
 package com.vanniktech.emoji;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.PopupWindow;
 import com.vanniktech.emoji.emoji.Emoji;
@@ -30,15 +28,14 @@ public final class EmojiPopup {
   private static final int MIN_KEYBOARD_HEIGHT = 100;
 
   final View rootView;
-  final Context context;
+  final Activity context;
 
   @NonNull final RecentEmoji recentEmoji;
   @NonNull final EmojiVariantPopup variantPopup;
 
   final PopupWindow popupWindow;
-  private final EmojiEditText emojiEditText;
+  final EmojiEditText emojiEditText;
 
-  int keyBoardHeight;
   boolean isPendingOpen;
   boolean isKeyboardOpen;
 
@@ -46,27 +43,21 @@ public final class EmojiPopup {
   @Nullable OnSoftKeyboardCloseListener onSoftKeyboardCloseListener;
   @Nullable OnSoftKeyboardOpenListener onSoftKeyboardOpenListener;
 
+  @Nullable OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
+  @Nullable OnEmojiClickedListener onEmojiClickedListener;
+  @Nullable OnEmojiPopupDismissListener onEmojiPopupDismissListener;
+
   private final ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
     @Override public void onGlobalLayout() {
-      final Rect rect = new Rect();
-      rootView.getWindowVisibleDisplayFrame(rect);
+      final Rect rect = Utils.windowVisibleDisplayFrame(context);
+      final int heightDifference = Utils.screenHeight(context) - rect.bottom;
 
-      int heightDifference = getUsableScreenHeight() - (rect.bottom - rect.top);
-
-      final Resources resources = context.getResources();
-      final int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-
-      if (resourceId > 0) {
-        heightDifference -= resources.getDimensionPixelSize(resourceId);
-      }
-
-      if (heightDifference > MIN_KEYBOARD_HEIGHT) {
-        keyBoardHeight = heightDifference;
-        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(keyBoardHeight);
+      if (heightDifference > Utils.dpToPx(context, MIN_KEYBOARD_HEIGHT)) {
+        popupWindow.setHeight(heightDifference);
+        popupWindow.setWidth(rect.right);
 
         if (!isKeyboardOpen && onSoftKeyboardOpenListener != null) {
-          onSoftKeyboardOpenListener.onKeyboardOpen(keyBoardHeight);
+          onSoftKeyboardOpenListener.onKeyboardOpen(heightDifference);
         }
 
         isKeyboardOpen = true;
@@ -82,23 +73,21 @@ public final class EmojiPopup {
           if (onSoftKeyboardCloseListener != null) {
             onSoftKeyboardCloseListener.onKeyboardClose();
           }
+
+          dismiss();
+          Utils.removeOnGlobalLayoutListener(context.getWindow().getDecorView(), onGlobalLayoutListener);
         }
       }
     }
   };
 
-  @Nullable OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
-  @Nullable OnEmojiClickedListener onEmojiClickedListener;
-  @Nullable OnEmojiPopupDismissListener onEmojiPopupDismissListener;
-
   EmojiPopup(@NonNull final View rootView, @NonNull final EmojiEditText emojiEditText, @Nullable final RecentEmoji recent) {
-    this.context = rootView.getContext();
-    this.rootView = rootView;
+    this.context = Utils.asActivity(rootView.getContext());
+    this.rootView = rootView.getRootView();
     this.emojiEditText = emojiEditText;
     this.recentEmoji = recent != null ? recent : new RecentEmojiManager(context);
 
     popupWindow = new PopupWindow(context);
-    popupWindow.setBackgroundDrawable(new BitmapDrawable(context.getResources(), (Bitmap) null)); // To avoid borders & overdraw
 
     final OnEmojiLongClickedListener longClickListener = new OnEmojiLongClickedListener() {
       @Override
@@ -121,7 +110,7 @@ public final class EmojiPopup {
       }
     };
 
-    variantPopup = new EmojiVariantPopup(clickListener);
+    variantPopup = new EmojiVariantPopup(this.rootView, clickListener);
 
     final EmojiView emojiView = new EmojiView(context, clickListener, longClickListener, recentEmoji);
 
@@ -136,9 +125,8 @@ public final class EmojiPopup {
     });
 
     popupWindow.setContentView(emojiView);
-    popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-    popupWindow.setHeight((int) context.getResources().getDimension(R.dimen.emoji_keyboard_height));
+    popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
+    popupWindow.setBackgroundDrawable(new BitmapDrawable(context.getResources(), (Bitmap) null)); // To avoid borders and overdraw.
     popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
       @Override public void onDismiss() {
         if (onEmojiPopupDismissListener != null) {
@@ -148,27 +136,17 @@ public final class EmojiPopup {
     });
   }
 
-  void showAtBottom() {
-    popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
-  }
-
-  private void showAtBottomPending() {
-    if (isKeyboardOpen) {
-      showAtBottom();
-    } else {
-      isPendingOpen = true;
-    }
-  }
-
   public void toggle() {
     if (!popupWindow.isShowing()) {
-      rootView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
+      // Remove any previous listeners to avoid duplicates.
+      Utils.removeOnGlobalLayoutListener(context.getWindow().getDecorView(), onGlobalLayoutListener);
+      context.getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
 
       if (isKeyboardOpen) {
-        // If keyboard is visible, simply show the emoji popup
+        // If the keyboard is visible, simply show the emoji popup.
         showAtBottom();
       } else {
-        // Open the text keyboard first and immediately after that show the emoji popup
+        // Open the text keyboard first and immediately after that show the emoji popup.
         emojiEditText.setFocusableInTouchMode(true);
         emojiEditText.requestFocus();
 
@@ -177,16 +155,12 @@ public final class EmojiPopup {
         final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(emojiEditText, InputMethodManager.SHOW_IMPLICIT);
       }
-
-      if (onEmojiPopupShownListener != null) {
-        onEmojiPopupShownListener.onEmojiPopupShown();
-      }
     } else {
       dismiss();
     }
 
     // Manually dispatch the event. In some cases this does not work out of the box reliably.
-    rootView.getViewTreeObserver().dispatchOnGlobalLayout();
+    context.getWindow().getDecorView().getViewTreeObserver().dispatchOnGlobalLayout();
   }
 
   public boolean isShowing() {
@@ -194,22 +168,27 @@ public final class EmojiPopup {
   }
 
   public void dismiss() {
-    Utils.removeOnGlobalLayoutListener(rootView, onGlobalLayoutListener);
     popupWindow.dismiss();
     variantPopup.dismiss();
     recentEmoji.persist();
   }
 
-  int getUsableScreenHeight() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-      final DisplayMetrics metrics = new DisplayMetrics();
+  void showAtBottom() {
+    final Point desiredLocation = new Point(0, Utils.screenHeight(context) - popupWindow.getHeight());
 
-      final WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-      windowManager.getDefaultDisplay().getMetrics(metrics);
+    popupWindow.showAtLocation(rootView, Gravity.NO_GRAVITY, desiredLocation.x, desiredLocation.y);
+    Utils.fixPopupLocation(popupWindow, desiredLocation);
 
-      return metrics.heightPixels;
+    if (onEmojiPopupShownListener != null) {
+      onEmojiPopupShownListener.onEmojiPopupShown();
+    }
+  }
+
+  private void showAtBottomPending() {
+    if (isKeyboardOpen) {
+      showAtBottom();
     } else {
-      return rootView.getRootView().getHeight();
+      isPendingOpen = true;
     }
   }
 
@@ -224,13 +203,13 @@ public final class EmojiPopup {
     @Nullable private RecentEmoji recentEmoji;
 
     private Builder(final View rootView) {
-      this.rootView = checkNotNull(rootView, "The rootView can't be null");
+      this.rootView = checkNotNull(rootView, "The root View can't be null");
     }
 
     /**
-     * @param rootView the rootView of your layout.xml which will be used for calculating the height
-     * of the keyboard
-     * @return builder for building {@link EmojiPopup}
+     * @param rootView The root View of your layout.xml which will be used for calculating the height
+     *                 of the keyboard.
+     * @return builder For building the {@link EmojiPopup}.
      */
     @CheckResult public static Builder fromRootView(final View rootView) {
       return new Builder(rootView);
@@ -267,7 +246,7 @@ public final class EmojiPopup {
     }
 
     /**
-     * allows you to pass your own implementation of recent emojis. If not provided the default one
+     * Allows you to pass your own implementation of recent emojis. If not provided the default one
      * {@link RecentEmojiManager} will be used
      *
      * @since 0.2.0
