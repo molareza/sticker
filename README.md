@@ -16,6 +16,7 @@ For getting the above iOS Emojis simply add the dependency and code below.
 
 ```groovy
 compile 'com.vanniktech:emoji-ios:0.5.1'
+compile 'com.vanniktech:emoji-ios:0.6.0-SNAPSHOT'
 ```
 
 And install the provider (preferably in your Application class):
@@ -32,6 +33,7 @@ For getting the above EmojiOne Emojis simply add the dependency and code below.
 
 ```groovy
 compile 'com.vanniktech:emoji-one:0.5.1'
+compile 'com.vanniktech:emoji-one:0.6.0-SNAPSHOT'
 ```
 
 And install the provider (preferably in your Application class):
@@ -48,6 +50,7 @@ For getting the above Google Emojis simply add the dependency and code below.
 
 ```groovy
 compile 'com.vanniktech:emoji-google:0.5.1'
+compile 'com.vanniktech:emoji-google:0.6.0-SNAPSHOT'
 ```
 
 And install the provider (preferably in your Application class):
@@ -64,6 +67,7 @@ For getting the above Twitter Emojis simply add the dependency and code below.
 
 ```groovy
 compile 'com.vanniktech:emoji-twitter:0.5.1'
+compile 'com.vanniktech:emoji-twitter:0.6.0-SNAPSHOT'
 ```
 
 And install the provider (preferably in your Application class):
@@ -80,6 +84,7 @@ All of the core API lays in, which is being pulled in automatically by the provi
 
 ```groovy
 compile 'com.vanniktech:emoji:0.5.1'
+compile 'com.vanniktech:emoji:0.6.0-SNAPSHOT'
 ```
 
 ### Inserting Emojis
