@@ -45,7 +45,9 @@ import android.util.AttributeSet;
   @Override @CallSuper public void setText(final CharSequence rawText, final BufferType type) {
     final CharSequence text = rawText == null ? "" : rawText;
     final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
-    EmojiManager.replaceWithImages(getContext(), spannableStringBuilder, emojiSize);
+    final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
+    final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
+    EmojiManager.replaceWithImages(getContext(), spannableStringBuilder, emojiSize, defaultEmojiSize);
     super.setText(spannableStringBuilder, type);
   }
 
