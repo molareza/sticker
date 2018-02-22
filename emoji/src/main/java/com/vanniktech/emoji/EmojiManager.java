@@ -146,7 +146,7 @@ import static com.vanniktech.emoji.Utils.checkNotNull;
     INSTANCE.emojiReplacer = null;
   }
 
-  static void replaceWithImages(final Context context, final Spannable text, final float emojiSize, final float defaultEmojiSize) {
+  public static void replaceWithImages(final Context context, final Spannable text, final float emojiSize, final float defaultEmojiSize) {
     final EmojiManager emojiManager = EmojiManager.getInstance();
     emojiManager.emojiReplacer.replaceWithImages(context, text, emojiSize, defaultEmojiSize, DEFAULT_EMOJI_REPLACER);
   }

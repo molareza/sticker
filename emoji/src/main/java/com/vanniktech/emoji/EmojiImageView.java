@@ -124,7 +124,7 @@ public final class EmojiImageView extends AppCompatImageView {
    *
    * @param emoji The new emoji variant to show.
    */
-  void updateEmoji(@NonNull final Emoji emoji) {
+  public void updateEmoji(@NonNull final Emoji emoji) {
     if (!emoji.equals(currentEmoji)) {
       currentEmoji = emoji;
 
