@@ -1,16 +1,35 @@
 package com.vanniktech.emoji.<%= package %>;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.LruCache;
+
+import com.vanniktech.emoji.emoji.CacheKey;
 import com.vanniktech.emoji.emoji.Emoji;
+
+import java.lang.ref.SoftReference;
 
 public class <%= name %> extends Emoji {
   private static final Object LOCK = new Object();
-  private static volatile Bitmap sheet;
+  private static final int NUM_STRIPS = <%= strips %>;
+  private static final SoftReference[] STRIP_REFS =
+      new SoftReference[NUM_STRIPS];
+  private static final int CACHE_SIZE = 100;
+  private static final LruCache<CacheKey, Bitmap> BITMAP_CACHE =
+      new LruCache<>(CACHE_SIZE);
+  private static final int SPRITE_SIZE = 64;
+  private static final int SPRITE_SIZE_INC_BORDER = 66;
+
+  static {
+    for (int i = 0; i < NUM_STRIPS; i++) {
+      STRIP_REFS[i] = new SoftReference<Bitmap>(null);
+    }
+  }
 
   private final int x;
   private final int y;
@@ -44,25 +63,43 @@ public class <%= name %> extends Emoji {
   }
 
   @NonNull @Override public Drawable getDrawable(final Context context) {
-    if (sheet == null) {
-      synchronized (LOCK) {
-        if (sheet == null) {
-          sheet = BitmapFactory.decodeResource(context.getResources(), R.drawable.emoji_<%= package %>_sheet);
-        }
-      }
+    final CacheKey key = new CacheKey(x, y);
+    final Bitmap bitmap = BITMAP_CACHE.get(key);
+    if (bitmap != null) {
+      return new BitmapDrawable(context.getResources(), bitmap);
     }
-
-    final Bitmap cut = Bitmap.createBitmap(sheet, x * 66, y * 66, 64, 64);
-
+    final Bitmap strip = loadStrip(context);
+    final Bitmap cut = Bitmap.createBitmap(strip, 1,
+        y * SPRITE_SIZE_INC_BORDER + 1, SPRITE_SIZE, SPRITE_SIZE);
+    BITMAP_CACHE.put(key, cut);
     return new BitmapDrawable(context.getResources(), cut);
   }
 
-  @Override public void destroy() {
-    if (sheet != null) {
+  private Bitmap loadStrip(final Context context) {
+    Bitmap strip = (Bitmap) STRIP_REFS[x].get();
+    if (strip == null) {
       synchronized (LOCK) {
-        if (sheet != null) {
-          sheet.recycle();
-          sheet = null;
+        strip = (Bitmap) STRIP_REFS[x].get();
+        if (strip == null) {
+          final Resources resources = context.getResources();
+          final int resId = resources.getIdentifier("emoji_<%= package %>_sheet_" + x,
+              "drawable", context.getPackageName());
+          strip = BitmapFactory.decodeResource(resources, resId);
+          STRIP_REFS[x] = new SoftReference<>(strip);
+        }
+      }
+    }
+    return strip;
+  }
+
+  @Override public void destroy() {
+    synchronized (LOCK) {
+      BITMAP_CACHE.evictAll();
+      for (int i = 0; i < NUM_STRIPS; i++) {
+        final Bitmap strip = (Bitmap) STRIP_REFS[i].get();
+        if (strip != null) {
+          strip.recycle();
+          STRIP_REFS[i].clear();
         }
       }
     }

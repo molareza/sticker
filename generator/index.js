@@ -6,6 +6,7 @@ const imagemin = require("imagemin");
 const imageminZopfli = require("imagemin-zopfli");
 const imageminPngquant = require("imagemin-pngquant");
 const emojiData = require("./node_modules/emoji-datasource/emoji.json");
+const Jimp = require("jimp");
 
 /**
  * The targets for generating. Extend these for adding more emoji variants.
@@ -57,15 +58,43 @@ const categoryOrder = ["SmileysAndPeople", "AnimalsAndNature", "FoodAndDrink", "
 async function copyTargetImages(map, target, shouldOptimize) {
     await fs.emptyDir(`../emoji-${target.package}/src/main/res/drawable-nodpi`);
 
-    const sheet = await fs.readFile(`node_modules/emoji-datasource-${target.dataSource}/img/${target.dataSource}/sheets/64.png`);
-    const optimizedSheet = shouldOptimize ? await imagemin.buffer(sheet, {
-        plugins: [
-            imageminPngquant(),
-            imageminZopfli()
-        ]
-    }) : sheet;
-
-    await fs.writeFile(`../emoji-${target.package}/src/main/res/drawable-nodpi/emoji_${target.package}_sheet.png`, optimizedSheet);
+    const allEmoji = emojiData.reduce((all, it) => {
+        all.push(it);
+        if (it.skin_variations) {
+            all.push(...Object.values(it.skin_variations));
+        }
+        return all;
+    }, []);
+    const emojiByStrip = [];
+    allEmoji.forEach(it => {
+        if (emojiByStrip[it.sheet_x]) {
+            emojiByStrip[it.sheet_x].push(it);
+        } else {
+            emojiByStrip[it.sheet_x] = new Array(it);
+        }
+    });
+    const src = `node_modules/emoji-datasource-${target.dataSource}/img/${target.dataSource}/sheets/64.png`;
+    const sheet = await Jimp.read(src);
+    const strips = sheet.bitmap.width / 66 - 1;
+    for (let i = 0; i < strips; i++) {
+        const maxY = emojiByStrip[i].map(it => it.sheet_y).reduce((a, b) => Math.max(a, b), 0);
+        const height = (maxY + 1) * 66;
+        const strip = await new Jimp(66, height);
+        await strip.blit(sheet, 0, 0, i * 66, 0, 66, height);
+        const dest = `../emoji-${target.package}/src/main/res/drawable-nodpi/emoji_${target.package}_sheet_${i}.png`;
+        if (shouldOptimize) {
+            const buffer = await new Promise((resolve, reject) => strip.getBuffer('image/png', (err, res) => err ? reject(err) : resolve(res)));
+            const optimizedStrip = await imagemin.buffer(buffer, {
+                plugins: [
+                    imageminPngquant(),
+                    imageminZopfli()
+                ]
+            });
+            await fs.writeFile(dest, optimizedStrip);
+        } else {
+            await new Promise((resolve, reject) => strip.write(dest, (err) => err ? reject(err) : resolve()));
+        }
+    }
 
     for (const [category] of map) {
         await fs.copy(`img/${category.toLowerCase()}.png`,
@@ -203,8 +232,10 @@ async function generateCode(map, targets) {
         await fs.emptyDir(dir);
         await fs.mkdir(`${dir}/category`);
 
+        let strips = 0;
         for (const [category, emojis] of entries) {
             const data = generateEmojiCode(target, emojis);
+            emojis.forEach(emoji => strips = Math.max(strips, emoji.x + 1));
 
             await fs.writeFile(`${dir}/category/${category}Category.java`,
                 _(categoryTemplate).template()({
@@ -235,7 +266,8 @@ async function generateCode(map, targets) {
 
         await fs.writeFile(`${dir}/${target.name}.java`, _(emojiTemplate).template()({
             package: target.package,
-            name: target.name
+            name: target.name,
+            strips: strips
         }));
     }
 }
