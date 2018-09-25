@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.CheckResult;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -84,7 +85,8 @@ public final class EmojiPopup {
   };
 
   EmojiPopup(@NonNull final View rootView, @NonNull final EmojiEditTextInterface editInterface,
-            @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant) {
+            @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant,
+            @ColorInt final int backgroundColor, @ColorInt final int iconColor, @ColorInt final int dividerColor) {
     this.context = Utils.asActivity(rootView.getContext());
     this.rootView = rootView.getRootView();
     this.editInterface = editInterface;
@@ -117,7 +119,7 @@ public final class EmojiPopup {
 
     variantPopup = new EmojiVariantPopup(this.rootView, clickListener);
 
-    final EmojiView emojiView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji);
+    final EmojiView emojiView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor);
     emojiView.setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
       @Override public void onEmojiBackspaceClick(final View v) {
         editInterface.backspace();
@@ -203,6 +205,9 @@ public final class EmojiPopup {
 
   public static final class Builder {
     @NonNull private final View rootView;
+    @ColorInt private int backgroundColor;
+    @ColorInt private int iconColor;
+    @ColorInt private int dividerColor;
     @Nullable private OnEmojiPopupShownListener onEmojiPopupShownListener;
     @Nullable private OnSoftKeyboardCloseListener onSoftKeyboardCloseListener;
     @Nullable private OnSoftKeyboardOpenListener onSoftKeyboardOpenListener;
@@ -277,11 +282,26 @@ public final class EmojiPopup {
       return this;
     }
 
+    @CheckResult public Builder setBackgroundColor(@ColorInt final int color) {
+      backgroundColor = color;
+      return this;
+    }
+
+    @CheckResult public Builder setIconColor(@ColorInt final int color) {
+      iconColor = color;
+      return this;
+    }
+
+    @CheckResult public Builder setDividerColor(@ColorInt final int color) {
+      dividerColor = color;
+      return this;
+    }
+
     @CheckResult public EmojiPopup build(@NonNull final EmojiEditTextInterface editInterface) {
       EmojiManager.getInstance().verifyInstalled();
       checkNotNull(editInterface, "EditText can't be null");
 
-      final EmojiPopup emojiPopup = new EmojiPopup(rootView, editInterface, recentEmoji, variantEmoji);
+      final EmojiPopup emojiPopup = new EmojiPopup(rootView, editInterface, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor);
       emojiPopup.onSoftKeyboardCloseListener = onSoftKeyboardCloseListener;
       emojiPopup.onEmojiClickListener = onEmojiClickListener;
       emojiPopup.onSoftKeyboardOpenListener = onSoftKeyboardOpenListener;

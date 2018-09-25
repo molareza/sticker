@@ -37,22 +37,26 @@ import java.util.concurrent.TimeUnit;
 
   private int emojiTabLastSelectedIndex = -1;
 
-  public EmojiView(final Context context, final OnEmojiClickListener onEmojiClickListener,
-            final OnEmojiLongClickListener onEmojiLongClickListener, @NonNull final RecentEmoji recentEmoji,
-            @NonNull final VariantEmoji variantManager) {
+  @SuppressWarnings("PMD.CyclomaticComplexity") public EmojiView(final Context context, final OnEmojiClickListener onEmojiClickListener,
+        final OnEmojiLongClickListener onEmojiLongClickListener, @NonNull final RecentEmoji recentEmoji,
+        @NonNull final VariantEmoji variantManager, @ColorInt final int backgroundColor,
+        @ColorInt final int iconColor, @ColorInt final int dividerColor) {
     super(context);
 
     View.inflate(context, R.layout.emoji_view, this);
 
     setOrientation(VERTICAL);
-    setBackgroundColor(ContextCompat.getColor(context, R.color.emoji_background));
+    setBackgroundColor(backgroundColor != 0 ? backgroundColor : ContextCompat.getColor(context, R.color.emoji_background));
+    themeIconColor = iconColor != 0 ? iconColor : ContextCompat.getColor(context, R.color.emoji_icons);
 
-    themeIconColor = ContextCompat.getColor(context, R.color.emoji_icons);
     final TypedValue value = new TypedValue();
     context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
     themeAccentColor = value.data;
 
     final ViewPager emojisPager = findViewById(R.id.emojis_pager);
+    final View emojiDivider = findViewById(R.id.emoji_divider);
+    emojiDivider.setBackgroundColor(dividerColor != 0 ? dividerColor : getResources().getColor(R.color.emoji_divider));
+
     final LinearLayout emojisTab = findViewById(R.id.emojis_tab);
     emojisPager.addOnPageChangeListener(this);
 
