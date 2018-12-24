@@ -7,7 +7,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -38,7 +37,7 @@ public final class EmojiImageView extends AppCompatImageView {
   public EmojiImageView(final Context context, final AttributeSet attrs) {
     super(context, attrs);
 
-    variantIndicatorPaint.setColor(ContextCompat.getColor(context, R.color.emoji_divider));
+    variantIndicatorPaint.setColor(Utils.resolveColor(context, R.attr.emojiDivider, R.color.emoji_divider));
     variantIndicatorPaint.setStyle(Paint.Style.FILL);
     variantIndicatorPaint.setAntiAlias(true);
   }
