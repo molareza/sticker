@@ -197,6 +197,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
                 holder.imgSticker.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
             } else {
+                holder.imgSticker.clearColorFilter();
                 Glide.with(context)
                         .load(new File(item.getPath().get(0))) // Uri of the picture
                         .into(holder.imgSticker);
