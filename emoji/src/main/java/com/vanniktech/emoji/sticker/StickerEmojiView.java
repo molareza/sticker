@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
@@ -32,10 +34,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private RecyclerView rcvTab;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
     private ArrayList<String> tabImageList = new ArrayList<>();
-    private boolean isOnClickWithAdapter = false;
     private OnPageChangeMainViewPager onChangeViewPager;
     private final StickerPagerAdapter stickerPagerAdapter;
     public static OnNotifyList onNotifyList;
+    private final String RECENT = "RECENT";
+
     @Nullable
     OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
@@ -72,7 +75,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         imgSmilePage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onChangeViewPager!=null)onChangeViewPager.changePage();
+                if (onChangeViewPager != null) onChangeViewPager.changePage();
             }
         });
 
@@ -81,9 +84,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         emojisPager.addOnPageChangeListener(this);
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList , onChangeViewPager);
+        stickerList.add(0, new StructSticker(RECENT, "", null, null));
 
-        onNotifyList=  new OnNotifyList() {
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager);
+
+        onNotifyList = new OnNotifyList() {
             @Override
             public void notifyList(int po) {
                 stickerPagerAdapter.notifyDataSetChanged();
@@ -104,16 +109,18 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
     @Override
     public void onPageSelected(final int i) {
-        if (!isOnClickWithAdapter) {
-            myRecyclerViewAdapter.indexItemSelect = i;
-            myRecyclerViewAdapter.notifyDataSetChanged();
+        myRecyclerViewAdapter.indexItemSelect = i;
+        Log.i("CCCCCCCCCC", "0 myRecyclerViewAdapter.lastIndexSelect: " + myRecyclerViewAdapter.lastIndexSelect);
+        Log.i("CCCCCCCCCC", "1 i(): " + i);
+        myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
+        myRecyclerViewAdapter.notifyItemChanged(i);
 
-            if (i >= 4 && (i + 2 <= tabImageList.size())) {
-                rcvTab.smoothScrollToPosition(tabImageList.size());
-            } else {
-                if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
-            }
+        if (i >= 4 && (i + 2 <= tabImageList.size())) {
+            rcvTab.smoothScrollToPosition(tabImageList.size());
+        } else {
+            if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
         }
+
     }
 
     @Override
@@ -133,6 +140,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         private ViewPager emojisPager;
         public int indexItemSelect = 0;
         private Context context;
+        private int lastIndexSelect;
+
 //        private ItemClickListener mClickListener;
 
         // data is passed into the constructor
@@ -142,6 +151,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             this.mData = data;
             this.emojisPager = emojisPager;
             this.indexItemSelect = startIndex;
+
         }
 
         // inflates the row layout from xml when needed
@@ -155,32 +165,34 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            if (position == 0){
-                holder.imgSticker.setImageResource(R.drawable.emoji_recent);
-                return;
-            }else if (position >= mData.size()){
-
+            if (position >= mData.size()) {
                 holder.imgSticker.setImageResource(R.drawable.sticker_emoji);
+                holder.imgSticker.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
                 return;
-            }
-
-            if (indexItemSelect == position){
-                holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
-            }else {
-                holder.itemView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             }
 
             StructSticker item = mData.get(position);
-            Glide.with(context)
-                    .load(new File(item.getPath().get(0))) // Uri of the picture
-                    .into(holder.imgSticker);
-            isOnClickWithAdapter = false;
+            if (position == 0) {
+                holder.imgSticker.setImageResource(R.drawable.emoji_recent);
+                holder.imgSticker.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+            } else {
+                Glide.with(context)
+                        .load(new File(item.getPath().get(0))) // Uri of the picture
+                        .into(holder.imgSticker);
+            }
+
+            if (indexItemSelect == position) {
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
+                lastIndexSelect = position;
+            } else {
+                holder.itemView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            }
         }
 
         // total number of rows
         @Override
         public int getItemCount() {
-            return mData.size() + 2;
+            return mData.size() + 1;
         }
 
 
@@ -196,16 +208,18 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             @Override
             public void onClick(View view) {
-                isOnClickWithAdapter = true;
-                indexItemSelect = getAdapterPosition();
-                emojisPager.setCurrentItem(getAdapterPosition());
-                notifyDataSetChanged();
 
+                if (getAdapterPosition() >= mData.size()) {
+                    Toast.makeText(context, "Add", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                emojisPager.setCurrentItem(getAdapterPosition());
+                indexItemSelect = getAdapterPosition();
             }
         }
     }
 
-    public interface OnNotifyList{
+    public interface OnNotifyList {
         void notifyList(int po);
     }
 

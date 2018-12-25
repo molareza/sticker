@@ -41,7 +41,6 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
     private final EmojiPagerAdapter emojiPagerAdapter;
     private ArrayList<StrauctTabItem> tabImageList = new ArrayList<>();
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
-    private boolean isOnClickWithAdapter = false;
     private final String RECENT = "RECENT";
     private final String STICKER = "STICKER";
     private final String CONST = "CONST";
@@ -200,8 +199,6 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
                 holder.myTextView.setColorFilter(themeIconColor, PorterDuff.Mode.SRC_IN);
             }
 
-            isOnClickWithAdapter = false;
-
         }
 
         // total number of rows
@@ -227,26 +224,12 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
                     if (onChangeViewPager != null) onChangeViewPager.changePage();
                     return;
                 }
-
-                isOnClickWithAdapter = true;
                 indexItemSelect = getAdapterPosition();
                 emojisPager.setCurrentItem(getAdapterPosition());
-                notifyItemChanged(getAdapterPosition());
-                notifyItemChanged(lastIndexSelect);
+
 
             }
         }
-
-
-        // allows clicks events to be caught
-//        void setClickListener(ItemClickListener itemClickListener) {
-//            this.mClickListener = itemClickListener;
-//        }
-
-        // parent activity will implement this method to respond to click events
-//        public interface ItemClickListener {
-//            void onItemClick(View view, int position);
-//        }
     }
 
 

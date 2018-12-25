@@ -30,14 +30,14 @@ public final class StickerPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return stickerList.size() + 1;
+        return stickerList.size();
     }
 
     @Override
     public Object instantiateItem(final ViewGroup pager, final int position) {
         final View newView;
 
-        if (position == 0){
+        if (position == RECENT_POSITION){
             newView = new RecentStickerGridView(pager.getContext()).init();
         }else {
             newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath());
