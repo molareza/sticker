@@ -110,8 +110,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     @Override
     public void onPageSelected(final int i) {
         myRecyclerViewAdapter.indexItemSelect = i;
-        Log.i("CCCCCCCCCC", "0 myRecyclerViewAdapter.lastIndexSelect: " + myRecyclerViewAdapter.lastIndexSelect);
-        Log.i("CCCCCCCCCC", "1 i(): " + i);
         myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
         myRecyclerViewAdapter.notifyItemChanged(i);
 
