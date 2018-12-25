@@ -20,12 +20,14 @@ import java.util.Collection;
 
 final class StickerArrayAdapter extends ArrayAdapter<String> {
     private ArrayList<String> mSticker;
-    private  OnStickerListener onStickerListener;
+    private OnStickerListener onStickerListener;
+    private RecentSticker recentSticker;
 
-    StickerArrayAdapter(@NonNull final Context context, @NonNull ArrayList<String> mSticker, OnStickerListener onStickerListener) {
+    StickerArrayAdapter(@NonNull final Context context, @NonNull ArrayList<String> mSticker, OnStickerListener onStickerListener, RecentSticker recentSticker) {
         super(context, 0, mSticker);
         this.mSticker = mSticker;
         this.onStickerListener = onStickerListener;
+        this.recentSticker = recentSticker;
     }
 
     @NonNull
@@ -47,14 +49,19 @@ final class StickerArrayAdapter extends ArrayAdapter<String> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (onStickerListener !=null)onStickerListener.onStickerPath(s);
+
+                recentSticker.addSticker(s);
+
+                recentSticker.persist();
+
+                if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
         });
 
         return image;
     }
 
-    void updateEmojis(final Collection<String> sticker) {
+    void updateSticker(final Collection<String> sticker) {
         clear();
         addAll(sticker);
         notifyDataSetChanged();

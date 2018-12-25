@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.RecentEmoji;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 
@@ -39,6 +40,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private final StickerPagerAdapter stickerPagerAdapter;
     public static OnNotifyList onNotifyList;
     private final String RECENT = "RECENT";
+    private RecentSticker recentSticker;
+    private int stickerTabLastSelectedIndex = -1;
 
     @Nullable
     OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
@@ -89,7 +92,10 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         stickerList.add(0, new StructSticker(RECENT, "", null, null));
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager ,onStickerListener);
+
+        recentSticker = new RecentStickeriManager(context);
+
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager ,onStickerListener , recentSticker);
 
         onNotifyList = new OnNotifyList() {
             @Override
@@ -112,14 +118,25 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
     @Override
     public void onPageSelected(final int i) {
-        myRecyclerViewAdapter.indexItemSelect = i;
-        myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
-        myRecyclerViewAdapter.notifyItemChanged(i);
 
-        if (i >= 4 && (i + 2 <= tabImageList.size())) {
-            rcvTab.smoothScrollToPosition(tabImageList.size());
-        } else {
-            if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
+        if (stickerTabLastSelectedIndex != i) {
+
+            if (i == 0) {
+                stickerPagerAdapter.invalidateRecentStickers();
+            }
+
+            myRecyclerViewAdapter.indexItemSelect = i;
+            myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
+            myRecyclerViewAdapter.notifyItemChanged(i);
+
+            if (i >= 4 && (i + 2 <= tabImageList.size())) {
+                rcvTab.smoothScrollToPosition(tabImageList.size());
+            } else {
+                if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
+            }
+
+            stickerTabLastSelectedIndex = i;
+
         }
 
     }

@@ -19,15 +19,20 @@ public final class StickerPagerAdapter extends PagerAdapter {
     private ArrayList<StructSticker> stickerList;
     private OnPageChangeMainViewPager onChangeViewPager;
     private OnStickerListener onStickerListener;
+    private RecentSticker recentSticker;
+    private RecentStickerGridView recentStickerGridView;
 
-    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener) {
+    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, RecentSticker recentSticker) {
         this.context = context;
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
         this.dividerColor = dividerColor;
         this.stickerList = stickerList;
         this.onChangeViewPager = onChangeViewPager;
-        this.onStickerListener= onStickerListener;
+        this.onStickerListener = onStickerListener;
+        this.recentSticker = recentSticker;
+        this.recentStickerGridView = null;
+
     }
 
     @Override
@@ -39,25 +44,38 @@ public final class StickerPagerAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup pager, final int position) {
         final View newView;
 
-        if (position == RECENT_POSITION){
-            newView = new RecentStickerGridView(pager.getContext()).init();
-        }else {
-            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath() ,onStickerListener);
+        if (position == RECENT_POSITION) {
+            newView = new RecentStickerGridView(pager.getContext()).init(onStickerListener , recentSticker);
+            recentStickerGridView = (RecentStickerGridView) newView;
+        } else {
+            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath(), onStickerListener , recentSticker);
         }
 
         pager.addView(newView);
         return newView;
     }
 
-    @Override
-    public void destroyItem(final ViewGroup pager, final int position, final Object view) {
+    @Override public void destroyItem(final ViewGroup pager, final int position, final Object view) {
         pager.removeView((View) view);
 
+        if (position == RECENT_POSITION) {
+            recentStickerGridView = null;
+        }
     }
 
     @Override
     public boolean isViewFromObject(final View view, final Object object) {
         return view.equals(object);
+    }
+
+    int numberOfRecentEmojis() {
+        return recentSticker.getRecentSticker().size();
+    }
+
+    void invalidateRecentStickers() {
+        if (recentStickerGridView != null) {
+            recentStickerGridView.invalidateStrickers();
+        }
     }
 
 }

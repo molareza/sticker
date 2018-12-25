@@ -3,6 +3,8 @@ package com.vanniktech.emoji;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.vanniktech.emoji.emoji.Emoji;
 import java.util.ArrayList;
 import java.util.Collection;
