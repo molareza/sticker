@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .setOnSoftKeyboardCloseListener(() -> Log.d(TAG, "Closed soft keyboard"))
-                .setIconColor(Color.parseColor("#ffffff"))
-                .setBackgroundColor(Color.parseColor("#81C784"))
-                .setDividerColor(Color.parseColor("#ffffff"))
+                .setIconColor(Color.parseColor("#03A9F4"))
+                .setBackgroundColor(Color.parseColor("#eceff1"))
+                .setDividerColor(Color.parseColor("#BDBDBD"))
 
                 .build(editText);
     }
