@@ -1,0 +1,25 @@
+{
+  "name": "emoji-parser",
+  "version": "2.0.0",
+  "scripts": {
+    "start": "node --max-old-space-size=4096 index.js"
+  },
+  "description": "Parser and extractor of emojis",
+  "main": "index.js",
+  "author": "Ruben Gees",
+  "license": "MIT",
+  "dependencies": {
+    "command-line-args": "^5.0.2",
+    "emoji-datasource": "^4.0.4",
+    "emoji-datasource-apple": "^4.0.4",
+    "emoji-datasource-emojione": "^4.0.4",
+    "emoji-datasource-google": "^4.0.4",
+    "emoji-datasource-twitter": "^4.0.4",
+    "fs-extra": "^6.0.1",
+    "imagemin": "^5.3.1",
+    "imagemin-pngquant": "^5.0.1",
+    "imagemin-zopfli": "^5.1.0",
+    "stable": "^0.1.6",
+    "underscore": "^1.8.3"
+  }
+}
