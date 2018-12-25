@@ -63,6 +63,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         }
 
         ImageView setting = findViewById(R.id.imgStickerSetting);
+        setting.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
         setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +74,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         });
 
         ImageView imgSmilePage = findViewById(R.id.imgEmojiPage);
+        imgSmilePage.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
         imgSmilePage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

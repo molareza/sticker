@@ -102,6 +102,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         tabImageList.add((tabImageList.size()), new StrauctTabItem(R.drawable.sticker_emoji, STICKER));
 
         ImageView btnBack = findViewById(R.id.imgBack);
+        btnBack.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
         btnBack.setOnTouchListener(new RepeatListener(INITIAL_INTERVAL, NORMAL_INTERVAL, new OnClickListener() {
             @Override
             public void onClick(final View view) {
