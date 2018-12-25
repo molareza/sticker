@@ -104,15 +104,18 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 myRecyclerViewAdapter.notifyDataSetChanged();
             }
         };
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context, stickerList, emojisPager, 0);
+        final int startIndex = stickerPagerAdapter.numberOfRecentEmojis() > 0 ? 0 : 1;
+
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context, stickerList, emojisPager, startIndex);
+
 
         myRecyclerViewAdapter.indexItemSelect = 0;
 
         rcvTab.setAdapter(myRecyclerViewAdapter);
         rcvTab.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         emojisPager.setAdapter(stickerPagerAdapter);
-        emojisPager.setCurrentItem(0);
-        onPageSelected(0);
+        emojisPager.setCurrentItem(startIndex);
+        onPageSelected(startIndex);
     }
 
 
