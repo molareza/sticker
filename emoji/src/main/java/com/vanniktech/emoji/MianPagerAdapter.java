@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.sticker.StickerEmojiView;
 import com.vanniktech.emoji.sticker.StructSticker;
 
@@ -26,8 +27,9 @@ public final class MianPagerAdapter extends PagerAdapter {
     private int dividerColor;
     private OnPageChangeMainViewPager onChangeViewPager;
     private ArrayList<StructSticker> stickerList;
+    private OnStickerListener onStickerListener;
 
-    MianPagerAdapter(Activity context, OnEmojiClickListener clickListener, OnEmojiLongClickListener longClickListener, RecentEmoji recentEmoji, VariantEmoji variantEmoji, int backgroundColor, int iconColor, int dividerColor, OnPageChangeMainViewPager onChangeViewPager, ArrayList<StructSticker> stickerList) {
+    MianPagerAdapter(Activity context, OnEmojiClickListener clickListener, OnEmojiLongClickListener longClickListener, RecentEmoji recentEmoji, VariantEmoji variantEmoji, int backgroundColor, int iconColor, int dividerColor, OnPageChangeMainViewPager onChangeViewPager, ArrayList<StructSticker> stickerList, OnStickerListener onStickerListener) {
 
         this.context = context;
         this.clickListener = clickListener;
@@ -39,6 +41,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         this.dividerColor = dividerColor;
         this.onChangeViewPager = onChangeViewPager;
         this.stickerList = stickerList;
+        this.onStickerListener = onStickerListener;
 
     }
 
@@ -54,7 +57,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         if (position == RECENT_POSITION) {
             newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onChangeViewPager);
         } else {
-            newView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager ,stickerList);
+            newView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager, stickerList , onStickerListener);
         }
 
         pager.addView(newView);

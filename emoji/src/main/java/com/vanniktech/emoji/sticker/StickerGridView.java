@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.vanniktech.emoji.EmojiGridView;
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 
 import java.util.ArrayList;
 
@@ -26,8 +27,8 @@ final class StickerGridView extends EmojiGridView {
         setVerticalScrollBarEnabled(false);
     }
 
-    public StickerGridView init(@NonNull ArrayList<String> mSticker) {
-        StickerArrayAdapter stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker);
+    public StickerGridView init(@NonNull ArrayList<String> mSticker, OnStickerListener onStickerListener) {
+        StickerArrayAdapter stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker , onStickerListener);
         setAdapter(stickerArrayAdapter);
         return this;
     }

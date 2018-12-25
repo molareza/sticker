@@ -21,6 +21,7 @@ import com.vanniktech.emoji.EmojiPopup;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider;
 import com.vanniktech.emoji.ios.IosEmojiProvider;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.one.EmojiOneProvider;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
@@ -141,6 +142,14 @@ public class MainActivityAutoCompeteTextView extends AppCompatActivity {
                 .setOnEmojiBackspaceClickListener(ignore -> Log.d(TAG, "Clicked on Backspace"))
                 .setOnEmojiClickListener((ignore, ignore2) -> Log.d(TAG, "Clicked on emoji"))
                 .setOnEmojiPopupShownListener(() -> emojiButton.setImageResource(R.drawable.ic_keyboard))
+                .setOnStickerListener(new OnStickerListener() {
+                    @Override
+                    public void onStickerPath(String path) {
+
+                        Log.i("CCCCCCCCCC", "onStickerPath: " + path );
+
+                    }
+                })
                 .setOnSoftKeyboardOpenListener(ignore -> Log.d(TAG, "Opened soft keyboard"))
                 .setOnEmojiPopupDismissListener(() -> emojiButton.setImageResource(R.drawable.emoji_ios_category_smileysandpeople))
                 .setOnSoftKeyboardCloseListener(() -> Log.d(TAG, "Closed soft keyboard"))

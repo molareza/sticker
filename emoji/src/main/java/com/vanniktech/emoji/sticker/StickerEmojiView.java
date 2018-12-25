@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     @Nullable
     OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
-    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, final ArrayList<StructSticker> stickerList) {
+    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, final ArrayList<StructSticker> stickerList, OnStickerListener onStickerListener) {
         super(context);
 
         View.inflate(context, R.layout.emoji_sticker_view, this);
@@ -86,7 +87,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         stickerList.add(0, new StructSticker(RECENT, "", null, null));
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager);
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager ,onStickerListener);
 
         onNotifyList = new OnNotifyList() {
             @Override

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.sticker.StructSticker;
 
 import java.io.File;
@@ -33,7 +34,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
 
     MainEmojiView(final Activity context, final OnEmojiClickListener onEmojiClickListener,
                   final OnEmojiLongClickListener onEmojiLongClickListener, @NonNull final RecentEmoji recentEmoji,
-                  @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor) {
+                  @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnStickerListener onStickerListener) {
         super(context);
 
         ArrayList<StructSticker> stickerList = getStickerPackage();
@@ -64,7 +65,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
             }
         };
 
-        emojiPagerAdapter = new MianPagerAdapter(context, onEmojiClickListener, onEmojiLongClickListener, recentEmoji, variantManager, backgroundColor, iconColor, dividerColor, onChangeViewPager, stickerList);
+        emojiPagerAdapter = new MianPagerAdapter(context, onEmojiClickListener, onEmojiLongClickListener, recentEmoji, variantManager, backgroundColor, iconColor, dividerColor, onChangeViewPager, stickerList ,onStickerListener);
 
         emojisPager.setAdapter(emojiPagerAdapter);
         emojisPager.setCurrentItem(0);

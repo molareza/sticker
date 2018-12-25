@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -27,6 +28,7 @@ import com.vanniktech.emoji.listeners.OnEmojiPopupDismissListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupShownListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 
 import static com.vanniktech.emoji.Utils.checkNotNull;
 
@@ -64,6 +66,9 @@ public final class EmojiPopup {
     @Nullable
     OnEmojiPopupDismissListener onEmojiPopupDismissListener;
 
+    @Nullable
+    OnStickerListener onStickerListener;
+
     final ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
@@ -100,7 +105,7 @@ public final class EmojiPopup {
     };
 
     public EmojiPopup(@NonNull final View rootView, @NonNull final EmojiEditTextInterface emojiEditText,
-                      @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant, int backgroundColor, int iconColor, int dividerColor) {
+                      @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant, int backgroundColor, int iconColor, int dividerColor, @Nullable OnStickerListener onStickerListener) {
         this.context = Utils.asActivity(rootView.getContext());
         this.rootView = rootView.getRootView();
         this.emojiEditText = emojiEditText;
@@ -109,6 +114,7 @@ public final class EmojiPopup {
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
         this.dividerColor = dividerColor;
+        this.onStickerListener = onStickerListener;
 
         popupWindow = new PopupWindow(context);
 
@@ -138,27 +144,14 @@ public final class EmojiPopup {
 
         variantPopup = new EmojiVariantPopup(this.rootView, clickListener);
 
-
-
-//        final EmojiView emojiView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor);
-//        emojiView.setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
-//            @Override
-//            public void onEmojiBackspaceClick(final View v) {
-//                emojiEditText.backspace();
-//
-//                if (onEmojiBackspaceClickListener != null) {
-//                    onEmojiBackspaceClickListener.onEmojiBackspaceClick(v);
-//                }
-//            }
-//        });
-        final MainEmojiView mainEmojiView = new MainEmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor);
+        final MainEmojiView mainEmojiView = new MainEmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor ,onStickerListener);
         mainEmojiView.setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
             @Override
             public void onEmojiBackspaceClick(final View v) {
                 emojiEditText.backspace();
 
-                if (onEmojiBackspaceClickListener != null) {
-                    onEmojiBackspaceClickListener.onEmojiBackspaceClick(v);
+                if (EmojiPopup.this.onEmojiBackspaceClickListener != null) {
+                    EmojiPopup.this.onEmojiBackspaceClickListener.onEmojiBackspaceClick(v);
                 }
             }
         });
@@ -258,6 +251,9 @@ public final class EmojiPopup {
         private OnEmojiClickListener onEmojiClickListener;
         @Nullable
         private OnEmojiPopupDismissListener onEmojiPopupDismissListener;
+
+        @Nullable
+        private OnStickerListener onStickerListener;
         @Nullable
         private RecentEmoji recentEmoji;
         @Nullable
@@ -304,6 +300,12 @@ public final class EmojiPopup {
         @CheckResult
         public Builder setOnEmojiPopupDismissListener(@Nullable final OnEmojiPopupDismissListener listener) {
             onEmojiPopupDismissListener = listener;
+            return this;
+        }
+
+        @CheckResult
+        public Builder setOnStickerListener(@Nullable final OnStickerListener listener) {
+            onStickerListener = listener;
             return this;
         }
 
@@ -360,13 +362,13 @@ public final class EmojiPopup {
         public EmojiPopup build(@NonNull final EmojiEditTextInterface emojiEditText) {
             EmojiManager.getInstance().verifyInstalled();
             checkNotNull(emojiEditText, "EmojiEditText can't be null");
-
-            final EmojiPopup emojiPopup = new EmojiPopup(rootView, emojiEditText, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor);
+            final EmojiPopup emojiPopup = new EmojiPopup(rootView, emojiEditText, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor , onStickerListener);
             emojiPopup.onSoftKeyboardCloseListener = onSoftKeyboardCloseListener;
             emojiPopup.onEmojiClickListener = onEmojiClickListener;
             emojiPopup.onSoftKeyboardOpenListener = onSoftKeyboardOpenListener;
             emojiPopup.onEmojiPopupShownListener = onEmojiPopupShownListener;
             emojiPopup.onEmojiPopupDismissListener = onEmojiPopupDismissListener;
+//            emojiPopup.onStickerListener = onStickerListener;
             emojiPopup.onEmojiBackspaceClickListener = onEmojiBackspaceClickListener;
             return emojiPopup;
         }

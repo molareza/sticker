@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.listeners.OnStickerListener;
 
 import java.util.ArrayList;
 
@@ -17,15 +18,16 @@ public final class StickerPagerAdapter extends PagerAdapter {
     private int dividerColor;
     private ArrayList<StructSticker> stickerList;
     private OnPageChangeMainViewPager onChangeViewPager;
+    private OnStickerListener onStickerListener;
 
-    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager) {
+    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener) {
         this.context = context;
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
         this.dividerColor = dividerColor;
         this.stickerList = stickerList;
         this.onChangeViewPager = onChangeViewPager;
-
+        this.onStickerListener= onStickerListener;
     }
 
     @Override
@@ -40,7 +42,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
         if (position == RECENT_POSITION){
             newView = new RecentStickerGridView(pager.getContext()).init();
         }else {
-            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath());
+            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath() ,onStickerListener);
         }
 
         pager.addView(newView);
