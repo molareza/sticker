@@ -45,11 +45,6 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
     private final String STICKER = "STICKER";
     private final String CONST = "CONST";
     private RecyclerView rcvTab;
-    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static final String EMOJI = "/emoji";
-    public static final String IMAGES = "/emoji Images";
-    public static String DIR_APP = DIR_SDCARD + EMOJI;
-    public static String DIR_IMAGES = DIR_APP + IMAGES;
     private OnPageChangeMainViewPager onChangeViewPager;
 
     @Nullable
@@ -59,7 +54,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
     EmojiView(final Context context, final OnEmojiClickListener onEmojiClickListener,
               final OnEmojiLongClickListener onEmojiLongClickListener, @NonNull final RecentEmoji recentEmoji,
-              @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager) {
+              @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, @Nullable OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager) {
         super(context);
 
         View.inflate(context, R.layout.emoji_view, this);
@@ -126,9 +121,6 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         onPageSelected(startIndex);
     }
 
-    public void setOnEmojiBackspaceClickListener(@Nullable final OnEmojiBackspaceClickListener onEmojiBackspaceClickListener) {
-        this.onEmojiBackspaceClickListener = onEmojiBackspaceClickListener;
-    }
 
     @Override
     public void onPageSelected(final int i) {
