@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
@@ -28,8 +29,9 @@ public final class MianPagerAdapter extends PagerAdapter {
     private OnPageChangeMainViewPager onChangeViewPager;
     private ArrayList<StructSticker> stickerList;
     private OnStickerListener onStickerListener;
+    private OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
-    MianPagerAdapter(Activity context, OnEmojiClickListener clickListener, OnEmojiLongClickListener longClickListener, RecentEmoji recentEmoji, VariantEmoji variantEmoji, int backgroundColor, int iconColor, int dividerColor, OnPageChangeMainViewPager onChangeViewPager, ArrayList<StructSticker> stickerList, OnStickerListener onStickerListener) {
+    MianPagerAdapter(Activity context, OnEmojiClickListener clickListener, OnEmojiLongClickListener longClickListener, RecentEmoji recentEmoji, VariantEmoji variantEmoji, int backgroundColor, int iconColor, int dividerColor, OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager, ArrayList<StructSticker> stickerList, OnStickerListener onStickerListener) {
 
         this.context = context;
         this.clickListener = clickListener;
@@ -42,6 +44,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         this.onChangeViewPager = onChangeViewPager;
         this.stickerList = stickerList;
         this.onStickerListener = onStickerListener;
+        this.onEmojiBackspaceClickListener = onEmojiBackspaceClickListener;
 
     }
 
@@ -55,7 +58,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         final View newView;
 
         if (position == RECENT_POSITION) {
-            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onChangeViewPager);
+            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener,onChangeViewPager);
         } else {
             newView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager, stickerList , onStickerListener);
         }

@@ -59,11 +59,12 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
     EmojiView(final Context context, final OnEmojiClickListener onEmojiClickListener,
               final OnEmojiLongClickListener onEmojiLongClickListener, @NonNull final RecentEmoji recentEmoji,
-              @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnPageChangeMainViewPager onChangeViewPager) {
+              @NonNull final VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager) {
         super(context);
 
         View.inflate(context, R.layout.emoji_view, this);
         this.onChangeViewPager = onChangeViewPager;
+        this.onEmojiBackspaceClickListener = onEmojiBackspaceClickListener;
         setOrientation(VERTICAL);
         if (backgroundColor != 0)
             setBackgroundColor(backgroundColor);
@@ -103,11 +104,12 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
         ImageView btnBack = findViewById(R.id.imgBack);
         btnBack.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+
         btnBack.setOnTouchListener(new RepeatListener(INITIAL_INTERVAL, NORMAL_INTERVAL, new OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if (onEmojiBackspaceClickListener != null) {
-                    onEmojiBackspaceClickListener.onEmojiBackspaceClick(view);
+                if (EmojiView.this.onEmojiBackspaceClickListener != null) {
+                    EmojiView.this.onEmojiBackspaceClickListener.onEmojiBackspaceClick(view);
                 }
             }
         }));

@@ -144,8 +144,7 @@ public final class EmojiPopup {
 
         variantPopup = new EmojiVariantPopup(this.rootView, clickListener);
 
-        final MainEmojiView mainEmojiView = new MainEmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor ,onStickerListener);
-        mainEmojiView.setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
+        OnEmojiBackspaceClickListener onEmojiBackspaceClickListener =new OnEmojiBackspaceClickListener() {
             @Override
             public void onEmojiBackspaceClick(final View v) {
                 emojiEditText.backspace();
@@ -154,7 +153,9 @@ public final class EmojiPopup {
                     EmojiPopup.this.onEmojiBackspaceClickListener.onEmojiBackspaceClick(v);
                 }
             }
-        });
+        };
+        final MainEmojiView mainEmojiView = new MainEmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor,onEmojiBackspaceClickListener, dividerColor ,onStickerListener);
+
 
         popupWindow.setContentView(mainEmojiView);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
