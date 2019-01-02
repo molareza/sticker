@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -42,17 +43,30 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private final String RECENT = "RECENT";
     private RecentSticker recentSticker;
     private int stickerTabLastSelectedIndex = -1;
+    private static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static final String emoji = "/emoji";
+    private static String DIR_APP = DIR_SDCARD + emoji;
+    private static StickerDatabase stickerDatabase;
 
     @Nullable
     OnEmojiBackspaceClickListener onEmojiBackspaceClickListener;
 
-    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, final ArrayList<StructSticker> stickerList, OnStickerListener onStickerListener) {
+    protected static StickerDatabase getStickerDatabase(Context context) {
+
+        if (stickerDatabase == null) stickerDatabase = new StickerDatabase(context);
+
+        return stickerDatabase;
+    }
+
+    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener) {
         super(context);
 
         View.inflate(context, R.layout.emoji_sticker_view, this);
         this.onChangeViewPager = onChangeViewPager;
-
         setOrientation(VERTICAL);
+
+
+
         if (backgroundColor != 0)
             setBackgroundColor(backgroundColor);
         else
@@ -85,6 +99,9 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             }
         });
 
+        ArrayList<StructSticker> stickerList = getStickerPackage(context);
+
+
         rcvTab = findViewById(R.id.rcvTabImageSticker);
         final ViewPager emojisPager = findViewById(R.id.stickerPager);
 
@@ -95,7 +112,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         recentSticker = new RecentStickeriManager(context);
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager ,onStickerListener , recentSticker);
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, stickerList, onChangeViewPager, onStickerListener, recentSticker);
 
         onNotifyList = new OnNotifyList() {
             @Override
@@ -243,6 +260,42 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
     public interface OnNotifyList {
         void notifyList(int po);
+    }
+
+    private ArrayList<StructSticker> getStickerPackage(Activity context) {
+
+        ArrayList<StructSticker> stickerList = new ArrayList<>();
+        File folder = new File(DIR_APP);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // Do something on success
+
+        int id = 1000;
+        int id_sticker = 5000;
+
+        File[] digi = folder.listFiles();
+        for (File aDigi : digi) {
+            ArrayList<String> path = new ArrayList<>();
+            File file = new File(DIR_APP + "/" + aDigi.getName());
+            File[] into = file.listFiles();
+
+            if (stickerDatabase.checkIsDataAlreadyInDBorNot("" + id)) {
+                continue;
+            }
+            stickerDatabase.insertCategorySticker(aDigi.getName(), "" + id++);
+
+            for (File anInto : into) {
+                path.add(anInto.getPath());
+                stickerDatabase.insertSticker("" + id, "" + id_sticker++, anInto.getPath());
+            }
+
+
+            stickerList.add(new StructSticker(aDigi.getName(), String.valueOf(into.length), file, path));
+        }
+
+        return stickerList;
     }
 
 

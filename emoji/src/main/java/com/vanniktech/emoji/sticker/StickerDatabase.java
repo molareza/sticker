@@ -26,6 +26,9 @@ public class StickerDatabase extends SQLiteOpenHelper {
     private static final String ID_STICKER = "id_sticker";
     private static final String URL_STICKER = "url";
 
+    private static final String STICKER_TABLE_RECENTLY = "sticker_table_recently";
+    private static final String TIME_USAGE = "time";
+
 
     public StickerDatabase(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -45,6 +48,12 @@ public class StickerDatabase extends SQLiteOpenHelper {
                 ID_STICKER + " TEXT, " +
                 URL_STICKER + " TEXT)" +
                 ";");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + STICKER_TABLE_RECENTLY + " (" +
+                ID + " INTEGER PRIMARY KEY, " +
+                ID_STICKER + " TEXT, " +
+                TIME_USAGE + " INTEGER)" +
+                ";");
     }
 
     @Override
@@ -52,6 +61,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
 // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + STICKER_TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + STICKER_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + STICKER_TABLE_RECENTLY);
         onCreate(db);
     }
 
@@ -63,11 +73,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
 
         long insert = db.insert(STICKER_TABLE_CATEGORY, null, contentValues);
 
-        if (insert == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return insert != -1;
     }
 
     public boolean insertSticker(String id_category, String id_sticker, String url) {
@@ -82,23 +88,29 @@ public class StickerDatabase extends SQLiteOpenHelper {
 
         long insert = db.insert(STICKER_TABLE, null, contentValues);
 
-        Log.i("CCCCCCC", "getStickerPackage: " + insert);
-
-        if (insert == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return insert != -1;
     }
 
-//    public boolean updateCategorySticker(Integer id, String name, String category, String url) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(NAME_CATEGORY, name);
-//        contentValues.put(STICKER_URL, url);
-//        db.update(STICKER_TABLE_CATEGORY, contentValues, "id = ? ", new String[]{Integer.toString(id)});
-//        return true;
-//    }
+    public  boolean checkIsDataAlreadyInDBorNot(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "Select * from " + STICKER_TABLE_CATEGORY + " where " + ID_CATEGORY + " = " + id;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
+
+    public boolean updateCategorySticker(Integer id, String time) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TIME_USAGE, time);
+        db.update(STICKER_TABLE_RECENTLY, contentValues, "id = ? ", new String[]{Integer.toString(id)});
+        return true;
+    }
 //
 //    public Integer deleteCategorySticker(Integer id) {
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -107,18 +119,18 @@ public class StickerDatabase extends SQLiteOpenHelper {
 //                new String[]{Integer.toString(id)});
 //    }
 //
-//    public ArrayList<String> getAllCategoryStickers() {
-//        ArrayList<String> array_list = new ArrayList<String>();
-//
-//        //hp = new HashMap();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res = db.rawQuery("select * from " + STICKER_TABLE_CATEGORY, null);
-//        res.moveToFirst();
-//
-//        while (!res.isAfterLast()) {
-//            array_list.add(res.getString(res.getColumnIndex(STICKER_TABLE_CATEGORY)));
-//            res.moveToNext();
-//        }
-//        return array_list;
-//    }
+    public ArrayList<String> getAllCategoryStickers() {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + STICKER_TABLE_CATEGORY, null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()) {
+            array_list.add(res.getString(res.getColumnIndex(STICKER_TABLE_CATEGORY)));
+            res.moveToNext();
+        }
+        return array_list;
+    }
 }
