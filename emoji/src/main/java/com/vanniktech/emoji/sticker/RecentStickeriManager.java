@@ -10,6 +10,7 @@ import com.vanniktech.emoji.RecentEmoji;
 import com.vanniktech.emoji.RecentEmojiManager;
 import com.vanniktech.emoji.emoji.Emoji;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -143,7 +144,10 @@ public final class RecentStickeriManager implements RecentSticker {
             final Collection<String> sortedEmojis = new ArrayList<>(stickers.size());
 
             for (final Data data : stickers) {
-                sortedEmojis.add(data.sticker);
+                if (new File(data.sticker).exists()){
+                    sortedEmojis.add(data.sticker);
+                }
+
             }
 
             return sortedEmojis;

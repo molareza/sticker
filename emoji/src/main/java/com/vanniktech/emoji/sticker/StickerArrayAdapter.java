@@ -37,7 +37,6 @@ final class StickerArrayAdapter extends ArrayAdapter<String> {
 
         final Context context = getContext();
 
-
         if (image == null) {
             image = (EmojiImageView) LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
         }
@@ -51,9 +50,7 @@ final class StickerArrayAdapter extends ArrayAdapter<String> {
             public void onClick(View v) {
 
                 recentSticker.addSticker(s);
-
                 recentSticker.persist();
-
                 if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
         });
