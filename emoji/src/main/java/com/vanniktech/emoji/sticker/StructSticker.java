@@ -1,20 +1,28 @@
 package com.vanniktech.emoji.sticker;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class StructSticker {
 
+    private int idCategory;
     private String category;
-    private String count;
-    private File folderSticker;
-    private ArrayList<String> path = new ArrayList<>();
+    private int count;
+    private ArrayList<StructEachSticker> eachSticker = new ArrayList<>();
 
-    public StructSticker(String category , String count,  File folderSticker,ArrayList<String> path) {
-        this.category = category;
-        this.path = path;
+    public StructSticker(int idCategory,String nameCategory  , int count,ArrayList<StructEachSticker> eachSticker) {
+        this.idCategory = idCategory;
+        this.category = nameCategory;
+        this.eachSticker = eachSticker;
         this.count = count;
-        this.folderSticker = folderSticker;
+    }
+
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getCategory() {
@@ -25,27 +33,19 @@ public class StructSticker {
         this.category = category;
     }
 
-    public ArrayList<String> getPath() {
-        return path;
-    }
-
-    public void setPath(ArrayList<String> path) {
-        this.path = path;
-    }
-
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
-    public File getFolderSticker() {
-        return folderSticker;
+    public ArrayList<StructEachSticker> getEachSticker() {
+        return eachSticker;
     }
 
-    public void setFolderSticker(File folderSticker) {
-        this.folderSticker = folderSticker;
+    public void setEachSticker(ArrayList<StructEachSticker> eachSticker) {
+        this.eachSticker = eachSticker;
     }
 }

@@ -115,7 +115,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         myRecyclerViewAdapter = new MyRecyclerViewAdapter(context, tabImageList, emojisPager, startIndex);
         rcvTab.setAdapter(myRecyclerViewAdapter);
         rcvTab.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
+        emojisPager.setOffscreenPageLimit(0);
         emojisPager.setAdapter(emojiPagerAdapter);
         emojisPager.setCurrentItem(startIndex);
         onPageSelected(startIndex);

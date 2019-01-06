@@ -40,7 +40,7 @@ public class EmojiSettingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emoji_activity_main);
 
-        ArrayList<StructSticker> stickerList = getStickerPackage();
+        ArrayList<StructCategory> stickerList = StickerEmojiView.getStickerDatabase(this).getAllCategory();
 
         RecyclerView rcvSettingPage = findViewById(R.id.rcvSettingPage);
         AdapterSettingPage adapterSettingPage = new AdapterSettingPage(this, stickerList);
@@ -50,13 +50,13 @@ public class EmojiSettingPage extends AppCompatActivity {
     }
 
     public class AdapterSettingPage extends RecyclerView.Adapter<AdapterSettingPage.ViewHolder> {
-        private ArrayList<StructSticker> mData;
+        private ArrayList<StructCategory> mData;
         private Context context;
         private LayoutInflater mInflater;
 
 
         // data is passed into the constructor
-        AdapterSettingPage(Context context, ArrayList<StructSticker> data) {
+        AdapterSettingPage(Context context, ArrayList<StructCategory> data) {
             this.mData = data;
             this.context = context;
             this.mInflater = LayoutInflater.from(context);
@@ -72,12 +72,12 @@ public class EmojiSettingPage extends AppCompatActivity {
         // binds the data to the TextView in each row
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            StructSticker item = mData.get(position);
+            StructCategory item = mData.get(position);
 
             Glide.with(context)
-                    .load(new File(item.getPath().get(0))) // Uri of the picture
+                    .load(new File(item.getUrl())) // Uri of the picture
                     .into(holder.imgSticker);
-            holder.txtName.setText(item.getCategory());
+            holder.txtName.setText(item.getNameCategory());
             holder.txtCount.setText(item.getCount() + " " + "Stickers");
         }
 
@@ -115,9 +115,9 @@ public class EmojiSettingPage extends AppCompatActivity {
                                 .setPositiveButton("REMOVE", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (mData.get(getAdapterPosition()).getFolderSticker().exists()) {
+                                        if (new File(mData.get(getAdapterPosition()).getNameCategory()).exists()) {
 
-                                            boolean isDeleteOk = deleteRecursive(mData.get(getAdapterPosition()).getFolderSticker());
+                                            boolean isDeleteOk = deleteRecursive(new File(mData.get(getAdapterPosition()).getNameCategory()));
                                             if (isDeleteOk) {
                                                 mData.remove(getAdapterPosition());
                                                 notifyDataSetChanged();
@@ -145,28 +145,7 @@ public class EmojiSettingPage extends AppCompatActivity {
         }
     }
 
-    private ArrayList<StructSticker> getStickerPackage() {
 
-        ArrayList<StructSticker> stickerList = new ArrayList<>();
-        File folder = new File(DIR_APP);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        // Do something on success
-        File[] digi = folder.listFiles();
-        for (File aDigi : digi) {
-            ArrayList<String> path = new ArrayList<>();
-            File file = new File(DIR_APP + "/" + aDigi.getName());
-            File[] into = file.listFiles();
-            for (File anInto : into) {
-                path.add(anInto.getPath());
-            }
-            stickerList.add(new StructSticker(aDigi.getName(), String.valueOf(into.length), file, path));
-        }
-
-        return stickerList;
-    }
 
     private boolean deleteRecursive(File fileOrDirectory) {
 

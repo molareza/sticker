@@ -17,12 +17,12 @@ public final class StickerPagerAdapter extends PagerAdapter {
     private int iconColor;
     private int dividerColor;
     private ArrayList<StructSticker> stickerList;
+    private ArrayList<StructRecentSticker> recentStickerList;
     private OnPageChangeMainViewPager onChangeViewPager;
     private OnStickerListener onStickerListener;
-    private RecentSticker recentSticker;
     private RecentStickerGridView recentStickerGridView;
 
-    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, RecentSticker recentSticker) {
+    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, ArrayList<StructRecentSticker> recentSticker) {
         this.context = context;
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
@@ -30,7 +30,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
         this.stickerList = stickerList;
         this.onChangeViewPager = onChangeViewPager;
         this.onStickerListener = onStickerListener;
-        this.recentSticker = recentSticker;
+        this.recentStickerList = recentSticker;
         this.recentStickerGridView = null;
 
     }
@@ -45,10 +45,10 @@ public final class StickerPagerAdapter extends PagerAdapter {
         final View newView;
 
         if (position == RECENT_POSITION) {
-            newView = new RecentStickerGridView(pager.getContext()).init(onStickerListener , recentSticker);
+            newView = new RecentStickerGridView(pager.getContext()).init(onStickerListener , recentStickerList);
             recentStickerGridView = (RecentStickerGridView) newView;
         } else {
-            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position).getPath(), onStickerListener , recentSticker);
+            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position), onStickerListener );
         }
 
         pager.addView(newView);
@@ -68,13 +68,9 @@ public final class StickerPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    int numberOfRecentEmojis() {
-        return recentSticker.getRecentSticker().size();
-    }
-
-    void invalidateRecentStickers() {
+    void invalidateRecentStickers(ArrayList<StructRecentSticker> recentlySticker) {
         if (recentStickerGridView != null) {
-            recentStickerGridView.invalidateStrickers();
+            recentStickerGridView.invalidateStrickers(recentlySticker);
         }
     }
 

@@ -2,7 +2,6 @@ package com.vanniktech.emoji.sticker;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,16 @@ import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
-final class StickerArrayAdapter extends ArrayAdapter<StructEachSticker> {
-    private StructSticker mSticker;
+final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
+    private ArrayList<StructRecentSticker> mSticker;
     private OnStickerListener onStickerListener;
 
-    StickerArrayAdapter(@NonNull final Context context, @NonNull StructSticker mSticker, OnStickerListener onStickerListener) {
-        super(context, 0, mSticker.getEachSticker());
+    RecentlyStickerAdapter(@NonNull final Context context, OnStickerListener onStickerListener, ArrayList<StructRecentSticker> mSticker) {
+        super(context, 0, mSticker);
         this.mSticker = mSticker;
         this.onStickerListener = onStickerListener;
     }
@@ -37,7 +37,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructEachSticker> {
         if (image == null) {
             image = (EmojiImageView) LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
         }
-        final String s = mSticker.getEachSticker().get(position).getUrl();
+        final String s = mSticker.get(position).getPath();
         Glide.with(context)
                 .load(new File(s)) // Uri of the picture
                 .into(image);
@@ -48,8 +48,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructEachSticker> {
 
 //                recentSticker.addSticker(s);
 
-                StickerDatabase stickerDatabase = StickerEmojiView.getStickerDatabase(context);
-                stickerDatabase.insertOrUpdateRecentlySticker( mSticker.getEachSticker().get(position).getIdSticker(),mSticker.getIdCategory() , mSticker.getEachSticker().get(position).getUrl() , System.currentTimeMillis());
+                StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker(mSticker.get(position).getIdSticker(),mSticker.get(position).getIdCategory() ,mSticker.get(position).getPath()  , System.currentTimeMillis());
 //                recentSticker.persist();
                 if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
@@ -58,7 +57,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructEachSticker> {
         return image;
     }
 
-    void updateSticker(final Collection<StructEachSticker> sticker) {
+    void updateSticker(final Collection<StructRecentSticker> sticker) {
         clear();
         addAll(sticker);
         notifyDataSetChanged();

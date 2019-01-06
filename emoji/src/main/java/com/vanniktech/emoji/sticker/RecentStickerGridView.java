@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 
 final class RecentStickerGridView extends GridView {
-    private RecentSticker recentSticker;
-    StickerArrayAdapter stickerArrayAdapter;
+    private ArrayList<StructRecentSticker> recentSticker;
+    private RecentlyStickerAdapter recentlyStickerArrayAdapter;
 
     RecentStickerGridView(@NonNull final Context context) {
         super(context);
@@ -31,15 +31,15 @@ final class RecentStickerGridView extends GridView {
         setVerticalScrollBarEnabled(false);
     }
 
-    public RecentStickerGridView init(OnStickerListener onStickerListener, RecentSticker recentSticker) {
+    public RecentStickerGridView init(OnStickerListener onStickerListener, ArrayList<StructRecentSticker> recentSticker) {
 
         this.recentSticker = recentSticker;
-        stickerArrayAdapter = new StickerArrayAdapter(getContext(), (ArrayList<String>) recentSticker.getRecentSticker(), onStickerListener, recentSticker);
-        setAdapter(stickerArrayAdapter);
+        recentlyStickerArrayAdapter = new RecentlyStickerAdapter(getContext(), onStickerListener,recentSticker);
+        setAdapter(recentlyStickerArrayAdapter);
         return this;
     }
 
-    public void invalidateStrickers() {
-        stickerArrayAdapter.updateSticker(recentSticker.getRecentSticker());
+    public void invalidateStrickers(ArrayList<StructRecentSticker> recentlySticker) {
+        recentlyStickerArrayAdapter.updateSticker(recentlySticker);
     }
 }

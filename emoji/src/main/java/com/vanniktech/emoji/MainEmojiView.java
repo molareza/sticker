@@ -61,6 +61,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
             }
         };
 
+        emojisPager.setOffscreenPageLimit(0);
         emojiPagerAdapter = new MianPagerAdapter(context, onEmojiClickListener, onEmojiLongClickListener, recentEmoji, variantManager, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener, onChangeViewPager, onStickerListener);
 
         emojisPager.setAdapter(emojiPagerAdapter);
