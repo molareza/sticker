@@ -37,7 +37,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private final StickerPagerAdapter stickerPagerAdapter;
     public static OnNotifyList onNotifyList;
     private final String RECENT = "RECENT";
-    private RecentSticker recentSticker;
     private int stickerTabLastSelectedIndex = -1;
     private static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     private static final String emoji = "/emoji";
@@ -109,8 +108,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         final ViewPager emojisPager = findViewById(R.id.stickerPager);
 
         emojisPager.addOnPageChangeListener(this);
-
-        recentSticker = new RecentStickeriManager(context);
 
         /**
          * add sticker

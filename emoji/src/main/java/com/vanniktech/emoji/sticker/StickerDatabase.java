@@ -105,9 +105,6 @@ public class StickerDatabase extends SQLiteOpenHelper {
         if (checkRecentlySticker(idSticker)) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-//            contentValues.put(ID_CATEGORY, idCategory);
-//            contentValues.put(ID_STICKER, idSticker);
-//            contentValues.put(URL_STICKER, url);
             contentValues.put(TIME_USAGE, time);
 
             long insert = db.update(STICKER_TABLE_RECENTLY, contentValues, ID_STICKER + "=" + idSticker, null);

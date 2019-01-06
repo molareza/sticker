@@ -46,10 +46,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
             @Override
             public void onClick(View v) {
 
-//                recentSticker.addSticker(s);
-
                 StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker(mSticker.get(position).getIdSticker(),mSticker.get(position).getIdCategory() ,mSticker.get(position).getPath()  , System.currentTimeMillis());
-//                recentSticker.persist();
                 if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
         });
