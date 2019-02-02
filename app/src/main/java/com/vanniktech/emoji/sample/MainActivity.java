@@ -28,7 +28,7 @@ import com.vanniktech.emoji.listeners.OnOpenPageStickerListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.listeners.OnUpdateStickerListener;
 import com.vanniktech.emoji.one.EmojiOneProvider;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
@@ -180,16 +180,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setOnUpdateSticker(new OnUpdateStickerListener() {
                     @Override
-                    public ArrayList<StructAllSticker> onUpdateStickerPath(ArrayList<StructAllSticker> categoryStickerList) {
+                    public void onUpdateStickerPath(ArrayList<StructGroupSticker> categoryStickerList) {
 
-
-
-                        for (StructAllSticker item : categoryStickerList) {
-
-                        }
-                        Log.i("CCCCC", "onStickerPath: " + categoryStickerList.size());
-
-                        return categoryStickerList;
                     }
                 })
                 .setOpenPageSticker(new OnOpenPageStickerListener() {
@@ -211,9 +203,9 @@ public class MainActivity extends AppCompatActivity {
                 .build(editText);
     }
 
-    private ArrayList<StructAllSticker> setDatabase() {
+    private ArrayList<StructGroupSticker> setDatabase() {
 //
-        ArrayList<StructAllSticker> stickerList = new ArrayList<>();
+        ArrayList<StructGroupSticker> stickerList = new ArrayList<>();
         File folder = new File(DIR_APP);
         if (!folder.exists()) {
             folder.mkdirs();
@@ -229,23 +221,32 @@ public class MainActivity extends AppCompatActivity {
             File file = new File(DIR_APP + "/" + aDigi.getName());
             File[] into = file.listFiles();
 
-            StructAllSticker item = new StructAllSticker();
+            StructGroupSticker item = new StructGroupSticker();
+            item.setCreatedAt(id);
             item.setId("" + id);
+            item.setRefId(id);
+            item.setName(aDigi.getName());
             item.setAvatarToken("" + id);
-            item.setUrl(into[0].getPath());
+            item.setUri(into[0].getPath());
+            item.setPrice(0);
+            item.setIsVip(false);
+            item.setSort(0);
+            item.setCreatedBy(0);
 
             ArrayList<StructItemSticker> structItemStickers = new ArrayList<>();
             for (File i : into) {
 
 
                 StructItemSticker itemSticker = new StructItemSticker();
-                itemSticker.setToken("a");
-                itemSticker.setName("z");
                 itemSticker.setId(""+id_sticker);
-                itemSticker.setGroupId("" + id);
-                itemSticker.setUrl(i.getPath());
+                itemSticker.setRefId(id_sticker);
+                itemSticker.setName("z");
+                itemSticker.setToken("a");
+                itemSticker.setUri(i.getPath());
+                itemSticker.setSort(0);
+                itemSticker.setGroupId(""+id);
                 structItemStickers.add(itemSticker);
-                item.setStructItemStickers(structItemStickers);
+                item.setStickers(structItemStickers);
                 id_sticker++;
             }
             stickerList.add(item);

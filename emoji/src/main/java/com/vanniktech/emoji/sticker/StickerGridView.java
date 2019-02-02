@@ -5,13 +5,9 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.widget.GridView;
 
-import com.vanniktech.emoji.EmojiGridView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
-import com.vanniktech.emoji.sticker.struct.StructStickerItemGroup;
-
-import java.util.ArrayList;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 final class StickerGridView extends GridView {
     StickerGridView(@NonNull final Context context) {
@@ -30,8 +26,8 @@ final class StickerGridView extends GridView {
         setVerticalScrollBarEnabled(false);
     }
 
-    public StickerGridView init(@NonNull StructAllSticker mSticker, OnStickerListener onStickerListener) {
-        StickerArrayAdapter stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker.getStructItemStickers() , onStickerListener);
+    public StickerGridView init(@NonNull StructGroupSticker mSticker, OnStickerListener onStickerListener) {
+        StickerArrayAdapter stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker.getStickers() , onStickerListener);
         setAdapter(stickerArrayAdapter);
         return this;
     }

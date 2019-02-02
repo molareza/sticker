@@ -6,36 +6,27 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class StructItemSticker implements Serializable {
-
-    @SerializedName("createdBy")
-    @Expose
-    private long createdBy;
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("refId")
+    @Expose
+    private Integer refId;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("token")
     @Expose
     private String token;
-    @SerializedName("url")
+    @SerializedName("uri")
     @Expose
-    private String url;
+    private String uri;
     @SerializedName("sort")
     @Expose
-    private int sort;
+    private Integer sort;
     @SerializedName("groupId")
     @Expose
     private String groupId;
-
-    public long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(long createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public String getId() {
         return id;
@@ -43,6 +34,14 @@ public class StructItemSticker implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getRefId() {
+        return refId;
+    }
+
+    public void setRefId(Integer refId) {
+        this.refId = refId;
     }
 
     public String getName() {
@@ -61,19 +60,19 @@ public class StructItemSticker implements Serializable {
         this.token = token;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUri() {
+        return uri;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
-    public int getSort() {
+    public Integer getSort() {
         return sort;
     }
 
-    public void setSort(int sort) {
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
 
@@ -84,5 +83,6 @@ public class StructItemSticker implements Serializable {
     public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
+
 
 }

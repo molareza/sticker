@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.listeners.OnStickerListener;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
-import com.vanniktech.emoji.sticker.struct.StructStickerItemGroup;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.ArrayList;
 
@@ -19,14 +19,14 @@ public final class StickerPagerAdapter extends PagerAdapter {
     private int backgroundColor;
     private int iconColor;
     private int dividerColor;
-    private ArrayList<StructAllSticker> stickerList;
-    private ArrayList<StructRecentSticker> recentStickerList;
+    private ArrayList<StructGroupSticker> stickerList;
+    private ArrayList<StructItemSticker> recentStickerList;
     private OnPageChangeMainViewPager onChangeViewPager;
     private OnStickerListener onStickerListener;
     private RecentStickerGridView recentStickerGridView;
     private StickerGridView stickerGridView;
 
-    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructAllSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, ArrayList<StructRecentSticker> recentSticker) {
+    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructGroupSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, ArrayList<StructItemSticker> recentSticker) {
         this.context = context;
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
@@ -47,7 +47,6 @@ public final class StickerPagerAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup pager, final int position) {
         final View newView;
 
-        Log.i("CCCCCDD", "instantiateItem: " + position);
         if (position == RECENT_POSITION) {
             newView = new RecentStickerGridView(pager.getContext()).init(onStickerListener, recentStickerList);
             recentStickerGridView = (RecentStickerGridView) newView;
@@ -74,7 +73,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    void invalidateRecentStickers(ArrayList<StructRecentSticker> recentlySticker) {
+    void invalidateRecentStickers(ArrayList<StructItemSticker> recentlySticker) {
         if (recentStickerGridView != null) {
             recentStickerGridView.invalidateStrickers(recentlySticker);
         }
@@ -84,7 +83,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
         return POSITION_NONE;
     }
 
-    public void updateStickerAdapter(ArrayList<StructAllSticker> categoryStickerList) {
+    public void updateStickerAdapter(ArrayList<StructGroupSticker> categoryStickerList) {
 
         this.stickerList = categoryStickerList;
         notifyDataSetChanged();

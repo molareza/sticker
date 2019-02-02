@@ -15,7 +15,7 @@ import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
 import com.vanniktech.emoji.listeners.OnOpenPageStickerListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.listeners.OnUpdateStickerListener;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.util.ArrayList;
 
@@ -87,7 +87,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
         // No-op.
     }
 
-    public void updateSticker(ArrayList<StructAllSticker> structAllStickers){
+    public void updateSticker(ArrayList<StructGroupSticker> structAllStickers){
         emojiPagerAdapter.updateSticker(structAllStickers);
     }
 

@@ -2,39 +2,34 @@ package com.vanniktech.emoji.sticker;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.R;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
+import com.vanniktech.emoji.sticker.struct.StructSticker;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
+import java.util.List;
 
 public class EmojiSettingPage extends AppCompatActivity {
 
     public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static final String emoji = "/emoji";
     public static String DIR_APP = DIR_SDCARD + emoji;
-    private ArrayList<StructAllSticker> stickerList;
+    private ArrayList<StructGroupSticker> stickerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +40,7 @@ public class EmojiSettingPage extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            stickerList = (ArrayList<StructAllSticker>) bundle.getSerializable("ALL");
+            stickerList = (ArrayList<StructGroupSticker>) bundle.getSerializable("ALL");
         }
 
         stickerList.remove(0);
@@ -57,13 +52,13 @@ public class EmojiSettingPage extends AppCompatActivity {
     }
 
     public class AdapterSettingPage extends RecyclerView.Adapter<AdapterSettingPage.ViewHolder> {
-        private ArrayList<StructAllSticker> mData;
+        private List<StructGroupSticker> mData;
         private Context context;
         private LayoutInflater mInflater;
 
 
         // data is passed into the constructor
-        AdapterSettingPage(Context context, ArrayList<StructAllSticker> data) {
+        AdapterSettingPage(Context context, List<StructGroupSticker> data) {
             this.mData = data;
             this.context = context;
             this.mInflater = LayoutInflater.from(context);
@@ -79,15 +74,15 @@ public class EmojiSettingPage extends AppCompatActivity {
         // binds the data to the TextView in each row
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            StructAllSticker item = mData.get(position);
+            StructGroupSticker item = mData.get(position);
 
-            if (item.getUrl() == null) return;
+            if (item.getUri() == null) return;
 
             Glide.with(context)
-                    .load(new File(item.getUrl())) // Uri of the picture
+                    .load(new File(item.getUri())) // Uri of the picture
                     .into(holder.imgSticker);
             holder.txtName.setText(item.getName());
-            holder.txtCount.setText(item.getStructItemStickers().size() + " " + "Stickers");
+            holder.txtCount.setText(item.getStickers().size() + " " + "Stickers");
         }
 
         // total number of rows

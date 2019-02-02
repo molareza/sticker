@@ -1,7 +1,6 @@
 package com.vanniktech.emoji.listeners;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.R;
-import com.vanniktech.emoji.sticker.EmojiSettingPage;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,9 +34,9 @@ public class SettingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private ArrayList<StructAllSticker> allList;
+    private ArrayList<StructGroupSticker> allList;
 
-    public static SettingFragment newInstance(ArrayList<StructAllSticker> allList) {
+    public static SettingFragment newInstance(ArrayList<StructGroupSticker> allList) {
         SettingFragment settingFragment = new SettingFragment();
         Bundle args = new Bundle();
         args.putSerializable("ALL", allList);
@@ -60,7 +57,7 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        allList = (ArrayList<StructAllSticker>) getArguments().getSerializable("ALL");
+        allList = (ArrayList<StructGroupSticker>) getArguments().getSerializable("ALL");
 
         Log.i("CCCCC", "onViewCreated: " + allList.size());
         RecyclerView rcvSettingPage = view.findViewById(R.id.rcvSettingPage);
@@ -71,13 +68,13 @@ public class SettingFragment extends Fragment {
     }
 
     public class AdapterSettingPage extends RecyclerView.Adapter<AdapterSettingPage.ViewHolder> {
-        private ArrayList<StructAllSticker> mData;
+        private ArrayList<StructGroupSticker> mData;
         private SettingFragment context;
         private LayoutInflater mInflater;
 
 
         // data is passed into the constructor
-        AdapterSettingPage(SettingFragment context, ArrayList<StructAllSticker> data) {
+        AdapterSettingPage(SettingFragment context, ArrayList<StructGroupSticker> data) {
             this.mData = data;
             this.context = context;
             this.mInflater = LayoutInflater.from(context.getContext());
@@ -93,13 +90,13 @@ public class SettingFragment extends Fragment {
         // binds the data to the TextView in each row
         @Override
         public void onBindViewHolder(AdapterSettingPage.ViewHolder holder, int position) {
-            StructAllSticker item = mData.get(position);
+            StructGroupSticker item = mData.get(position);
 
             Glide.with(context)
-                    .load(new File(item.getUrl())) // Uri of the picture
+                    .load(new File(item.getUri())) // Uri of the picture
                     .into(holder.imgSticker);
             holder.txtName.setText(item.getName());
-            holder.txtCount.setText(item.getStructItemStickers().size() + " " + "Stickers");
+            holder.txtCount.setText(item.getStickers().size() + " " + "Stickers");
         }
 
         // total number of rows

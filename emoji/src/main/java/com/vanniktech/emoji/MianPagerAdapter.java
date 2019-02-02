@@ -12,7 +12,7 @@ import com.vanniktech.emoji.listeners.OnOpenPageStickerListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.listeners.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.StickerEmojiView;
-import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.util.ArrayList;
 
@@ -83,7 +83,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    public void updateSticker(ArrayList<StructAllSticker> structAllStickers){
+    public void updateSticker(ArrayList<StructGroupSticker> structAllStickers){
         if (stickerEmojiView !=null) stickerEmojiView.updateDB(structAllStickers);
 
     }

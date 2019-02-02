@@ -7,27 +7,26 @@ import java.util.List;
 
 public class StructSticker {
 
-
     @SerializedName("ok")
     @Expose
-    private boolean ok;
+    private Boolean ok;
     @SerializedName("data")
     @Expose
-    private List<StructItemSticker> data = null;
+    private List<StructGroupSticker> data = null;
 
-    public boolean isOk() {
+    public Boolean getOk() {
         return ok;
     }
 
-    public void setOk(boolean ok) {
+    public void setOk(Boolean ok) {
         this.ok = ok;
     }
 
-    public List<StructItemSticker> getData() {
+    public List<StructGroupSticker> getData() {
         return data;
     }
 
-    public void setData(List<StructItemSticker> data) {
+    public void setData(List<StructGroupSticker> data) {
         this.data = data;
     }
 

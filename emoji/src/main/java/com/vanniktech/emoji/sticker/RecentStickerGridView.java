@@ -7,12 +7,14 @@ import android.widget.GridView;
 
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 final class RecentStickerGridView extends GridView {
-    private ArrayList<StructRecentSticker> recentSticker;
+    private List<StructItemSticker> recentSticker;
     private RecentlyStickerAdapter recentlyStickerArrayAdapter;
 
     RecentStickerGridView(@NonNull final Context context) {
@@ -31,7 +33,7 @@ final class RecentStickerGridView extends GridView {
         setVerticalScrollBarEnabled(false);
     }
 
-    public RecentStickerGridView init(OnStickerListener onStickerListener, ArrayList<StructRecentSticker> recentSticker) {
+    public RecentStickerGridView init(OnStickerListener onStickerListener, List<StructItemSticker> recentSticker) {
 
         this.recentSticker = recentSticker;
         recentlyStickerArrayAdapter = new RecentlyStickerAdapter(getContext(), onStickerListener,recentSticker);
@@ -39,7 +41,7 @@ final class RecentStickerGridView extends GridView {
         return this;
     }
 
-    public void invalidateStrickers(ArrayList<StructRecentSticker> recentlySticker) {
+    public void invalidateStrickers(ArrayList<StructItemSticker> recentlySticker) {
         recentlyStickerArrayAdapter.updateSticker(recentlySticker);
     }
 }

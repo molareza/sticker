@@ -11,17 +11,19 @@ import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.EmojiImageView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
-final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
-    private ArrayList<StructRecentSticker> mSticker;
+final class RecentlyStickerAdapter extends ArrayAdapter<StructItemSticker> {
+    private List<StructItemSticker> mSticker;
     private OnStickerListener onStickerListener;
 
-    RecentlyStickerAdapter(@NonNull final Context context, OnStickerListener onStickerListener, ArrayList<StructRecentSticker> mSticker) {
+    RecentlyStickerAdapter(@NonNull final Context context, OnStickerListener onStickerListener, List<StructItemSticker> mSticker) {
         super(context, 0, mSticker);
         this.mSticker = mSticker;
         this.onStickerListener = onStickerListener;
@@ -37,7 +39,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
         if (image == null) {
             image = (EmojiImageView) LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
         }
-        final String s = mSticker.get(position).getUrl();
+        final String s = mSticker.get(position).getUri();
         Glide.with(context)
                 .load(new File(s)) // Uri of the picture
                 .into(image);
@@ -46,7 +48,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
             @Override
             public void onClick(View v) {
 
-                StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker(mSticker.get(position).getIdSticker(), mSticker.get(position).getIdCategory(), mSticker.get(position).getToken(), mSticker.get(position).getUrl(), System.currentTimeMillis());
+                StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker( mSticker.get(position).getId(),mSticker.get(position).getRefId() , mSticker.get(position).getName() ,mSticker.get(position).getToken(),mSticker.get(position).getUri(),mSticker.get(position).getSort(),mSticker.get(position).getGroupId(), System.currentTimeMillis());
                 if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
         });
@@ -54,7 +56,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
         return image;
     }
 
-    void updateSticker(final Collection<StructRecentSticker> sticker) {
+    void updateSticker(final Collection<StructItemSticker> sticker) {
         clear();
         addAll(sticker);
         notifyDataSetChanged();
