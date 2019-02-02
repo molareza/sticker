@@ -1,87 +1,99 @@
-package com.vanniktech.emoji.sticker;
+package com.vanniktech.emoji.listeners;
+
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.sticker.EmojiSettingPage;
 import com.vanniktech.emoji.sticker.struct.StructAllSticker;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class EmojiSettingPage extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SettingFragment extends Fragment {
 
-    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static final String emoji = "/emoji";
-    public static String DIR_APP = DIR_SDCARD + emoji;
-    private ArrayList<StructAllSticker> stickerList;
+
+    public SettingFragment() {
+        // Required empty public constructor
+    }
+
+    private ArrayList<StructAllSticker> allList;
+
+    public static SettingFragment newInstance(ArrayList<StructAllSticker> allList) {
+        SettingFragment settingFragment = new SettingFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("ALL", allList);
+        settingFragment.setArguments(args);
+        return settingFragment;
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.emoji_activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.emoji_fragment_setting, container, false);
 
-//        ArrayList<StructAllSticker> stickerList = StickerEmojiView.getStickerDatabase(this).getAllCategory();
+    }
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            stickerList = (ArrayList<StructAllSticker>) bundle.getSerializable("ALL");
-        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        stickerList.remove(0);
-        RecyclerView rcvSettingPage = findViewById(R.id.rcvSettingPage);
-        AdapterSettingPage adapterSettingPage = new AdapterSettingPage(this, stickerList);
+        allList = (ArrayList<StructAllSticker>) getArguments().getSerializable("ALL");
+
+        Log.i("CCCCC", "onViewCreated: " + allList.size());
+        RecyclerView rcvSettingPage = view.findViewById(R.id.rcvSettingPage);
+        AdapterSettingPage adapterSettingPage = new AdapterSettingPage(this, allList);
         rcvSettingPage.setAdapter(adapterSettingPage);
-        rcvSettingPage.setLayoutManager(new LinearLayoutManager(this));
+        rcvSettingPage.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvSettingPage.setHasFixedSize(true);
     }
 
     public class AdapterSettingPage extends RecyclerView.Adapter<AdapterSettingPage.ViewHolder> {
         private ArrayList<StructAllSticker> mData;
-        private Context context;
+        private SettingFragment context;
         private LayoutInflater mInflater;
 
 
         // data is passed into the constructor
-        AdapterSettingPage(Context context, ArrayList<StructAllSticker> data) {
+        AdapterSettingPage(SettingFragment context, ArrayList<StructAllSticker> data) {
             this.mData = data;
             this.context = context;
-            this.mInflater = LayoutInflater.from(context);
+            this.mInflater = LayoutInflater.from(context.getContext());
         }
 
         // inflates the row layout from xml when needed
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public AdapterSettingPage.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(R.layout.emoji_adapter_setting_page, parent, false);
-            return new ViewHolder(view);
+            return new AdapterSettingPage.ViewHolder(view);
         }
 
         // binds the data to the TextView in each row
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(AdapterSettingPage.ViewHolder holder, int position) {
             StructAllSticker item = mData.get(position);
-
-            if (item.getUrl() == null) return;
 
             Glide.with(context)
                     .load(new File(item.getUrl())) // Uri of the picture
@@ -115,21 +127,23 @@ public class EmojiSettingPage extends AppCompatActivity {
                     public void onClick(View v) {
                         AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+                            builder = new AlertDialog.Builder(context.getContext(), android.R.style.Theme_Material_Dialog_Alert);
                         } else {
-                            builder = new AlertDialog.Builder(context);
+                            builder = new AlertDialog.Builder(context.getContext());
                         }
                         builder.setTitle("Delete entry")
                                 .setMessage("Are you sure you want to delete this entry?")
                                 .setPositiveButton("REMOVE", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//
-                                        StickerEmojiView.getStickerDatabase(EmojiSettingPage.this).favoriteDeleteGroup(mData.get(getAdapterPosition()).getId());
-                                        StickerEmojiView.getStickerDatabase(EmojiSettingPage.this).favoriteDeleteSticker(mData.get(getAdapterPosition()).getId());
-                                        StickerEmojiView.onNotifyList.notifyList(getAdapterPosition());
-                                        dialog.dismiss();
-//
+                                        if (new File(mData.get(getAdapterPosition()).getName()).exists()) {
+
+
+
+                                            mData.remove(getAdapterPosition());
+                                            notifyDataSetChanged();
+                                            dialog.dismiss();
+                                        }
                                     }
                                 })
                                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -146,4 +160,6 @@ public class EmojiSettingPage extends AppCompatActivity {
             }
         }
     }
+
+
 }

@@ -3,6 +3,8 @@ package com.vanniktech.emoji.sample;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -21,9 +24,16 @@ import com.vanniktech.emoji.EmojiPopup;
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
 import com.vanniktech.emoji.ios.IosEmojiProvider;
+import com.vanniktech.emoji.listeners.OnOpenPageStickerListener;
 import com.vanniktech.emoji.listeners.OnStickerListener;
+import com.vanniktech.emoji.listeners.OnUpdateStickerListener;
 import com.vanniktech.emoji.one.EmojiOneProvider;
+import com.vanniktech.emoji.sticker.struct.StructAllSticker;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
+
+import java.io.File;
+import java.util.ArrayList;
 
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START")
@@ -37,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     ViewGroup rootView;
     ImageView emojiButton;
     EmojiCompat emojiCompat;
+    private static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static final String emoji = "/emoji";
+    private static String DIR_APP = DIR_SDCARD + emoji;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -54,7 +67,20 @@ public class MainActivity extends AppCompatActivity {
         emojiButton.setColorFilter(ContextCompat.getColor(this, R.color.emoji_icons), PorterDuff.Mode.SRC_IN);
         sendButton.setColorFilter(ContextCompat.getColor(this, R.color.emoji_icons), PorterDuff.Mode.SRC_IN);
 
-        emojiButton.setOnClickListener(ignore -> emojiPopup.toggle());
+        emojiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiPopup.toggle();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        emojiPopup.updateStickerAdapter(setDatabase());
+
+                    }
+                }, 5000);
+            }
+        });
+//        emojiButton.setOnClickListener(ignore -> emojiPopup.toggle());
         sendButton.setOnClickListener(ignore -> {
             final String text = editText.getText().toString().trim();
 
@@ -148,7 +174,32 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onStickerPath(String path) {
 
-                        Log.i("CCCCCCCCCC", "onStickerPath: " + path );
+                        Log.i("CCCCCCCCCC", "onStickerPath: " + path);
+
+                    }
+                })
+                .setOnUpdateSticker(new OnUpdateStickerListener() {
+                    @Override
+                    public ArrayList<StructAllSticker> onUpdateStickerPath(ArrayList<StructAllSticker> categoryStickerList) {
+
+
+
+                        for (StructAllSticker item : categoryStickerList) {
+
+                        }
+                        Log.i("CCCCC", "onStickerPath: " + categoryStickerList.size());
+
+                        return categoryStickerList;
+                    }
+                })
+                .setOpenPageSticker(new OnOpenPageStickerListener() {
+                    @Override
+                    public void addSticker(String page) {
+
+                    }
+
+                    @Override
+                    public void openSetting(String page) {
 
                     }
                 })
@@ -159,4 +210,50 @@ public class MainActivity extends AppCompatActivity {
 
                 .build(editText);
     }
+
+    private ArrayList<StructAllSticker> setDatabase() {
+//
+        ArrayList<StructAllSticker> stickerList = new ArrayList<>();
+        File folder = new File(DIR_APP);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // Do something on success
+
+        int id = 1000;
+        int id_sticker = 5000;
+
+        File[] digi = folder.listFiles();
+        for (File aDigi : digi) {
+            File file = new File(DIR_APP + "/" + aDigi.getName());
+            File[] into = file.listFiles();
+
+            StructAllSticker item = new StructAllSticker();
+            item.setId("" + id);
+            item.setAvatarToken("" + id);
+            item.setUrl(into[0].getPath());
+
+            ArrayList<StructItemSticker> structItemStickers = new ArrayList<>();
+            for (File i : into) {
+
+
+                StructItemSticker itemSticker = new StructItemSticker();
+                itemSticker.setToken("a");
+                itemSticker.setName("z");
+                itemSticker.setId(""+id_sticker);
+                itemSticker.setGroupId("" + id);
+                itemSticker.setUrl(i.getPath());
+                structItemStickers.add(itemSticker);
+                item.setStructItemStickers(structItemStickers);
+                id_sticker++;
+            }
+            stickerList.add(item);
+
+            id++;
+        }
+
+        return stickerList;
+    }
+
 }

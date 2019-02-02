@@ -39,7 +39,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
     private int themeIconColor = 0;
 
     private final EmojiPagerAdapter emojiPagerAdapter;
-    private ArrayList<StrauctTabItem> tabImageList = new ArrayList<>();
+    private ArrayList<Integer> tabImageList = new ArrayList<>();
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
     private final String RECENT = "RECENT";
     private final String STICKER = "STICKER";
@@ -91,11 +91,11 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         final EmojiCategory[] categories = EmojiManager.getInstance().getCategories();
 
         for (EmojiCategory category : categories) {
-            tabImageList.add(new StrauctTabItem(category.getIcon(), CONST));
+            tabImageList.add(category.getIcon());
         }
 
-        tabImageList.add(0, new StrauctTabItem(R.drawable.emoji_recent, RECENT));
-        tabImageList.add((tabImageList.size()), new StrauctTabItem(R.drawable.sticker_emoji, STICKER));
+        tabImageList.add(0, R.drawable.emoji_recent);
+        tabImageList.add((tabImageList.size()), R.drawable.sticker_emoji);
 
         ImageView btnBack = findViewById(R.id.imgBack);
         btnBack.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
@@ -151,7 +151,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
     public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-        private ArrayList<StrauctTabItem> mData;
+        private ArrayList<Integer> mData;
         private LayoutInflater mInflater;
         private ViewPager emojisPager;
         public int indexItemSelect;
@@ -160,7 +160,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 //        private ItemClickListener mClickListener;
 
         // data is passed into the constructor
-        MyRecyclerViewAdapter(Context context, ArrayList<StrauctTabItem> data, ViewPager emojisPager, int startIndex) {
+        MyRecyclerViewAdapter(Context context, ArrayList<Integer> data, ViewPager emojisPager, int startIndex) {
             this.mInflater = LayoutInflater.from(context);
             this.context = context;
             this.mData = data;
@@ -178,15 +178,9 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         // binds the data to the TextView in each row
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            StrauctTabItem item = mData.get(position);
+            int item = mData.get(position);
 
-            if (item.getTag().equals(CONST) || item.getTag().equals(STICKER) || item.getTag().equals(RECENT)) {
-
-                holder.myTextView.setImageResource(item.getImageUri());
-
-            } else {
-//                holder.myTextView.setImageResource(item.getImageUri());
-            }
+            holder.myTextView.setImageResource(item);
 
             holder.myTextView.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
             if (indexItemSelect == position) {
@@ -215,7 +209,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
             @Override
             public void onClick(View view) {
-                if (mData.get(getAdapterPosition()).tag.equals(STICKER)) {
+                if (mData.get(getAdapterPosition()) == mData.get(mData.size() - 1)) {
                     if (onChangeViewPager != null) onChangeViewPager.changePage();
                     return;
                 }

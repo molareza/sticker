@@ -22,7 +22,7 @@ public interface RecentEmoji {
   @NonNull Collection<Emoji> getRecentEmojis();
 
   /**
-   * Should add the emoji to the recent ones. After calling this method, {@link #getRecentEmojis()}
+   * Should addSticker the emoji to the recent ones. After calling this method, {@link #getRecentEmojis()}
    * should return the emoji that was just added.
    *
    * @since 0.2.0

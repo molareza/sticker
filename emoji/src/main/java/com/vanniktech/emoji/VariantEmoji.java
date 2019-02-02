@@ -23,7 +23,7 @@ public interface VariantEmoji {
   @NonNull Emoji getVariant(Emoji desiredEmoji);
 
   /**
-   * Should add the emoji to the variants. After calling this method, {@link #getVariant(Emoji)}
+   * Should addSticker the emoji to the variants. After calling this method, {@link #getVariant(Emoji)}
    * should return the emoji that was just added.
    *
    * @param newVariant The new variant to save.

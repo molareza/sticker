@@ -37,7 +37,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
         if (image == null) {
             image = (EmojiImageView) LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
         }
-        final String s = mSticker.get(position).getPath();
+        final String s = mSticker.get(position).getUrl();
         Glide.with(context)
                 .load(new File(s)) // Uri of the picture
                 .into(image);
@@ -46,7 +46,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructRecentSticker> {
             @Override
             public void onClick(View v) {
 
-                StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker(mSticker.get(position).getIdSticker(),mSticker.get(position).getIdCategory() ,mSticker.get(position).getPath()  , System.currentTimeMillis());
+                StickerEmojiView.getStickerDatabase(context).insertOrUpdateRecentlySticker(mSticker.get(position).getIdSticker(), mSticker.get(position).getIdCategory(), mSticker.get(position).getToken(), mSticker.get(position).getUrl(), System.currentTimeMillis());
                 if (onStickerListener != null) onStickerListener.onStickerPath(s);
             }
         });
