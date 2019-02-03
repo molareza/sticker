@@ -12,11 +12,10 @@ import com.vanniktech.emoji.emoji.Emoji;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static com.vanniktech.emoji.Utils.checkNotNull;
-import static java.util.Arrays.asList;
+import static com.vanniktech.emoji.Utils.asListWithoutDuplicates;
 
 final class EmojiArrayAdapter extends ArrayAdapter<Emoji> {
   @Nullable private final VariantEmoji variantManager;
@@ -26,7 +25,7 @@ final class EmojiArrayAdapter extends ArrayAdapter<Emoji> {
 
   EmojiArrayAdapter(@NonNull final Context context, @NonNull final Emoji[] emojis, @Nullable final VariantEmoji variantManager,
                     @Nullable final OnEmojiClickListener listener, @Nullable final OnEmojiLongClickListener longListener) {
-    super(context, 0, new ArrayList<>(asList(emojis)));
+    super(context, 0, asListWithoutDuplicates(emojis));
 
     this.variantManager = variantManager;
     this.listener = listener;
