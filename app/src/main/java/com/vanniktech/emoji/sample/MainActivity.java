@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 }, 5000);
             }
         });
-//        emojiButton.setOnClickListener(ignore -> emojiPopup.toggle());
         sendButton.setOnClickListener(ignore -> {
             final String text = editText.getText().toString().trim();
 
@@ -173,15 +172,16 @@ public class MainActivity extends AppCompatActivity {
                 .setOnStickerListener(new OnStickerListener() {
                     @Override
                     public void onStickerPath(String path) {
-
-                        Log.i("CCCCCCCCCC", "onStickerPath: " + path);
-
                     }
                 })
                 .setOnUpdateSticker(new OnUpdateStickerListener() {
                     @Override
                     public void onUpdateStickerPath(ArrayList<StructGroupSticker> categoryStickerList) {
 
+                    }
+
+                    @Override
+                    public void onRemoveSticker(String token) {
                     }
                 })
                 .setOpenPageSticker(new OnOpenPageStickerListener() {
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void openSetting(String page) {
+                    public void openSetting(ArrayList<StructGroupSticker> stickerList) {
 
                     }
                 })
@@ -238,13 +238,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                 StructItemSticker itemSticker = new StructItemSticker();
-                itemSticker.setId(""+id_sticker);
+                itemSticker.setId("" + id_sticker);
                 itemSticker.setRefId(id_sticker);
                 itemSticker.setName("z");
                 itemSticker.setToken("a");
                 itemSticker.setUri(i.getPath());
                 itemSticker.setSort(0);
-                itemSticker.setGroupId(""+id);
+                itemSticker.setGroupId("" + id);
                 structItemStickers.add(itemSticker);
                 item.setStickers(structItemStickers);
                 id_sticker++;

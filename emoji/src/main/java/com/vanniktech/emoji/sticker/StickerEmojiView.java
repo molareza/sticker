@@ -5,12 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +28,7 @@ import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("ViewConstructor")
 public final class StickerEmojiView extends LinearLayout implements ViewPager.OnPageChangeListener {
@@ -40,23 +39,20 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private OnPageChangeMainViewPager onChangeViewPager;
     private final StickerPagerAdapter stickerPagerAdapter;
     public static OnNotifyList onNotifyList;
-    private final String RECENT = "RECENT";
     private int stickerTabLastSelectedIndex = -1;
-    private static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
-    private static final String emoji = "/emoji";
-    private static String DIR_APP = DIR_SDCARD + emoji;
     private static StickerDatabase stickerDatabase;
     private Context context;
     private OnOpenPageStickerListener myOnOpenPageStickerListener;
     private ArrayList<StructGroupSticker> categoryStickerList;
-    private  ViewPager emojisPager;
+    private ViewPager emojisPager;
+    public static OnUpdateStickerListener mOnUpdateStickerListener;
 
     protected static StickerDatabase getStickerDatabase(Context context) {
         if (stickerDatabase == null) stickerDatabase = new StickerDatabase(context);
         return stickerDatabase;
     }
 
-    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, OnOpenPageStickerListener onOpenPageStickerListener) {
+    public StickerEmojiView(final Activity context, int backgroundColor, int iconColor, int dividerColor, final OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, final OnOpenPageStickerListener onOpenPageStickerListener) {
         super(context);
         View.inflate(context, R.layout.emoji_sticker_view, this);
         this.onChangeViewPager = onChangeViewPager;
@@ -64,6 +60,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         this.context = context;
         this.myOnOpenPageStickerListener = onOpenPageStickerListener;
+        this.mOnUpdateStickerListener = onUpdateStickerListener;
 
         if (backgroundColor != 0) {
             setBackgroundColor(backgroundColor);
@@ -84,10 +81,13 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(context, EmojiSettingPage.class);
-                myIntent.putExtra("ALL", categoryStickerList);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getContext().startActivity(myIntent);
+//                Intent myIntent = new Intent(context, EmojiSettingPage.class);
+//                myIntent.putExtra("ALL", categoryStickerList);
+//                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getContext().startActivity(myIntent);
+
+                if (onOpenPageStickerListener !=null)onOpenPageStickerListener.openSetting(categoryStickerList);
+
             }
         });
 
@@ -100,12 +100,12 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             }
         });
 
-        categoryStickerList = getStickerDatabase(context).getAllCategory();
+        categoryStickerList = new ArrayList<>();
 
         categoryStickerList.add(0, new StructGroupSticker());
 
         rcvTab = findViewById(R.id.rcvTabImageSticker);
-         emojisPager = findViewById(R.id.stickerPager);
+        emojisPager = findViewById(R.id.stickerPager);
 
         emojisPager.addOnPageChangeListener(this);
 
@@ -114,13 +114,15 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
          */
         ArrayList<StructItemSticker> recentStickerList = getStickerDatabase(context).getRecentlySticker();
 
-        Log.i("CCCCC", "StickerEmojiView: " + categoryStickerList.size());
         stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList);
 
         onNotifyList = new OnNotifyList() {
             @Override
-            public void notifyList(int po) {
-                updateStickerList();
+            public void notifyList(List<StructGroupSticker> structGroupStickers, String removeToken) {
+                updateListStickers((ArrayList<StructGroupSticker>) structGroupStickers);
+
+                if (mOnUpdateStickerListener != null)
+                    mOnUpdateStickerListener.onRemoveSticker(removeToken);
             }
         };
         final int startIndex = recentStickerList.size() > 0 ? 0 : 1;
@@ -134,20 +136,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         emojisPager.setAdapter(stickerPagerAdapter);
         emojisPager.setCurrentItem(startIndex);
         onPageSelected(startIndex);
-
-
-//        setting.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
-//        setting.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FragmentTransaction ft =  getfra().beginTransaction();
-//                Fragment fragment = SettingFragment.newInstance(categoryStickerList);
-//                ft.replace(R.id.rootFragmentSetting, fragment);
-//                ft.commit();
-//
-//            }
-//        });
 
     }
 
@@ -286,41 +274,19 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     }
 
     public interface OnNotifyList {
-        void notifyList(int po);
+        void notifyList(List<StructGroupSticker> structGroupStickers, String avatarToken);
     }
 
 
-    public void updateDB(ArrayList<StructGroupSticker> structAllStickers) {
-        /**
-         *
-         * insert to db
-         *
-         *
-         */
+    public void updateListStickers(ArrayList<StructGroupSticker> structAllStickers) {
 
-        boolean isChange = false;
-
-        for (StructGroupSticker item : structAllStickers) {
-            if (getStickerDatabase(context).checkIsDataAlreadyInDBorNot(item.getId())) {
-                continue;
-            }
-            isChange = true;
-
-            if (item.getStickers().size() <= 0) return;
-            getStickerDatabase(context).insertCategorySticker("" + item.getCreatedAt(), item.getId(), item.getRefId(), item.getName(), item.getAvatarToken(), item.getUri(), item.getPrice(), item.getIsVip(), item.getSort(), "" + item.getCreatedBy());
-
-            for (StructItemSticker anInto : item.getStickers()) {
-                getStickerDatabase(context).insertSticker(anInto.getId(), anInto.getRefId(), anInto.getName(), anInto.getToken(), anInto.getUri(), anInto.getSort(), anInto.getGroupId());
-            }
-        }
-        if (!isChange) return;
-
+        categoryStickerList = structAllStickers;
+        categoryStickerList.add(0, new StructGroupSticker());
         updateStickerList();
     }
 
     private void updateStickerList() {
-        categoryStickerList = getStickerDatabase(context).getAllCategory();
-        categoryStickerList.add(0, new StructGroupSticker());
+
         stickerPagerAdapter.updateStickerAdapter(categoryStickerList);
         myRecyclerViewAdapter.updateStickerAdapter(categoryStickerList);
         onPageSelected(0);

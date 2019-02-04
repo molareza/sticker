@@ -3,8 +3,6 @@
     package="com.vanniktech.emoji">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application>
-        <activity android:name=".sticker.EmojiSettingPage"></activity>
-    </application>
+    <application></application>
 
 </manifest>

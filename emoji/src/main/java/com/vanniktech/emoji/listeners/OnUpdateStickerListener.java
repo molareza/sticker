@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface OnUpdateStickerListener {
   void onUpdateStickerPath(ArrayList<StructGroupSticker> categoryStickerList);
+  void onRemoveSticker(String token);
 }
