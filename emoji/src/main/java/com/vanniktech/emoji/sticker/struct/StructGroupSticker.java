@@ -2,28 +2,59 @@ package com.vanniktech.emoji.sticker.struct;
 
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class StructGroupSticker implements Serializable {
 
-    private Integer createdAt;
+    @SerializedName("createdAt")
+    @Expose
+    private Long createdAt;
+    @SerializedName("id")
+    @Expose
     private String id;
-    private Integer refId;
+    @SerializedName("refId")
+    @Expose
+    private Long refId;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("avatarToken")
+    @Expose
     private String avatarToken;
+    @SerializedName("uri")
+    @Expose
     private String uri;
-    private Integer price;
+    @SerializedName("avatarSize")
+    @Expose
+    private int avatarSize;
+    @SerializedName("avatarName")
+    @Expose
+    private String avatarName;
+    @SerializedName("price")
+    @Expose
+    private Long price;
+    @SerializedName("isVip")
+    @Expose
     private Boolean isVip;
+    @SerializedName("sort")
+    @Expose
     private Integer sort;
-    private Integer createdBy;
+    @SerializedName("createdBy")
+    @Expose
+    private Long createdBy;
+    @SerializedName("stickers")
+    @Expose
     private List<StructItemSticker> stickers = null;
 
-    public Integer getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -35,11 +66,11 @@ public class StructGroupSticker implements Serializable {
         this.id = id;
     }
 
-    public Integer getRefId() {
+    public Long getRefId() {
         return refId;
     }
 
-    public void setRefId(Integer refId) {
+    public void setRefId(Long refId) {
         this.refId = refId;
     }
 
@@ -67,11 +98,35 @@ public class StructGroupSticker implements Serializable {
         this.uri = uri;
     }
 
-    public Integer getPrice() {
+    public int getAvatarSize() {
+        return avatarSize;
+    }
+
+    public void setAvatarSize(int avatarSize) {
+        this.avatarSize = avatarSize;
+    }
+
+    public String getAvatarName() {
+        return avatarName;
+    }
+
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
+
+    public Boolean getVip() {
+        return isVip;
+    }
+
+    public void setVip(Boolean vip) {
+        isVip = vip;
+    }
+
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -91,11 +146,11 @@ public class StructGroupSticker implements Serializable {
         this.sort = sort;
     }
 
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
