@@ -51,7 +51,7 @@ public class StructGroupSticker implements Serializable {
     private List<StructItemSticker> stickers = null;
     @SerializedName("isFavorite")
     @Expose
-    private Long isFavorite;
+    private boolean isFavorite;
 
     public Long getCreatedAt() {
         return createdAt;
@@ -165,11 +165,11 @@ public class StructGroupSticker implements Serializable {
         this.stickers = stickers;
     }
 
-    public Long getIsFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setIsFavorite(Long isFavorite) {
+    public void setIsFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
     }
 }
