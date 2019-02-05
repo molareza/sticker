@@ -1,45 +1,22 @@
 package com.vanniktech.emoji.sticker.struct;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 import java.io.Serializable;
 import java.util.List;
 
 public class StructGroupSticker implements Serializable {
 
-    @SerializedName("createdAt")
-    @Expose
     private Integer createdAt;
-    @SerializedName("id")
-    @Expose
     private String id;
-    @SerializedName("refId")
-    @Expose
     private Integer refId;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("avatarToken")
-    @Expose
     private String avatarToken;
-    @SerializedName("uri")
-    @Expose
     private String uri;
-    @SerializedName("price")
-    @Expose
     private Integer price;
-    @SerializedName("isVip")
-    @Expose
     private Boolean isVip;
-    @SerializedName("sort")
-    @Expose
     private Integer sort;
-    @SerializedName("createdBy")
-    @Expose
     private Integer createdBy;
-    @SerializedName("stickers")
-    @Expose
     private List<StructItemSticker> stickers = null;
 
     public Integer getCreatedAt() {

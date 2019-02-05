@@ -1,31 +1,17 @@
 package com.vanniktech.emoji.sticker.struct;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 import java.io.Serializable;
 
 public class StructItemSticker implements Serializable {
-    @SerializedName("id")
-    @Expose
+
     private String id;
-    @SerializedName("refId")
-    @Expose
     private Integer refId;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("token")
-    @Expose
     private String token;
-    @SerializedName("uri")
-    @Expose
     private String uri;
-    @SerializedName("sort")
-    @Expose
     private Integer sort;
-    @SerializedName("groupId")
-    @Expose
     private String groupId;
 
     public String getId() {
