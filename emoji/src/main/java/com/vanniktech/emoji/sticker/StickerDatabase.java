@@ -55,7 +55,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertOrUpdateRecentlySticker(String id_st, int ref_id, String name, String token, String uri, int sort, String groupId, Long time) {
+    public boolean insertOrUpdateRecentlySticker(String id_st, long ref_id, String name, String token, String uri, int sort, String groupId, Long time) {
 
         if (checkRecentlySticker(id_st)) {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -110,7 +110,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
 
                         StructItemSticker item = new StructItemSticker();
                         item.setId(cursor.getString(cursor.getColumnIndex(ID_ST)));
-                        item.setRefId(cursor.getInt(cursor.getColumnIndex(REF_ID)));
+                        item.setRefId(cursor.getLong(cursor.getColumnIndex(REF_ID)));
                         item.setName(cursor.getString(cursor.getColumnIndex(NAME)));
                         item.setToken(cursor.getString(cursor.getColumnIndex(TOKEN)));
                         item.setUri(cursor.getString(cursor.getColumnIndex(URI)));

@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Do something on success
 
-        int id = 1000;
+        long id = 1000;
         int id_sticker = 5000;
 
         File[] digi = folder.listFiles();
@@ -228,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
             item.setName(aDigi.getName());
             item.setAvatarToken("" + id);
             item.setUri(into[0].getPath());
-            item.setPrice(0);
+            item.setPrice((long) 0);
             item.setIsVip(false);
             item.setSort(0);
-            item.setCreatedBy(0);
+            item.setCreatedBy((long) 0);
 
             ArrayList<StructItemSticker> structItemStickers = new ArrayList<>();
             for (File i : into) {
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
                 StructItemSticker itemSticker = new StructItemSticker();
                 itemSticker.setId("" + id_sticker);
-                itemSticker.setRefId(id_sticker);
+                itemSticker.setRefId((long) id_sticker);
                 itemSticker.setName("z");
                 itemSticker.setToken("a");
                 itemSticker.setUri(i.getPath());
