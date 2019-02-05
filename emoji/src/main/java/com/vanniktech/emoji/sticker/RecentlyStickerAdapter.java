@@ -14,7 +14,6 @@ import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
