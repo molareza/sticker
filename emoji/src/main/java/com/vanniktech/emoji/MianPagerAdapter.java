@@ -92,7 +92,7 @@ public final class MianPagerAdapter extends PagerAdapter {
                 public void run() {
                     if (stickerEmojiView !=null) stickerEmojiView.updateListStickers(structAllStickers);
                 }
-            },200);
+            },2000);
         }else {
              stickerEmojiView.updateListStickers(structAllStickers);
         }
