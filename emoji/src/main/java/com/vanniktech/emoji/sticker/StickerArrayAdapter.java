@@ -50,7 +50,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
 
                 StickerDatabase stickerDatabase = StickerEmojiView.getStickerDatabase(context);
                 stickerDatabase.insertOrUpdateRecentlySticker( mSticker.get(position).getId(),mSticker.get(position).getRefId() , mSticker.get(position).getName() ,mSticker.get(position).getToken(),mSticker.get(position).getUri(),mSticker.get(position).getSort(),mSticker.get(position).getGroupId(), System.currentTimeMillis());
-                if (onStickerListener != null) onStickerListener.onStickerPath(s);
+                if (onStickerListener != null) onStickerListener.onStickerPath(mSticker);
             }
         });
 

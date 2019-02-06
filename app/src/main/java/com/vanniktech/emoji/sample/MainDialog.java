@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import com.vanniktech.emoji.EmojiEditText;
 import com.vanniktech.emoji.EmojiPopup;
 import com.vanniktech.emoji.listeners.OnStickerListener;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
+
+import java.util.List;
 
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START") public class MainDialog extends DialogFragment {
@@ -94,7 +97,7 @@ import com.vanniktech.emoji.listeners.OnStickerListener;
             .setOnSoftKeyboardOpenListener(ignore -> Log.d(TAG, "Opened soft keyboard"))
             .setOnStickerListener(new OnStickerListener() {
               @Override
-              public void onStickerPath(String path) {
+              public void onStickerPath(List<StructItemSticker> path) {
 
                 Log.i("CCCCCCCCCC", "onStickerPath: " + path );
 

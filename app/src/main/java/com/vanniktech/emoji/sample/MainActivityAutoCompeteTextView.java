@@ -1,6 +1,5 @@
 package com.vanniktech.emoji.sample;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.text.emoji.EmojiCompat;
@@ -23,7 +22,10 @@ import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider;
 import com.vanniktech.emoji.ios.IosEmojiProvider;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.one.EmojiOneProvider;
+import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
+
+import java.util.List;
 
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START")
@@ -144,7 +146,7 @@ public class MainActivityAutoCompeteTextView extends AppCompatActivity {
                 .setOnEmojiPopupShownListener(() -> emojiButton.setImageResource(R.drawable.ic_keyboard))
                 .setOnStickerListener(new OnStickerListener() {
                     @Override
-                    public void onStickerPath(String path) {
+                    public void onStickerPath(List<StructItemSticker> path) {
 
                         Log.i("CCCCCCCCCC", "onStickerPath: " + path );
 
