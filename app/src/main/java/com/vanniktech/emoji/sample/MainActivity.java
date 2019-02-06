@@ -34,7 +34,6 @@ import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START")
@@ -172,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnEmojiPopupDismissListener(() -> emojiButton.setImageResource(R.drawable.emoji_ios_category_smileysandpeople))
                 .setOnStickerListener(new OnStickerListener() {
                     @Override
-                    public void onStickerPath(List<StructItemSticker> mStickerList) {
+                    public void onItemSticker(StructItemSticker mStickerList) {
                     }
                 })
                 .setOnUpdateSticker(new OnUpdateStickerListener() {

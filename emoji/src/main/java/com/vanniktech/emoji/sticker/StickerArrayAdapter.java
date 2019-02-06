@@ -14,7 +14,6 @@ import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,7 +49,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
 
                 StickerDatabase stickerDatabase = StickerEmojiView.getStickerDatabase(context);
                 stickerDatabase.insertOrUpdateRecentlySticker( mSticker.get(position).getId(),mSticker.get(position).getRefId() , mSticker.get(position).getName() ,mSticker.get(position).getToken(),mSticker.get(position).getUri(),mSticker.get(position).getSort(),mSticker.get(position).getGroupId(), System.currentTimeMillis());
-                if (onStickerListener != null) onStickerListener.onStickerPath(mSticker);
+                if (onStickerListener != null) onStickerListener.onItemSticker(mSticker.get(position));
             }
         });
 

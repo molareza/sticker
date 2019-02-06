@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StructGroupSticker implements Serializable {
@@ -48,7 +49,7 @@ public class StructGroupSticker implements Serializable {
     private Long createdBy;
     @SerializedName("stickers")
     @Expose
-    private List<StructItemSticker> stickers = null;
+    private List<StructItemSticker> stickers = new ArrayList<>();
     @SerializedName("isFavorite")
     @Expose
     private boolean isFavorite;

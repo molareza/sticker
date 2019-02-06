@@ -20,8 +20,6 @@ import com.vanniktech.emoji.EmojiPopup;
 import com.vanniktech.emoji.listeners.OnStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
-import java.util.List;
-
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START") public class MainDialog extends DialogFragment {
   static final String FRAGMENT_MANAGER_TAG = "dialog_main";
@@ -97,9 +95,9 @@ import java.util.List;
             .setOnSoftKeyboardOpenListener(ignore -> Log.d(TAG, "Opened soft keyboard"))
             .setOnStickerListener(new OnStickerListener() {
               @Override
-              public void onStickerPath(List<StructItemSticker> path) {
+              public void onItemSticker(StructItemSticker structItemSticker) {
 
-                Log.i("CCCCCCCCCC", "onStickerPath: " + path );
+                Log.i("CCCCCCCCCC", "onItemSticker: " + structItemSticker);
 
               }
             })

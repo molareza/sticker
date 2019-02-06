@@ -25,8 +25,6 @@ import com.vanniktech.emoji.one.EmojiOneProvider;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
 
-import java.util.List;
-
 // We don't care about duplicated code in the sample.
 @SuppressWarnings("CPD-START")
 public class MainActivityMultiAutoCompeteTextView extends AppCompatActivity {
@@ -146,9 +144,9 @@ public class MainActivityMultiAutoCompeteTextView extends AppCompatActivity {
                 .setOnEmojiPopupShownListener(() -> emojiButton.setImageResource(R.drawable.ic_keyboard))
                 .setOnStickerListener(new OnStickerListener() {
                     @Override
-                    public void onStickerPath(List<StructItemSticker> path) {
+                    public void onItemSticker(StructItemSticker structItemSticker) {
 
-                        Log.i("CCCCCCCCCC", "onStickerPath: " + path);
+                        Log.i("CCCCCCCCCC", "onItemSticker: " + structItemSticker);
 
                     }
                 })
