@@ -272,7 +272,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             }
         }
     }
-
     public interface OnNotifyList {
         void notifyList(List<StructGroupSticker> structGroupStickers, String avatarToken);
     }
@@ -281,13 +280,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     public void updateListStickers(ArrayList<StructGroupSticker> structAllStickers) {
 
         if (structAllStickers !=null){
-
             categoryStickerList = new ArrayList<>();
             categoryStickerList = structAllStickers;
             categoryStickerList.add(0, new StructGroupSticker());
             updateStickerList();
         }
-
     }
 
     private void updateStickerList() {
