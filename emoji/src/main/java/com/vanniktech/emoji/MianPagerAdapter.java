@@ -1,6 +1,7 @@
 package com.vanniktech.emoji;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,8 +84,17 @@ public final class MianPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    public void updateSticker(ArrayList<StructGroupSticker> structAllStickers){
-        if (stickerEmojiView !=null) stickerEmojiView.updateListStickers(structAllStickers);
+    public void updateSticker(final ArrayList<StructGroupSticker> structAllStickers){
 
+        if (stickerEmojiView ==null){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (stickerEmojiView !=null) stickerEmojiView.updateListStickers(structAllStickers);
+                }
+            },200);
+        }else {
+             stickerEmojiView.updateListStickers(structAllStickers);
+        }
     }
 }
