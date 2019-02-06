@@ -62,7 +62,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(TIME_USAGE, time);
 
-            long insert = db.update(STICKER_TABLE_RECENTLY, contentValues, ID_ST + "=" + id_st, null);
+            long insert = db.update(STICKER_TABLE_RECENTLY, contentValues, ID_ST + "= '" + id_st  +"'", null);
 
             return insert != -1;
         } else {
@@ -86,7 +86,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
 
     public boolean checkRecentlySticker(String idSticker) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "Select * from " + STICKER_TABLE_RECENTLY + " where " + ID_ST + " = " + idSticker;
+        String Query = "Select * from " + STICKER_TABLE_RECENTLY + " where " + ID_ST + " = '" + idSticker + "'";
         Cursor cursor = db.rawQuery(Query, null);
         if (cursor.getCount() <= 0) {
             cursor.close();
