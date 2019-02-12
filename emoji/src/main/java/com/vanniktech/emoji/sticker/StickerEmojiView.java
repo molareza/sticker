@@ -281,7 +281,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         if (structAllStickers !=null){
             categoryStickerList = new ArrayList<>();
-            categoryStickerList = structAllStickers;
+            categoryStickerList.addAll(structAllStickers);
             categoryStickerList.add(0, new StructGroupSticker());
             updateStickerList();
         }
