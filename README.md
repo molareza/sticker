@@ -11,7 +11,7 @@ The library has 4 different providers to choose from ([iOS](#ios-emojis), [Emoji
 For getting the above iOS Emojis simply add the dependency and code below.
 
 ```groovy
-compile 'com.vanniktech:emoji-ios:0.5.1'
+compile 'com.vanniktech:emoji-ios:0.6.0'
 ```
 
 And install the provider (preferably in your Application class):
@@ -28,7 +28,7 @@ EmojiManager.install(new IosEmojiProvider());
 For getting the above EmojiOne Emojis simply add the dependency and code below.
 
 ```groovy
-compile 'com.vanniktech:emoji-one:0.5.1'
+compile 'com.vanniktech:emoji-one:0.6.0'
 ```
 
 And install the provider (preferably in your Application class):
@@ -45,7 +45,7 @@ EmojiManager.install(new EmojiOneProvider());
 For getting the above Google Emojis simply add the dependency and code below.
 
 ```groovy
-compile 'com.vanniktech:emoji-google:0.5.1'
+compile 'com.vanniktech:emoji-google:0.6.0'
 ```
 
 And install the provider (preferably in your Application class):
@@ -62,7 +62,7 @@ EmojiManager.install(new GoogleEmojiProvider());
 For getting the above Twitter Emojis simply add the dependency and code below.
 
 ```groovy
-compile 'com.vanniktech:emoji-twitter:0.5.1'
+compile 'com.vanniktech:emoji-twitter:0.6.0'
 ```
 
 And install the provider (preferably in your Application class):
@@ -79,7 +79,7 @@ If you want to display your own Emojis you can create your own implementation of
 All of the core API lays in, which is being pulled in automatically by the provided implementations ([iOS](#ios-emojis), [EmojiOne](#emojione), [Google](#google) & [Twitter](#twitter)):
 
 ```groovy
-compile 'com.vanniktech:emoji:0.5.1'
+compile 'com.vanniktech:emoji:0.6.0'
 ```
 
 ### Custom EditText
@@ -174,7 +174,7 @@ You can pass your own animation style for enter and exit transitions of the Emoj
 setKeyboardAnimationStyle(R.style.emoji_fade_animation_style);
 ```
 
-If no style is set the keyboard will appear and exit as a regular PopupWindow. 
+If no style is set the keyboard will appear and exit as a regular PopupWindow.
 This library currently ships with two animation styles as an example:
 
 - R.style.emoji_slide_animation_style
