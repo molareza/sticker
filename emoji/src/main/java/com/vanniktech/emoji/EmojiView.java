@@ -3,6 +3,7 @@ package com.vanniktech.emoji;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -74,7 +75,9 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
 
         final TypedValue value = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            context.getTheme().resolveAttribute(android.R.attr.colorAccent, value, true);
+        }
         themeAccentColor = value.data;
 
         final ViewPager emojisPager = findViewById(R.id.emojis_pager);
@@ -98,7 +101,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
         tabImageList.add((tabImageList.size()), R.drawable.sticker_emoji);
 
         ImageView btnBack = findViewById(R.id.imgBack);
-        btnBack.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+        btnBack.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
 
         btnBack.setOnTouchListener(new RepeatListener(INITIAL_INTERVAL, NORMAL_INTERVAL, new OnClickListener() {
             @Override
@@ -182,7 +185,7 @@ final class EmojiView extends LinearLayout implements ViewPager.OnPageChangeList
 
             holder.myTextView.setImageResource(item);
 
-            holder.myTextView.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+            holder.myTextView.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
             if (indexItemSelect == position) {
                 lastIndexSelect = position;
                 holder.myTextView.setColorFilter(themeIconColor, PorterDuff.Mode.SRC_IN);

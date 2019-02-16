@@ -76,7 +76,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         }
 
         ImageView setting = findViewById(R.id.imgStickerSetting);
-        setting.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+        setting.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
         setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         });
 
         ImageView imgSmilePage = findViewById(R.id.imgEmojiPage);
-        imgSmilePage.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+        imgSmilePage.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
         imgSmilePage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,15 +208,15 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         public void onBindViewHolder(ViewHolder holder, int position) {
 
             if (position >= mData.size()) {
-                holder.imgSticker.setImageResource(R.drawable.sticker_emoji);
-                holder.imgSticker.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+                holder.imgSticker.setImageResource(R.drawable.emoji_add);
+                holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
                 return;
             }
 
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
-                holder.imgSticker.setColorFilter(R.color.cardview_shadow_start_color, PorterDuff.Mode.SRC_IN);
+                holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
             } else {
                 if (item.getUri() == null) return;
                 holder.imgSticker.clearColorFilter();
