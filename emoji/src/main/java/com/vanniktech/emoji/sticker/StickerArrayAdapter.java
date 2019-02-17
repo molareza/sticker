@@ -49,7 +49,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
                     .into(image);
 
         } else {
-            onUpdateStickerListener.onUpdateSticker(mSticker.get(position).getToken(), position);
+            onUpdateStickerListener.onUpdateSticker(mSticker.get(position).getToken(), mSticker.get(position).getName() ,mSticker.get(position).getAvatarSize(), position);
         }
 
 

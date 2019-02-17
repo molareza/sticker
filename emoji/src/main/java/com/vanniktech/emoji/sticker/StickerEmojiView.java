@@ -38,7 +38,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private ArrayList<String> tabImageList = new ArrayList<>();
     private OnPageChangeMainViewPager onChangeViewPager;
     private final StickerPagerAdapter stickerPagerAdapter;
-//    public static OnNotifyList onNotifyList;
+    //    public static OnNotifyList onNotifyList;
     private int stickerTabLastSelectedIndex = -1;
     private static StickerDatabase stickerDatabase;
     private Context context;
@@ -80,7 +80,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onOpenPageStickerListener !=null)onOpenPageStickerListener.openSetting(categoryStickerList);
+                if (onOpenPageStickerListener != null)
+                    onOpenPageStickerListener.openSetting(categoryStickerList);
             }
         });
 
@@ -107,7 +108,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
          */
         ArrayList<StructItemSticker> recentStickerList = getStickerDatabase(context).getRecentlySticker();
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList , onUpdateStickerListener);
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList, onUpdateStickerListener);
 
         final int startIndex = recentStickerList.size() > 0 ? 0 : 1;
         myRecyclerViewAdapter = new MyRecyclerViewAdapter(context, categoryStickerList, emojisPager, startIndex);
@@ -205,12 +206,13 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 if (item.getUri() == null) return;
                 holder.imgSticker.clearColorFilter();
 
-                if (new File(item.getUri()).exists()){
+                if (new File(item.getUri()).exists()) {
                     Glide.with(context)
                             .load(new File(item.getUri())) // Uri of the picture
                             .into(holder.imgSticker);
-                }else {
-                  if (mOnUpdateStickerListener !=null) mOnUpdateStickerListener.onUpdateTabSticker(item.getAvatarToken() , position);
+                } else {
+                    if (mOnUpdateStickerListener != null)
+                        mOnUpdateStickerListener.onUpdateTabSticker(item.getAvatarToken(), item.getName(), item.getAvatarSize(), position);
                 }
 
             }
@@ -265,7 +267,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
     public void updateListStickers(ArrayList<StructGroupSticker> structAllStickers) {
 
-        if (structAllStickers !=null){
+        if (structAllStickers != null) {
             categoryStickerList = new ArrayList<>();
             categoryStickerList.addAll(structAllStickers);
             categoryStickerList.add(0, new StructGroupSticker());

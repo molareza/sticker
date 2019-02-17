@@ -175,8 +175,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .setOnUpdateSticker(new OnUpdateStickerListener() {
+
+
                     @Override
-                    public void onUpdateSticker(String token, int positionAdapter) {
+                    public void onUpdateSticker(String token, String extention, long avatarSize, int positionAdapter) {
 
                     }
 
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onUpdateTabSticker(String token, int positionAdapter) {
+                    public void onUpdateTabSticker(String token, String extention, long avatarSize, int positionAdapter) {
 
                     }
 
