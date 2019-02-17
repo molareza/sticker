@@ -402,6 +402,17 @@ public final class EmojiPopup {
 
     public void updateStickerAdapter(ArrayList<StructGroupSticker> structAllStickers) {
         mainEmojiView.updateSticker(structAllStickers);
+    }
 
+    public void onUpdateSticker(int updatePosition) {
+        mainEmojiView.onUpdateSticker(updatePosition);
+    }
+
+    public void onUpdateRecentSticker(ArrayList<StructGroupSticker> structAllStickers) {
+        mainEmojiView.onUpdateRecentSticker(structAllStickers);
+    }
+
+    public void onUpdateTabSticker(int updatePosition) {
+        mainEmojiView.onUpdateTabSticker(updatePosition);
     }
 }

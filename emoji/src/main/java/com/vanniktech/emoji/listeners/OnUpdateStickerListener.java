@@ -5,6 +5,9 @@ import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 import java.util.ArrayList;
 
 public interface OnUpdateStickerListener {
-  void onUpdateStickerPath(ArrayList<StructGroupSticker> categoryStickerList);
-  void onRemoveSticker(String token);
+    void onUpdateSticker(String token , int positionAdapter);
+
+    void onUpdateRecentSticker();
+
+    void onUpdateTabSticker(String token , int positionAdapter);
 }

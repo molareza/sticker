@@ -176,13 +176,20 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setOnUpdateSticker(new OnUpdateStickerListener() {
                     @Override
-                    public void onUpdateStickerPath(ArrayList<StructGroupSticker> categoryStickerList) {
+                    public void onUpdateSticker(String token, int positionAdapter) {
 
                     }
 
                     @Override
-                    public void onRemoveSticker(String token) {
+                    public void onUpdateRecentSticker() {
+
                     }
+
+                    @Override
+                    public void onUpdateTabSticker(String token, int positionAdapter) {
+
+                    }
+
                 })
                 .setOpenPageSticker(new OnOpenPageStickerListener() {
                     @Override

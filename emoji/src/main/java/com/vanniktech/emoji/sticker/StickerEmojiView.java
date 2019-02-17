@@ -38,7 +38,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private ArrayList<String> tabImageList = new ArrayList<>();
     private OnPageChangeMainViewPager onChangeViewPager;
     private final StickerPagerAdapter stickerPagerAdapter;
-    public static OnNotifyList onNotifyList;
+//    public static OnNotifyList onNotifyList;
     private int stickerTabLastSelectedIndex = -1;
     private static StickerDatabase stickerDatabase;
     private Context context;
@@ -80,14 +80,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent myIntent = new Intent(context, EmojiSettingPage.class);
-//                myIntent.putExtra("ALL", categoryStickerList);
-//                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                getContext().startActivity(myIntent);
-
                 if (onOpenPageStickerListener !=null)onOpenPageStickerListener.openSetting(categoryStickerList);
-
             }
         });
 
@@ -114,17 +107,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
          */
         ArrayList<StructItemSticker> recentStickerList = getStickerDatabase(context).getRecentlySticker();
 
-        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList);
+        stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList , onUpdateStickerListener);
 
-        onNotifyList = new OnNotifyList() {
-            @Override
-            public void notifyList(List<StructGroupSticker> structGroupStickers, String removeToken) {
-                updateListStickers((ArrayList<StructGroupSticker>) structGroupStickers);
-
-                if (mOnUpdateStickerListener != null)
-                    mOnUpdateStickerListener.onRemoveSticker(removeToken);
-            }
-        };
         final int startIndex = recentStickerList.size() > 0 ? 0 : 1;
         myRecyclerViewAdapter = new MyRecyclerViewAdapter(context, categoryStickerList, emojisPager, startIndex);
 
@@ -220,9 +204,15 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             } else {
                 if (item.getUri() == null) return;
                 holder.imgSticker.clearColorFilter();
-                Glide.with(context)
-                        .load(new File(item.getUri())) // Uri of the picture
-                        .into(holder.imgSticker);
+
+                if (new File(item.getUri()).exists()){
+                    Glide.with(context)
+                            .load(new File(item.getUri())) // Uri of the picture
+                            .into(holder.imgSticker);
+                }else {
+                  if (mOnUpdateStickerListener !=null) mOnUpdateStickerListener.onUpdateTabSticker(item.getAvatarToken() , position);
+                }
+
             }
 
             if (indexItemSelect == position) {
@@ -272,10 +262,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             }
         }
     }
-    public interface OnNotifyList {
-        void notifyList(List<StructGroupSticker> structGroupStickers, String avatarToken);
-    }
-
 
     public void updateListStickers(ArrayList<StructGroupSticker> structAllStickers) {
 
@@ -292,6 +278,17 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         stickerPagerAdapter.updateStickerAdapter(categoryStickerList);
         myRecyclerViewAdapter.updateStickerAdapter(categoryStickerList);
         onPageSelected(0);
+    }
+
+    public void onUpdateSticker(int updatePosition) {
+        stickerPagerAdapter.onUpdateSticker(updatePosition);
+    }
+
+    public void onUpdateRecentSticker(ArrayList<StructGroupSticker> structAllStickers) {
+    }
+
+    public void onUpdateTabSticker(int updatePosition) {
+        myRecyclerViewAdapter.notifyItemChanged(updatePosition);
     }
 
 

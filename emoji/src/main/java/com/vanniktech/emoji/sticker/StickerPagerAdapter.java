@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.listeners.OnStickerListener;
+import com.vanniktech.emoji.listeners.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
@@ -25,8 +26,9 @@ public final class StickerPagerAdapter extends PagerAdapter {
     private OnStickerListener onStickerListener;
     private RecentStickerGridView recentStickerGridView;
     private StickerGridView stickerGridView;
+    private OnUpdateStickerListener onUpdateStickerListener;
 
-    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructGroupSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, ArrayList<StructItemSticker> recentSticker) {
+    StickerPagerAdapter(Activity context, int backgroundColor, int iconColor, int dividerColor, ArrayList<StructGroupSticker> stickerList, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, ArrayList<StructItemSticker> recentSticker, OnUpdateStickerListener onUpdateStickerListener) {
         this.context = context;
         this.backgroundColor = backgroundColor;
         this.iconColor = iconColor;
@@ -36,6 +38,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
         this.onStickerListener = onStickerListener;
         this.recentStickerList = recentSticker;
         this.recentStickerGridView = null;
+        this.onUpdateStickerListener = onUpdateStickerListener;
     }
 
     @Override
@@ -51,7 +54,7 @@ public final class StickerPagerAdapter extends PagerAdapter {
             newView = new RecentStickerGridView(pager.getContext()).init(onStickerListener, recentStickerList);
             recentStickerGridView = (RecentStickerGridView) newView;
         } else {
-            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position), onStickerListener);
+            newView = new StickerGridView(pager.getContext()).init(stickerList.get(position), onStickerListener , onUpdateStickerListener);
             stickerGridView = (StickerGridView) newView;
         }
 
@@ -88,6 +91,10 @@ public final class StickerPagerAdapter extends PagerAdapter {
         this.stickerList = categoryStickerList;
         notifyDataSetChanged();
 
+    }
+
+    public void onUpdateSticker(int updatePosition) {
+        stickerGridView.onUpdateSticker(updatePosition);
     }
 
 
