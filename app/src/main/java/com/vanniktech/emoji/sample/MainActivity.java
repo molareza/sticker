@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void openSetting(ArrayList<StructGroupSticker> stickerList) {
+                    public void openSetting(ArrayList<StructGroupSticker> stickerList, ArrayList<StructItemSticker> recentStickerList) {
 
                     }
                 })

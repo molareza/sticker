@@ -47,6 +47,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private ArrayList<StructGroupSticker> categoryStickerList;
     private ViewPager emojisPager;
     public static OnUpdateStickerListener mOnUpdateStickerListener;
+    private ArrayList<StructItemSticker> recentStickerList = new ArrayList<>();
 
     protected static StickerDatabase getStickerDatabase(Context context) {
         if (stickerDatabase == null) stickerDatabase = new StickerDatabase(context);
@@ -82,7 +83,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             @Override
             public void onClick(View v) {
                 if (onOpenPageStickerListener != null)
-                    onOpenPageStickerListener.openSetting(categoryStickerList);
+                    onOpenPageStickerListener.openSetting(categoryStickerList, getStickerDatabase(context).getRecentlySticker());
             }
         });
 
@@ -107,7 +108,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         /**
          * addSticker sticker
          */
-        ArrayList<StructItemSticker> recentStickerList = getStickerDatabase(context).getRecentlySticker();
+        recentStickerList = getStickerDatabase(context).getRecentlySticker();
 
         stickerPagerAdapter = new StickerPagerAdapter(context, backgroundColor, iconColor, dividerColor, categoryStickerList, onChangeViewPager, onStickerListener, recentStickerList, onUpdateStickerListener);
 
@@ -132,7 +133,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         if (stickerTabLastSelectedIndex != i) {
 
             if (i == 0) {
-                stickerPagerAdapter.invalidateRecentStickers(getStickerDatabase(context).getRecentlySticker());
+                resetRecentlySticker();
             }
 
             myRecyclerViewAdapter.indexItemSelect = i;
@@ -148,6 +149,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             stickerTabLastSelectedIndex = i;
 
         }
+
+    }
+
+    private void resetRecentlySticker() {
+        stickerPagerAdapter.invalidateRecentStickers(getStickerDatabase(context).getRecentlySticker());
 
     }
 
@@ -289,6 +295,12 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     }
 
     public void onUpdateRecentSticker(ArrayList<StructGroupSticker> structAllStickers) {
+
+        for (StructGroupSticker item : structAllStickers) {
+            getStickerDatabase(context).removeRecentSticker(item.getId());
+
+        }
+        resetRecentlySticker();
     }
 
     public void onUpdateTabSticker(int updatePosition) {

@@ -96,6 +96,17 @@ public class StickerDatabase extends SQLiteOpenHelper {
         return true;
     }
 
+
+    public void removeRecentSticker(String idSticker){
+
+        if (checkRecentlySticker(idSticker)) {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(STICKER_TABLE_RECENTLY, "ID =?", new String[]{ID});
+        }
+    }
+
+
     public ArrayList<StructItemSticker> getRecentlySticker() {
 
         ArrayList<StructItemSticker> list = new ArrayList<>();
