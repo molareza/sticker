@@ -95,7 +95,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
         emojiPagerAdapter.onUpdateSticker(updatePosition);
     }
 
-    public void onUpdateRecentSticker(ArrayList<StructGroupSticker> structAllStickers) {
+    public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
         emojiPagerAdapter.onUpdateRecentSticker(structAllStickers);
     }
 

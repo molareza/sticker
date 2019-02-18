@@ -408,7 +408,7 @@ public final class EmojiPopup {
         mainEmojiView.onUpdateSticker(updatePosition);
     }
 
-    public void onUpdateRecentSticker(ArrayList<StructGroupSticker> structAllStickers) {
+    public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
         mainEmojiView.onUpdateRecentSticker(structAllStickers);
     }
 
