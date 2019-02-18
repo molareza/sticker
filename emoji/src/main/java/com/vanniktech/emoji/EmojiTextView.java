@@ -12,14 +12,16 @@ import android.util.AttributeSet;
 
 @SuppressWarnings("CPD-START") public class EmojiTextView extends AppCompatTextView {
   private float emojiSize;
+  private boolean hasEmoji;
 
   public EmojiTextView(final Context context) {
     this(context, null);
+    setHasEmoji(true);
   }
 
   public EmojiTextView(final Context context, final AttributeSet attrs) {
     super(context, attrs);
-
+    setHasEmoji(true);
     if (!isInEditMode()) {
       EmojiManager.getInstance().verifyInstalled();
     }
@@ -43,12 +45,16 @@ import android.util.AttributeSet;
   }
 
   @Override @CallSuper public void setText(final CharSequence rawText, final BufferType type) {
-    final CharSequence text = rawText == null ? "" : rawText;
-    final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
-    final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
-    final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
-    EmojiManager.getInstance().replaceWithImages(getContext(), spannableStringBuilder, emojiSize, defaultEmojiSize);
-    super.setText(spannableStringBuilder, type);
+    if (hasEmoji) {
+      final CharSequence text = rawText == null ? "" : rawText;
+      final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+      final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
+      final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
+      EmojiManager.getInstance().replaceWithImages(getContext(), spannableStringBuilder, emojiSize, defaultEmojiSize);
+      super.setText(spannableStringBuilder, type);
+    } else {
+      super.setText(rawText, type);
+    }
   }
 
   /** sets the emoji size in pixels and automatically invalidates the text and renders it with the new size */
@@ -73,5 +79,13 @@ import android.util.AttributeSet;
   /** sets the emoji size in pixels with the provided resource and invalidates the text and renders it with the new size when {@code shouldInvalidate} is true */
   public final void setEmojiSizeRes(@DimenRes final int res, final boolean shouldInvalidate) {
     setEmojiSize(getResources().getDimensionPixelSize(res), shouldInvalidate);
+  }
+
+  public boolean getHasEmoji() {
+    return hasEmoji;
+  }
+
+  public void setHasEmoji(boolean value) {
+    hasEmoji = value;
   }
 }
