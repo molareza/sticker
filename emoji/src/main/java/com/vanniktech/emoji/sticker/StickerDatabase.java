@@ -102,6 +102,7 @@ public class StickerDatabase extends SQLiteOpenHelper {
         if (checkRecentlySticker(idSticker)) {
             SQLiteDatabase db = this.getWritableDatabase();
             return db.delete(STICKER_TABLE_RECENTLY, ID_ST + "=" + idSticker, null) > 0;
+
         }
         return false;
     }
