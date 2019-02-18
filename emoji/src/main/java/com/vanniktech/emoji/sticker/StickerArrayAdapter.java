@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.EmojiImageView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
@@ -46,6 +47,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
         if (new File(s).exists()) {
             Glide.with(context)
                     .load(new File(s)) // Uri of the picture
+                    .apply(new RequestOptions().override(160, 160))
                     .into(image);
 
         } else {

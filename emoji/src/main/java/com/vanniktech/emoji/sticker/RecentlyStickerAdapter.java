@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.EmojiImageView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnStickerListener;
@@ -41,6 +42,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructItemSticker> {
         final String s = mSticker.get(position).getUri();
         Glide.with(context)
                 .load(new File(s)) // Uri of the picture
+                .apply(new RequestOptions().override(160, 160))
                 .into(image);
 
         image.setOnClickListener(new View.OnClickListener() {

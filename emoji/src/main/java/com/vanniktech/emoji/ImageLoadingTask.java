@@ -5,12 +5,16 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.emoji.Emoji;
 import java.lang.ref.WeakReference;
 
 final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
   private final WeakReference<ImageView> imageViewReference;
   private final WeakReference<Context> contextReference;
+  private Context context;
 
   ImageLoadingTask(final ImageView imageView) {
     imageViewReference = new WeakReference<>(imageView);
@@ -18,7 +22,7 @@ final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
   }
 
   @Override protected Drawable doInBackground(final Emoji... emoji) {
-    final Context context = contextReference.get();
+     context = contextReference.get();
 
     if (context != null && !isCancelled()) {
       return emoji[0].getDrawable(context);
@@ -32,7 +36,10 @@ final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
       final ImageView imageView = imageViewReference.get();
 
       if (imageView != null) {
-        imageView.setImageDrawable(drawable);
+        Glide.with(context)
+                .load(drawable)
+                .apply(new RequestOptions().override(60, 60))
+                .into(imageView);
       }
     }
   }

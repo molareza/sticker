@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.listeners.OnOpenPageStickerListener;
@@ -209,6 +210,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 if (new File(item.getUri()).exists()) {
                     Glide.with(context)
                             .load(new File(item.getUri())) // Uri of the picture
+                            .apply(new RequestOptions().override(48, 48))
                             .into(holder.imgSticker);
                 } else {
                     if (mOnUpdateStickerListener != null)
