@@ -2,7 +2,8 @@ package com.vanniktech.emoji.googlecompat;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
 
 public final class GoogleCompatEmoji extends Emoji {
@@ -14,7 +15,8 @@ public final class GoogleCompatEmoji extends Emoji {
     super(codePoint, -1, false, emojis);
   }
 
-  @Override @NonNull public Drawable getDrawable(@NonNull final Context context) {
+  @Override @NonNull
+  public Drawable getDrawable(@NonNull final Context context) {
     return new GoogleCompatEmojiDrawable(getUnicode());
   }
 }

@@ -3,9 +3,7 @@ package com.vanniktech.emoji;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-
-import androidx.annotation.Nullable;
-
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

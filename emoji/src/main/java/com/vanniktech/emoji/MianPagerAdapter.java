@@ -2,13 +2,14 @@ package com.vanniktech.emoji;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
-
 import com.vanniktech.emoji.sticker.OnOpenPageStickerListener;
 import com.vanniktech.emoji.sticker.OnPageChangeMainViewPager;
 import com.vanniktech.emoji.sticker.OnStickerListener;
@@ -18,8 +19,7 @@ import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.util.ArrayList;
 
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+
 
 public final class MianPagerAdapter extends PagerAdapter {
     private static final int RECENT_POSITION = 0;

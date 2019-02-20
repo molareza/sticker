@@ -1,10 +1,12 @@
 package com.vanniktech.emoji.google.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
-import com.vanniktech.emoji.google.R;
 import com.vanniktech.emoji.google.GoogleEmoji;
+import com.vanniktech.emoji.google.R;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class FlagsCategory implements EmojiCategory {
   private static final GoogleEmoji[] DATA = new GoogleEmoji[] {
@@ -259,11 +261,13 @@ import com.vanniktech.emoji.google.GoogleEmoji;
     new GoogleEmoji(new int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F }, 12, 18, false)
   };
 
-  @Override @NonNull public GoogleEmoji[] getEmojis() {
+  @Override @NonNull
+  public GoogleEmoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_google_category_flags;
   }
 }

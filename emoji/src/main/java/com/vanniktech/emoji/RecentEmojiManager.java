@@ -2,8 +2,10 @@ package com.vanniktech.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +22,8 @@ public final class RecentEmojiManager implements RecentEmoji {
   static final int EMOJI_GUESS_SIZE = 5;
   static final int MAX_RECENTS = 40;
 
-  @NonNull private final Context context;
+  @NonNull
+  private final Context context;
   @NonNull private EmojiList emojiList = new EmojiList(0);
 
   public RecentEmojiManager(@NonNull final Context context) {

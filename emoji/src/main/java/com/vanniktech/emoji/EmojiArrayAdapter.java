@@ -1,8 +1,8 @@
 package com.vanniktech.emoji;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +14,12 @@ import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
 
 import java.util.Collection;
 
-import static com.vanniktech.emoji.Utils.checkNotNull;
 import static com.vanniktech.emoji.Utils.asListWithoutDuplicates;
+import static com.vanniktech.emoji.Utils.checkNotNull;
 
 final class EmojiArrayAdapter extends ArrayAdapter<Emoji> {
-  @Nullable private final VariantEmoji variantManager;
+  @Nullable
+  private final VariantEmoji variantManager;
 
   @Nullable private final OnEmojiClickListener listener;
   @Nullable private final OnEmojiLongClickListener longListener;

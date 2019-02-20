@@ -2,9 +2,10 @@ package com.vanniktech.emoji;
 
 import android.content.Context;
 import android.content.res.Resources;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.GridView;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
@@ -29,8 +30,8 @@ class EmojiGridView extends GridView {
   }
 
   public EmojiGridView init(@Nullable final OnEmojiClickListener onEmojiClickListener,
-      @Nullable final OnEmojiLongClickListener onEmojiLongClickListener,
-      @NonNull final EmojiCategory category, @NonNull final VariantEmoji variantManager) {
+                            @Nullable final OnEmojiLongClickListener onEmojiLongClickListener,
+                            @NonNull final EmojiCategory category, @NonNull final VariantEmoji variantManager) {
     emojiArrayAdapter = new EmojiArrayAdapter(getContext(), category.getEmojis(), variantManager,
             onEmojiClickListener, onEmojiLongClickListener);
 

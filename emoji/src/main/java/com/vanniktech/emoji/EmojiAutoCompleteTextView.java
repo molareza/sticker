@@ -3,10 +3,10 @@ package com.vanniktech.emoji;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import androidx.annotation.CallSuper;
-import androidx.annotation.DimenRes;
-import androidx.annotation.Px;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import android.support.annotation.CallSuper;
+import android.support.annotation.DimenRes;
+import android.support.annotation.Px;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.AttributeSet;
 
 import com.vanniktech.emoji.emoji.Emoji;
@@ -44,7 +44,8 @@ import com.vanniktech.emoji.emoji.Emoji;
     setText(getText());
   }
 
-  @Override @CallSuper protected void onTextChanged(final CharSequence text, final int start, final int lengthBefore, final int lengthAfter) {
+  @Override @CallSuper
+  protected void onTextChanged(final CharSequence text, final int start, final int lengthBefore, final int lengthAfter) {
     final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
     final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
     EmojiManager.getInstance().replaceWithImages(getContext(), getText(), emojiSize, defaultEmojiSize);

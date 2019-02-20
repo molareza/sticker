@@ -1,10 +1,12 @@
 package com.vanniktech.emoji.ios.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
-import com.vanniktech.emoji.ios.R;
 import com.vanniktech.emoji.ios.IosEmoji;
+import com.vanniktech.emoji.ios.R;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class FoodAndDrinkCategory implements EmojiCategory {
   private static final IosEmoji[] DATA = new IosEmoji[] {
@@ -112,11 +114,13 @@ import com.vanniktech.emoji.ios.IosEmoji;
     new IosEmoji(0x1F3FA, 12, 24, false)
   };
 
-  @Override @NonNull public IosEmoji[] getEmojis() {
+  @Override @NonNull
+  public IosEmoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_ios_category_foodanddrink;
   }
 }

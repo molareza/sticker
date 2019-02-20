@@ -1,10 +1,12 @@
 package com.vanniktech.emoji.google.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
-import com.vanniktech.emoji.google.R;
 import com.vanniktech.emoji.google.GoogleEmoji;
+import com.vanniktech.emoji.google.R;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class AnimalsAndNatureCategory implements EmojiCategory {
   private static final GoogleEmoji[] DATA = new GoogleEmoji[] {
@@ -123,11 +125,13 @@ import com.vanniktech.emoji.google.GoogleEmoji;
     new GoogleEmoji(0x1F343, 7, 5, false)
   };
 
-  @Override @NonNull public GoogleEmoji[] getEmojis() {
+  @Override @NonNull
+  public GoogleEmoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_google_category_animalsandnature;
   }
 }

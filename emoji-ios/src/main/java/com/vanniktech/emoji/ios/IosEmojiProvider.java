@@ -1,6 +1,8 @@
 package com.vanniktech.emoji.ios;
 
-import androidx.annotation.NonNull;
+
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.EmojiProvider;
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.ios.category.ActivitiesCategory;
@@ -13,7 +15,8 @@ import com.vanniktech.emoji.ios.category.SymbolsCategory;
 import com.vanniktech.emoji.ios.category.TravelAndPlacesCategory;
 
 public final class IosEmojiProvider implements EmojiProvider {
-  @Override @NonNull public EmojiCategory[] getCategories() {
+  @Override @NonNull
+  public EmojiCategory[] getCategories() {
     return new EmojiCategory[] {
       new SmileysAndPeopleCategory(),
       new AnimalsAndNatureCategory(),

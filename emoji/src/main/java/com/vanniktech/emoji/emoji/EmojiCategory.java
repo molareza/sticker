@@ -1,7 +1,8 @@
 package com.vanniktech.emoji.emoji;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 
 /**
  * Interface for defining a category.
@@ -14,12 +15,14 @@ public interface EmojiCategory {
    *
    * @since 0.4.0
    */
-  @NonNull Emoji[] getEmojis();
+  @NonNull
+  Emoji[] getEmojis();
 
   /**
    * Returns the icon of the category that should be displayed.
    *
    * @since 0.4.0
    */
-  @DrawableRes int getIcon();
+  @DrawableRes
+  int getIcon();
 }

@@ -1,11 +1,13 @@
 package com.vanniktech.emoji;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 public final class EmojiInformation {
   public final boolean isOnlyEmojis;
-  @NonNull public final List<EmojiRange> emojis;
+  @NonNull
+  public final List<EmojiRange> emojis;
 
   EmojiInformation(final boolean isOnlyEmojis, @NonNull final List<EmojiRange> emojis) {
     this.isOnlyEmojis = isOnlyEmojis;

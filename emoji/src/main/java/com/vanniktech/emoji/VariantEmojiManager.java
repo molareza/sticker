@@ -2,8 +2,10 @@ package com.vanniktech.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -14,7 +16,8 @@ import java.util.StringTokenizer;
   private static final String VARIANT_EMOJIS = "variant-emojis";
   static final int EMOJI_GUESS_SIZE = 5;
 
-  @NonNull private final Context context;
+  @NonNull
+  private final Context context;
   @NonNull private List<Emoji> variantsList = new ArrayList<>(0);
 
   public VariantEmojiManager(@NonNull final Context context) {
