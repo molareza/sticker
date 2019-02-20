@@ -26,7 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 
-
 @SuppressLint("ViewConstructor")
 public final class StickerEmojiView extends LinearLayout implements ViewPager.OnPageChangeListener {
 
@@ -44,6 +43,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private ViewPager emojisPager;
     public static OnUpdateStickerListener mOnUpdateStickerListener;
     private ArrayList<StructItemSticker> recentStickerList = new ArrayList<>();
+    private int dividerColor;
+    private int iconColor;
 
     protected static StickerDatabase getStickerDatabase(Context context) {
         if (stickerDatabase == null) stickerDatabase = new StickerDatabase(context);
@@ -59,7 +60,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         this.context = context;
         this.myOnOpenPageStickerListener = onOpenPageStickerListener;
         this.mOnUpdateStickerListener = onUpdateStickerListener;
-
+        this.dividerColor = dividerColor;
+        this.iconColor = iconColor;
         if (backgroundColor != 0) {
             setBackgroundColor(backgroundColor);
         } else {
@@ -197,14 +199,22 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             if (position >= mData.size()) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_add);
-                holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+                if (iconColor != 0) {
+                    holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+                } else {
+                    holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+                }
                 return;
             }
 
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
-                holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+                if (iconColor != 0) {
+                    holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+                } else {
+                    holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+                }
             } else {
                 if (item.getUri() == null) return;
                 holder.imgSticker.clearColorFilter();
@@ -221,7 +231,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             }
 
-            if (indexItemSelect == position) {
+            if (indexItemSelect == position && (position < mData.size())) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
                 lastIndexSelect = position;
             } else {
