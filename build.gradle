@@ -79,7 +79,7 @@ ext {
 
   androidXVersion = '1.0.0'
   leakCanaryVersion = '1.6.3'
-
+  supportLibraryVersion = '27.1.1'
   versionCode = VERSION_CODE
   versionName = VERSION_NAME
 
@@ -91,6 +91,8 @@ ext {
   supportAnnotations = "androidx.annotation:annotation:$androidXVersion"
   supportEmoji = "androidx.emoji:emoji-appcompat:$androidXVersion"
   supportEmojiBundled = "androidx.emoji:emoji-bundled:$androidXVersion"
+  supportRecyclerView = "com.android.support:recyclerview-v7:$androidXVersion"
+
 
   leakCanaryDebug = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
   leakCanaryRelease = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
