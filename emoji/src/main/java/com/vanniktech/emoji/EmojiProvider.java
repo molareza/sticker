@@ -1,6 +1,7 @@
 package com.vanniktech.emoji;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
 
 /**
@@ -13,5 +14,6 @@ public interface EmojiProvider {
    * @return The Array of categories.
    * @since 0.4.0
    */
-  @NonNull EmojiCategory[] getCategories();
+  @NonNull
+  EmojiCategory[] getCategories();
 }

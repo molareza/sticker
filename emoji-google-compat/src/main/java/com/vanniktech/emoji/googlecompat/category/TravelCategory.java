@@ -1,10 +1,12 @@
 package com.vanniktech.emoji.googlecompat.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import com.vanniktech.emoji.googlecompat.GoogleCompatEmoji;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
 import com.vanniktech.emoji.emoji.EmojiCategory;
+import com.vanniktech.emoji.googlecompat.GoogleCompatEmoji;
 import com.vanniktech.emoji.googlecompat.R;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class TravelCategory implements EmojiCategory {
@@ -130,11 +132,13 @@ import com.vanniktech.emoji.googlecompat.R;
     new GoogleCompatEmoji(0x1f301),
   };
 
-  @Override @NonNull public Emoji[] getEmojis() {
+  @Override @NonNull
+  public Emoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_compat_category_travel;
   }
 }

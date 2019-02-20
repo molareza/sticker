@@ -1,6 +1,7 @@
 package com.vanniktech.emoji.listeners;
 
-import androidx.annotation.Px;
+
+import android.support.annotation.Px;
 
 public interface OnSoftKeyboardOpenListener {
   void onKeyboardOpen(@Px int keyBoardHeight);

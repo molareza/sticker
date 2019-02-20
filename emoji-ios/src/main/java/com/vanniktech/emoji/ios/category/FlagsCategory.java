@@ -1,10 +1,12 @@
 package com.vanniktech.emoji.ios.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
-import com.vanniktech.emoji.ios.R;
 import com.vanniktech.emoji.ios.IosEmoji;
+import com.vanniktech.emoji.ios.R;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class FlagsCategory implements EmojiCategory {
   private static final IosEmoji[] DATA = new IosEmoji[] {
@@ -276,11 +278,13 @@ import com.vanniktech.emoji.ios.IosEmoji;
     new IosEmoji(new int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F }, 12, 18, false)
   };
 
-  @Override @NonNull public IosEmoji[] getEmojis() {
+  @Override @NonNull
+  public IosEmoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_ios_category_flags;
   }
 }

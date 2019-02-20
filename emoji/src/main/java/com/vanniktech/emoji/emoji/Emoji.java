@@ -2,10 +2,11 @@ package com.vanniktech.emoji.emoji;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.content.res.AppCompatResources;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,14 @@ public class Emoji implements Serializable {
   private static final long serialVersionUID = 3L;
   private static final List<Emoji> EMPTY_EMOJI_LIST = emptyList();
 
-  @NonNull private final String unicode;
-  @DrawableRes private final int resource;
+  @NonNull
+  private final String unicode;
+  @DrawableRes
+  private final int resource;
   private final boolean isDuplicate;
   @NonNull private final List<Emoji> variants;
-  @Nullable private Emoji base;
+  @Nullable
+  private Emoji base;
 
   public Emoji(@NonNull final int[] codePoints, @DrawableRes final int resource,
                final boolean isDuplicate) {

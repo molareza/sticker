@@ -9,12 +9,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.CheckResult;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
-import androidx.viewpager.widget.ViewPager;
+import android.support.annotation.CheckResult;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+
 import com.vanniktech.emoji.emoji.Emoji;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
@@ -51,7 +52,8 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
   final View rootView;
   final Activity context;
 
-  @NonNull final RecentEmoji recentEmoji;
+  @NonNull
+  final RecentEmoji recentEmoji;
   @NonNull final VariantEmoji variantEmoji;
   @NonNull final EmojiVariantPopup variantPopup;
 
@@ -61,7 +63,8 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
   boolean isPendingOpen;
   boolean isKeyboardOpen;
 
-  @Nullable OnEmojiPopupShownListener onEmojiPopupShownListener;
+  @Nullable
+  OnEmojiPopupShownListener onEmojiPopupShownListener;
   @Nullable OnSoftKeyboardCloseListener onSoftKeyboardCloseListener;
   @Nullable OnSoftKeyboardOpenListener onSoftKeyboardOpenListener;
 
@@ -84,9 +87,9 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
   };
 
   EmojiPopup(@NonNull final View rootView, @NonNull final EditText editText,
-      @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant,
-      @ColorInt final int backgroundColor, @ColorInt final int iconColor, @ColorInt final int dividerColor,
-      @StyleRes final int animationStyle, @Nullable final ViewPager.PageTransformer pageTransformer ,  @Nullable OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, OnOpenPageStickerListener onOpenPageStickerListener) {
+             @Nullable final RecentEmoji recent, @Nullable final VariantEmoji variant,
+             @ColorInt final int backgroundColor, @ColorInt final int iconColor, @ColorInt final int dividerColor,
+             @StyleRes final int animationStyle, @Nullable final ViewPager.PageTransformer pageTransformer , @Nullable OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, OnOpenPageStickerListener onOpenPageStickerListener) {
     this.context = Utils.asActivity(rootView.getContext());
     this.rootView = rootView.getRootView();
     this.editText = editText;
@@ -298,7 +301,8 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
      * of the keyboard.
      * @return builder For building the {@link EmojiPopup}.
      */
-    @CheckResult public static Builder fromRootView(final View rootView) {
+    @CheckResult
+    public static Builder fromRootView(final View rootView) {
       return new Builder(rootView);
     }
 

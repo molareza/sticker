@@ -1,7 +1,9 @@
 package com.vanniktech.emoji;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
+
 import java.util.Collection;
 
 /**
@@ -19,7 +21,8 @@ public interface RecentEmoji {
    *
    * @since 0.2.0
    */
-  @NonNull Collection<Emoji> getRecentEmojis();
+  @NonNull
+  Collection<Emoji> getRecentEmojis();
 
   /**
    * Should add the emoji to the recent ones. After calling this method, {@link #getRecentEmojis()}

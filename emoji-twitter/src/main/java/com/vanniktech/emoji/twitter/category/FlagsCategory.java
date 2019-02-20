@@ -1,7 +1,9 @@
 package com.vanniktech.emoji.twitter.category;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.twitter.R;
 import com.vanniktech.emoji.twitter.TwitterEmoji;
@@ -277,11 +279,13 @@ import com.vanniktech.emoji.twitter.TwitterEmoji;
     new TwitterEmoji(new int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F }, 12, 18, false)
   };
 
-  @Override @NonNull public TwitterEmoji[] getEmojis() {
+  @Override @NonNull
+  public TwitterEmoji[] getEmojis() {
     return DATA;
   }
 
-  @Override @DrawableRes public int getIcon() {
+  @Override @DrawableRes
+  public int getIcon() {
     return R.drawable.emoji_twitter_category_flags;
   }
 }

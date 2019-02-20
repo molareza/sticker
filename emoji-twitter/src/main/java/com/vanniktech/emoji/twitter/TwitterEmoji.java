@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 import android.util.LruCache;
 
 import com.vanniktech.emoji.emoji.CacheKey;
@@ -57,7 +57,7 @@ public class TwitterEmoji extends Emoji {
   }
 
   public TwitterEmoji(@NonNull final int[] codePoints, final int x, final int y, final boolean isDuplicate,
-                     final Emoji... variants) {
+                      final Emoji... variants) {
     super(codePoints, -1, isDuplicate, variants);
 
     this.x = x;
