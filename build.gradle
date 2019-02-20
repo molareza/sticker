@@ -69,7 +69,6 @@ subprojects {
     google()
     jcenter()
     mavenCentral()
-    maven { url "https://jitpack.io" }
   }
 }
 
@@ -92,7 +91,7 @@ ext {
   supportAnnotations = "androidx.annotation:annotation:$androidXVersion"
   supportEmoji = "androidx.emoji:emoji-appcompat:$androidXVersion"
   supportEmojiBundled = "androidx.emoji:emoji-bundled:$androidXVersion"
-  supportRecyclerView = "com.android.support:recyclerview-v7:$androidXVersion"
+  supportRecyclerView = "androidx.recyclerview:recyclerview:$androidXVersion"
 
 
   leakCanaryDebug = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
