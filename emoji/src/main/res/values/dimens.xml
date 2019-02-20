@@ -2,4 +2,6 @@
 <resources>
     <dimen name="emoji_grid_view_column_width">36dp</dimen>
     <dimen name="emoji_grid_view_spacing">6dp</dimen>
+    <dimen name="emoji_sticker_grid_view_column_width">80dp</dimen>
+    <dimen name="emoji_sticker_grid_view_spacing">4dp</dimen>
 </resources>

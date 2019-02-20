@@ -2,11 +2,26 @@ package com.vanniktech.emoji.sample;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import androidx.emoji.text.EmojiCompat;
+import androidx.emoji.bundled.BundledEmojiCompatConfig;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.eftimoff.viewpagertransformers.AccordionTransformer;
+import com.eftimoff.viewpagertransformers.DefaultTransformer;
+import com.eftimoff.viewpagertransformers.RotateUpTransformer;
+import com.vanniktech.emoji.EmojiEditText;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.EmojiPopup;
+import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider;
+import com.vanniktech.emoji.google.GoogleEmojiProvider;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.emoji.bundled.BundledEmojiCompatConfig;
@@ -122,8 +137,8 @@ import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
         .setOnSoftKeyboardOpenListener(ignore -> Log.d(TAG, "Opened soft keyboard"))
         .setOnEmojiPopupDismissListener(() -> emojiButton.setImageResource(R.drawable.emoji_ios_category_smileysandpeople))
         .setOnSoftKeyboardCloseListener(() -> Log.d(TAG, "Closed soft keyboard"))
-        .setKeyboardAnimationStyle(R.style.emoji_fade_animation_style)
-        .setPageTransformer(new PageTransformer())
+        .setKeyboardAnimationStyle(R.style.emoji_slide_animation_style)
+        .setPageTransformer(new DefaultTransformer())
         .build(editText);
   }
 }

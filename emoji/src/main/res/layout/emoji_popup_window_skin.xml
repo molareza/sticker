@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
-  <androidx.cardview.widget.CardView
+  <android.support.v7.widget.CardView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:cardCornerRadius="1dp"
@@ -18,5 +18,5 @@
         android:layout_margin="4dp"
         android:orientation="horizontal"
         />
-  </androidx.cardview.widget.CardView>
+  </android.support.v7.widget.CardView>
 </FrameLayout>

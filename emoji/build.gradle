@@ -27,6 +27,11 @@ dependencies {
   testImplementation rootProject.ext.testing.assertJ
   testImplementation rootProject.ext.testing.robolectric
   testImplementation rootProject.ext.testing.privateConstructor
+  implementation rootProject.ext.supportRecyclerView
+  implementation 'com.github.bumptech.glide:glide:4.8.0'
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 apply plugin: "com.vanniktech.maven.publish"
