@@ -76,7 +76,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         }
 
         ImageView setting = findViewById(R.id.imgStickerSetting);
-        setting.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+        if (iconColor != 0) {
+            setting.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+        } else {
+            setting.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+        }
         setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +90,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         });
 
         ImageView imgSmilePage = findViewById(R.id.imgEmojiPage);
-        imgSmilePage.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+        if (iconColor != 0) {
+            imgSmilePage.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+        } else {
+            imgSmilePage.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+        }
         imgSmilePage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
