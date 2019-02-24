@@ -289,7 +289,10 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                     } else {
                         Toast.makeText(context, "something is wrong", Toast.LENGTH_SHORT).show();
                     }
+                    return;
                 }
+                emojisPager.setCurrentItem(getAdapterPosition());
+                indexItemSelect = getAdapterPosition();
             }
         }
     }
@@ -309,6 +312,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         stickerPagerAdapter.updateStickerAdapter(categoryStickerList);
         myRecyclerViewAdapter.updateStickerAdapter(categoryStickerList);
         onPageSelected(0);
+        if (emojisPager != null)
+            emojisPager.setCurrentItem(0);
     }
 
     public void onUpdateSticker(int updatePosition) {
