@@ -45,6 +45,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
     private ArrayList<StructItemSticker> recentStickerList = new ArrayList<>();
     private int dividerColor;
     private int iconColor;
+    private static int keepPositionAdapter = 0;
 
     protected static StickerDatabase getStickerDatabase(Context context) {
         if (stickerDatabase == null) stickerDatabase = new StickerDatabase(context);
@@ -128,7 +129,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         emojisPager.setOffscreenPageLimit(0);
         emojisPager.setAdapter(stickerPagerAdapter);
         emojisPager.setCurrentItem(startIndex);
-        onPageSelected(startIndex);
+        if (keepPositionAdapter != 0) {
+            onPageSelected(keepPositionAdapter);
+        } else {
+            onPageSelected(startIndex);
+        }
 
     }
 
@@ -181,6 +186,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         public int indexItemSelect = 0;
         private Context context;
         private int lastIndexSelect;
+        private int po = 0;
 
 //        private ItemClickListener mClickListener;
 
@@ -206,6 +212,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         public void onBindViewHolder(ViewHolder holder, int position) {
 
             if (position >= mData.size()) {
+                po = position;
                 holder.imgSticker.setImageResource(R.drawable.emoji_add);
                 if (iconColor != 0) {
                     holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
@@ -239,7 +246,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             }
 
-            if (indexItemSelect == position && (position < mData.size())) {
+            if (indexItemSelect == position  && position < po) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
                 lastIndexSelect = position;
             } else {
