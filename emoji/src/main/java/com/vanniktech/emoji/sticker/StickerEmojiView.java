@@ -232,6 +232,9 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 }
             } else {
                 if (item.getUri() == null) return;
+
+                keepPositionAdapter = position;
+
                 holder.imgSticker.clearColorFilter();
 
                 if (new File(item.getUri()).exists()) {
@@ -246,7 +249,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             }
 
-            if (indexItemSelect == position  && position < po) {
+            if (indexItemSelect == position && position < po) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
                 lastIndexSelect = position;
             } else {
@@ -286,10 +289,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                     } else {
                         Toast.makeText(context, "something is wrong", Toast.LENGTH_SHORT).show();
                     }
-                    return;
                 }
-                emojisPager.setCurrentItem(getAdapterPosition());
-                indexItemSelect = getAdapterPosition();
             }
         }
     }
