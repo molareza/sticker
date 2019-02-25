@@ -211,8 +211,8 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             if (position >= mData.size()) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_add);
+                holder.itemView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 if (iconColor != 0) {
-                    holder.imgSticker.setTag("ADD");
                     holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
                 } else {
                     holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
@@ -220,7 +220,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 return;
             }
 
-            holder.imgSticker.setTag("STICKER");
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
@@ -248,7 +247,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             }
 
-            if (indexItemSelect == position && ! holder.imgSticker.getTag().equals("ADD")) {
+            if (indexItemSelect == position) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
                 lastIndexSelect = position;
             } else {
