@@ -146,7 +146,17 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             if (i == 0) {
                 resetRecentlySticker();
             }
-            rcvTab.smoothScrollToPosition(i);
+
+            myRecyclerViewAdapter.indexItemSelect = i;
+            myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
+//            myRecyclerViewAdapter.notifyItemChanged(i);
+
+//            if (i >= 4 && (i + 2 <= tabImageList.size())) {
+                rcvTab.smoothScrollToPosition(myRecyclerViewAdapter.lastIndexSelect);
+//            } else {
+//                if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
+//            }
+
             stickerTabLastSelectedIndex = i;
 
         }
@@ -282,7 +292,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                     return;
                 }
                 emojisPager.setCurrentItem(getAdapterPosition());
-//                rcvTab.smoothScrollToPosition(getAdapterPosition());
+                rcvTab.smoothScrollToPosition(getAdapterPosition());
                 indexItemSelect = getAdapterPosition();
             }
         }
