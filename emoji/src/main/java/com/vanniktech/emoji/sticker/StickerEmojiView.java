@@ -31,7 +31,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
     private RecyclerView rcvTab;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
-    private ArrayList<String> tabImageList = new ArrayList<>();
     private OnPageChangeMainViewPager onChangeViewPager;
     private final StickerPagerAdapter stickerPagerAdapter;
     //    public static OnNotifyList onNotifyList;
@@ -151,12 +150,12 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             myRecyclerViewAdapter.indexItemSelect = i;
             myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
             myRecyclerViewAdapter.notifyItemChanged(i);
-
-            if (i + 3 >= tabImageList.size()) {
-                rcvTab.smoothScrollToPosition(tabImageList.size());
-            } else if (i - 3 <= 0) {
-                rcvTab.smoothScrollToPosition(0);
-            }
+            rcvTab.smoothScrollToPosition(i);
+//            if (i + 3 >= categoryStickerList.size()) {
+//                rcvTab.smoothScrollToPosition(categoryStickerList.size());
+//            } else if (i - 3 <= 0) {
+//                rcvTab.smoothScrollToPosition(0);
+//            }
 
         }
 
