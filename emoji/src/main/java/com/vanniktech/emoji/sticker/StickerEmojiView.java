@@ -148,7 +148,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             if (i > myRecyclerViewAdapter.lastIndexSelect && i < (categoryStickerList.size() - 1)) {
                 rcvTab.smoothScrollToPosition(i + 1);
-            } else {
+            } else if (i > 0){
                 rcvTab.smoothScrollToPosition(i - 1);
             }
             stickerTabLastSelectedIndex = i;
