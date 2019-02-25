@@ -146,10 +146,10 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 resetRecentlySticker();
             }
 
-            if (i > myRecyclerViewAdapter.lastIndexSelect && i < (categoryStickerList.size() - 1)) {
-                rcvTab.smoothScrollToPosition(i + 1);
+            if (i > myRecyclerViewAdapter.lastIndexSelect && i < (categoryStickerList.size() - 2)) {
+                rcvTab.smoothScrollToPosition(i + 2);
             } else if (i > 0){
-                rcvTab.smoothScrollToPosition(i - 1);
+                rcvTab.smoothScrollToPosition(i - 2);
             }else {
                 rcvTab.smoothScrollToPosition(i);
             }
