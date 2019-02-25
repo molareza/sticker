@@ -220,6 +220,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 return;
             }
 
+            holder.imgSticker.setTag("STICKER");
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
