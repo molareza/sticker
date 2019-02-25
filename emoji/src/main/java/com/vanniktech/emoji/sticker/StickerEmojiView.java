@@ -147,17 +147,16 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 resetRecentlySticker();
             }
 
-            myRecyclerViewAdapter.indexItemSelect = i;
-            myRecyclerViewAdapter.notifyItemChanged(i);
-//            myRecyclerViewAdapter.notifyItemChanged(i);
-
-//            if (i >= 4 && (i + 2 <= tabImageList.size())) {
-            rcvTab.smoothScrollToPosition(i);
-//            } else {
-//                if ((i - 1) >= 0) rcvTab.smoothScrollToPosition(0);
-//            }
-
             stickerTabLastSelectedIndex = i;
+            myRecyclerViewAdapter.indexItemSelect = i;
+            myRecyclerViewAdapter.notifyItemChanged(myRecyclerViewAdapter.lastIndexSelect);
+            myRecyclerViewAdapter.notifyItemChanged(i);
+
+            if (i + 3 >= tabImageList.size()) {
+                rcvTab.smoothScrollToPosition(tabImageList.size());
+            } else if (i - 3 <= 0) {
+                rcvTab.smoothScrollToPosition(0);
+            }
 
         }
 
@@ -186,7 +185,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         public int indexItemSelect = 0;
         private Context context;
         private int lastIndexSelect;
-        private int po = 0;
 
 //        private ItemClickListener mClickListener;
 
@@ -212,9 +210,9 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         public void onBindViewHolder(ViewHolder holder, int position) {
 
             if (position >= mData.size()) {
-                po = position;
                 holder.imgSticker.setImageResource(R.drawable.emoji_add);
                 if (iconColor != 0) {
+                    holder.imgSticker.setTag("ADD");
                     holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
                 } else {
                     holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
@@ -249,7 +247,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             }
 
-            if (indexItemSelect == position && position < po) {
+            if (indexItemSelect == position && ! holder.imgSticker.getTag().equals("ADD")) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.emoji_background_sticker_tab));
                 lastIndexSelect = position;
             } else {
