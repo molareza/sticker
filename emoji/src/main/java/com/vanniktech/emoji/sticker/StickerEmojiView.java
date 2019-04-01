@@ -19,11 +19,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 @SuppressLint("ViewConstructor")
@@ -148,9 +152,9 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             if (i > myRecyclerViewAdapter.lastIndexSelect && i < (categoryStickerList.size() - 2)) {
                 rcvTab.smoothScrollToPosition(i + 2);
-            } else if (i > 0 && i < myRecyclerViewAdapter.lastIndexSelect){
+            } else if (i > 0 && i < myRecyclerViewAdapter.lastIndexSelect) {
                 rcvTab.smoothScrollToPosition(i - 1);
-            }else {
+            } else {
                 rcvTab.smoothScrollToPosition(i);
             }
             stickerTabLastSelectedIndex = i;
@@ -230,21 +234,15 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                     holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
                 }
             } else {
-                if (item.getUri() == null) return;
+                if (item.getImageUrl() == null) return;
 
                 keepPositionAdapter = position;
-
                 holder.imgSticker.clearColorFilter();
+                Glide.with(context)
+                        .load(item.getImageUrl()) // Uri of the picture
+                        .apply(new RequestOptions().override(50, 50))
+                        .into(holder.imgSticker);
 
-                if (new File(item.getUri()).exists()) {
-                    Glide.with(context)
-                            .load(new File(item.getUri())) // Uri of the picture
-                            .apply(new RequestOptions().override(48, 48))
-                            .into(holder.imgSticker);
-                } else {
-                    if (mOnUpdateStickerListener != null)
-                        mOnUpdateStickerListener.onUpdateTabSticker(item.getAvatarToken(), item.getName(), item.getAvatarSize(), position);
-                }
 
             }
 
@@ -297,11 +295,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         }
     }
 
-    public void updateListStickers(ArrayList<StructGroupSticker> structAllStickers) {
+    public <T> void updateListStickers(T structAllStickers) {
 
         if (structAllStickers != null) {
             categoryStickerList = new ArrayList<>();
-            categoryStickerList.addAll(structAllStickers);
+            categoryStickerList.addAll((Collection<? extends StructGroupSticker>) structAllStickers);
             categoryStickerList.add(0, new StructGroupSticker());
             updateStickerList();
         }
@@ -316,21 +314,11 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             emojisPager.setCurrentItem(0);
     }
 
-    public void onUpdateSticker(int updatePosition) {
-        stickerPagerAdapter.onUpdateSticker(updatePosition);
-    }
+    public void onUpdateRecentSticker(ArrayList<String> idStickerList) {
 
-    public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
-
-        for (String item : structAllStickers) {
+        for (String item : idStickerList) {
             getStickerDatabase(context).removeRecentSticker(item);
         }
         resetRecentlySticker();
     }
-
-    public void onUpdateTabSticker(int updatePosition) {
-        myRecyclerViewAdapter.notifyItemChanged(updatePosition);
-    }
-
-
 }

@@ -32,9 +32,9 @@ import com.vanniktech.emoji.listeners.OnEmojiPopupDismissListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupShownListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
-import com.vanniktech.emoji.sticker.OnOpenPageStickerListener;
-import com.vanniktech.emoji.sticker.OnStickerListener;
-import com.vanniktech.emoji.sticker.OnUpdateStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.util.ArrayList;
@@ -423,15 +423,8 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
     mainEmojiView.updateSticker(structAllStickers);
   }
 
-  public void onUpdateSticker(int updatePosition) {
-    mainEmojiView.onUpdateSticker(updatePosition);
-  }
-
   public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
     mainEmojiView.onUpdateRecentSticker(structAllStickers);
   }
 
-  public void onUpdateTabSticker(int updatePosition) {
-    mainEmojiView.onUpdateTabSticker(updatePosition);
-  }
 }

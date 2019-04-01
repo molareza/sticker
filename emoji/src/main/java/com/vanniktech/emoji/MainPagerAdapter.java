@@ -10,18 +10,17 @@ import android.view.ViewGroup;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
-import com.vanniktech.emoji.sticker.OnOpenPageStickerListener;
-import com.vanniktech.emoji.sticker.OnPageChangeMainViewPager;
-import com.vanniktech.emoji.sticker.OnStickerListener;
-import com.vanniktech.emoji.sticker.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.StickerEmojiView;
-import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
+import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 
 import java.util.ArrayList;
 
 
 
-public final class MianPagerAdapter extends PagerAdapter {
+public final class MainPagerAdapter extends PagerAdapter {
     private static final int RECENT_POSITION = 0;
 
     private RecentEmojiGridView recentEmojiGridView;
@@ -41,7 +40,7 @@ public final class MianPagerAdapter extends PagerAdapter {
     private StickerEmojiView stickerEmojiView;
     private ViewPager.PageTransformer pageTransformer;
 
-    public MianPagerAdapter(Activity context, OnEmojiClickListener onEmojiClickListener, OnEmojiLongClickListener onEmojiLongClickListener, RecentEmoji recentEmoji, VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, OnOpenPageStickerListener onOpenPageStickerListener, ViewPager.PageTransformer pageTransformer) {
+    public MainPagerAdapter(Activity context, OnEmojiClickListener onEmojiClickListener, OnEmojiLongClickListener onEmojiLongClickListener, RecentEmoji recentEmoji, VariantEmoji variantManager, int backgroundColor, int iconColor, int dividerColor, OnEmojiBackspaceClickListener onEmojiBackspaceClickListener, OnPageChangeMainViewPager onChangeViewPager, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener, OnOpenPageStickerListener onOpenPageStickerListener, ViewPager.PageTransformer pageTransformer) {
         this.context = context;
         this.clickListener = onEmojiClickListener;
         this.longClickListener = onEmojiLongClickListener;
@@ -89,7 +88,7 @@ public final class MianPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    public void updateSticker(final ArrayList<StructGroupSticker> structAllStickers){
+    public <T> void updateSticker(final T structAllStickers){
 
         if (stickerEmojiView ==null){
             new Handler().postDelayed(new Runnable() {
@@ -103,15 +102,8 @@ public final class MianPagerAdapter extends PagerAdapter {
         }
     }
 
-    public void onUpdateSticker(int updatePosition) {
-        stickerEmojiView.onUpdateSticker(updatePosition);
+    public void onUpdateRecentSticker(ArrayList<String> idStickerList) {
+        stickerEmojiView.onUpdateRecentSticker(idStickerList);
     }
 
-    public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
-        stickerEmojiView.onUpdateRecentSticker(structAllStickers);
-    }
-
-    public void onUpdateTabSticker(int updatePosition) {
-        stickerEmojiView.onUpdateTabSticker(updatePosition);
-    }
 }

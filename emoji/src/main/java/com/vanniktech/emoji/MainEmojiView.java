@@ -12,11 +12,10 @@ import android.widget.LinearLayout;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
-import com.vanniktech.emoji.sticker.OnOpenPageStickerListener;
-import com.vanniktech.emoji.sticker.OnPageChangeMainViewPager;
-import com.vanniktech.emoji.sticker.OnStickerListener;
-import com.vanniktech.emoji.sticker.OnUpdateStickerListener;
-import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
+import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 
 @SuppressLint("ViewConstructor")
 final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChangeListener {
-    private final MianPagerAdapter emojiPagerAdapter;
+    private final MainPagerAdapter emojiPagerAdapter;
     private ViewPager emojisPager;
     private OnPageChangeMainViewPager onChangeViewPager;
 
@@ -63,7 +62,7 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
         };
 
         emojisPager.setOffscreenPageLimit(0);
-        emojiPagerAdapter = new MianPagerAdapter(context, onEmojiClickListener, onEmojiLongClickListener, recentEmoji, variantManager, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener, onChangeViewPager, onStickerListener , onUpdateStickerListener ,onOpenPageStickerListener ,pageTransformer);
+        emojiPagerAdapter = new MainPagerAdapter(context, onEmojiClickListener, onEmojiLongClickListener, recentEmoji, variantManager, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener, onChangeViewPager, onStickerListener , onUpdateStickerListener ,onOpenPageStickerListener ,pageTransformer);
 
         emojisPager.setAdapter(emojiPagerAdapter);
         emojisPager.setCurrentItem(0);
@@ -90,20 +89,12 @@ final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChange
         // No-op.
     }
 
-    public void updateSticker(ArrayList<StructGroupSticker> structAllStickers){
+    public <T> void updateSticker(T structAllStickers){
         emojiPagerAdapter.updateSticker(structAllStickers);
     }
 
-    public void onUpdateSticker(int updatePosition) {
-        emojiPagerAdapter.onUpdateSticker(updatePosition);
-    }
-
-    public void onUpdateRecentSticker(ArrayList<String> structAllStickers) {
-        emojiPagerAdapter.onUpdateRecentSticker(structAllStickers);
-    }
-
-    public void onUpdateTabSticker(int updatePosition) {
-        emojiPagerAdapter.onUpdateTabSticker(updatePosition);
+    public void onUpdateRecentSticker(ArrayList<String> idStickerList) {
+        emojiPagerAdapter.onUpdateRecentSticker(idStickerList);
     }
 
 }

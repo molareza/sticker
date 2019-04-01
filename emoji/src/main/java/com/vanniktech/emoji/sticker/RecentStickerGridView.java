@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.widget.GridView;
 
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.ArrayList;
