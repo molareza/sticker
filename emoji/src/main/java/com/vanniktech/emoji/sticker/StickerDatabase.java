@@ -18,12 +18,10 @@ public class StickerDatabase extends SQLiteOpenHelper {
     private final static int DB_VERSION = 1;
     private static final String ID = "id";
     private static final String ID_ST = "id_sticker";
-    private static final String SORT = "sort";
     private static final String NAME = "name";
-    private static final String TOKEN = "token";
+    private static final String UNI_CODE = "uni_code";
     private static final String URI = "URI";
     private static final String GROUP_ID = "groupId";
-    private static final String REF_ID = "ref_id";
     private static final String STICKER_TABLE_RECENTLY = "sticker_table_recently";
     private static final String TIME_USAGE = "time";
 
@@ -37,11 +35,9 @@ public class StickerDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + STICKER_TABLE_RECENTLY + " (" +
                 ID + " INTEGER PRIMARY KEY, " +
                 ID_ST + " TEXT, " +
-                REF_ID + " INTEGER, " +
                 NAME + " TEXT, " +
-                TOKEN + " TEXT, " +
+                UNI_CODE + " TEXT, " +
                 URI + " TEXT, " +
-                SORT + " INTEGER," +
                 GROUP_ID + " TEXT," +
                 TIME_USAGE + " INTEGER)" +
                 ";");
@@ -53,27 +49,25 @@ public class StickerDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertOrUpdateRecentlySticker(String id_st, long ref_id, String name, String token, String uri, int sort, String groupId, Long time) {
+    public boolean insertOrUpdateRecentlySticker(StructItemSticker item) {
 
-        if (checkRecentlySticker(id_st)) {
+        if (checkRecentlySticker(item.getId())) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(TIME_USAGE, time);
+            contentValues.put(TIME_USAGE, System.currentTimeMillis());
 
-            long insert = db.update(STICKER_TABLE_RECENTLY, contentValues, ID_ST + "= '" + id_st  +"'", null);
+            long insert = db.update(STICKER_TABLE_RECENTLY, contentValues, ID_ST + "= '" + item.getId()  +"'", null);
 
             return insert != -1;
         } else {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(ID_ST, id_st);
-            contentValues.put(REF_ID, ref_id);
-            contentValues.put(NAME, name);
-            contentValues.put(TOKEN, token);
-            contentValues.put(URI, uri);
-            contentValues.put(SORT, sort);
-            contentValues.put(GROUP_ID, groupId);
-            contentValues.put(TIME_USAGE, time);
+            contentValues.put(ID_ST, item.getId());
+            contentValues.put(NAME, item.getName());
+            contentValues.put(UNI_CODE, item.getUniCode());
+            contentValues.put(URI, item.getImageUrl());
+            contentValues.put(GROUP_ID, item.getGroupId());
+            contentValues.put(TIME_USAGE, System.currentTimeMillis());
 
             long insert = db.insert(STICKER_TABLE_RECENTLY, null, contentValues);
 
@@ -120,11 +114,9 @@ public class StickerDatabase extends SQLiteOpenHelper {
 
                         StructItemSticker item = new StructItemSticker();
                         item.setId(cursor.getString(cursor.getColumnIndex(ID_ST)));
-                        item.setRefId(cursor.getLong(cursor.getColumnIndex(REF_ID)));
                         item.setName(cursor.getString(cursor.getColumnIndex(NAME)));
-                        item.setToken(cursor.getString(cursor.getColumnIndex(TOKEN)));
-                        item.setUri(cursor.getString(cursor.getColumnIndex(URI)));
-                        item.setSort(cursor.getInt(cursor.getColumnIndex(SORT)));
+                        item.setName(cursor.getString(cursor.getColumnIndex(UNI_CODE)));
+                        item.setImageUrl(cursor.getString(cursor.getColumnIndex(URI)));
                         item.setGroupId(cursor.getString(cursor.getColumnIndex(GROUP_ID)));
                         list.add(item);
                     } while (cursor.moveToNext());

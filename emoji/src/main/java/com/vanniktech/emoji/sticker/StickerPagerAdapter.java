@@ -5,6 +5,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 

@@ -22,7 +22,7 @@ import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiLongClickListener;
 import com.vanniktech.emoji.listeners.RepeatListener;
-import com.vanniktech.emoji.sticker.OnPageChangeMainViewPager;
+import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 

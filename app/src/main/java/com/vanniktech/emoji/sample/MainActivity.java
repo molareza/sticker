@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.eftimoff.viewpagertransformers.DefaultTransformer;
 import com.vanniktech.emoji.EmojiEditText;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.EmojiPopup;
@@ -136,7 +135,6 @@ import com.vanniktech.emoji.twitter.TwitterEmojiProvider;
         .setOnEmojiPopupDismissListener(() -> emojiButton.setImageResource(R.drawable.emoji_ios_category_smileysandpeople))
         .setOnSoftKeyboardCloseListener(() -> Log.d(TAG, "Closed soft keyboard"))
         .setKeyboardAnimationStyle(R.style.emoji_slide_animation_style)
-        .setPageTransformer(new DefaultTransformer())
         .build(editText);
   }
 }

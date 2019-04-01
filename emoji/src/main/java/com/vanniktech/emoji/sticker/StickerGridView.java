@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.widget.GridView;
 
 import com.vanniktech.emoji.R;
+import com.vanniktech.emoji.sticker.listener.OnStickerListener;
+import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 
@@ -29,7 +31,7 @@ final class StickerGridView extends GridView {
     }
 
     public StickerGridView init(@NonNull StructGroupSticker mSticker, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener) {
-        stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker.getStickers(), onStickerListener, onUpdateStickerListener);
+        stickerArrayAdapter = new StickerArrayAdapter(getContext(), mSticker.getStickerList(), onStickerListener, onUpdateStickerListener);
 
         setAdapter(stickerArrayAdapter);
         return this;

@@ -1,4 +1,4 @@
-package com.vanniktech.emoji.sticker;
+package com.vanniktech.emoji.sticker.listener;
 
 public interface OnPageChangeMainViewPager {
     void changePage();

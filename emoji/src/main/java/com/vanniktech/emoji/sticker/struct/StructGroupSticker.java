@@ -6,171 +6,52 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StructGroupSticker implements Serializable {
 
-    @SerializedName("createdAt")
+    @SerializedName("groupId")
     @Expose
-    private Long createdAt;
-    @SerializedName("id")
+    private String groupId;
+    @SerializedName("groupName")
     @Expose
-    private String id;
-    @SerializedName("refId")
+    private String groupName;
+    @SerializedName("imageUrl")
     @Expose
-    private Long refId;
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("avatarToken")
-    @Expose
-    private String avatarToken;
-    @SerializedName("uri")
-    @Expose
-    private String uri;
-    @SerializedName("avatarSize")
-    @Expose
-    private int avatarSize;
-    @SerializedName("avatarName")
-    @Expose
-    private String avatarName;
-    @SerializedName("price")
-    @Expose
-    private Long price;
-    @SerializedName("isVip")
-    @Expose
-    private Boolean isVip;
-    @SerializedName("sort")
-    @Expose
-    private Integer sort;
-    @SerializedName("createdBy")
-    @Expose
-    private Long createdBy;
+    private String imageUrl;
     @SerializedName("stickers")
     @Expose
-    private List<StructItemSticker> stickers = new ArrayList<>();
-    @SerializedName("isFavorite")
-    @Expose
-    private boolean isFavorite;
+    private List<StructItemSticker> stickerList;
 
-    public Long getCreatedAt() {
-        return createdAt;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public String getId() {
-        return id;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
-    public Long getRefId() {
-        return refId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setRefId(Long refId) {
-        this.refId = refId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getName() {
-        return name;
+    public List<StructItemSticker> getStickerList() {
+        return stickerList;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAvatarToken() {
-        return avatarToken;
-    }
-
-    public void setAvatarToken(String avatarToken) {
-        this.avatarToken = avatarToken;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public int getAvatarSize() {
-        return avatarSize;
-    }
-
-    public void setAvatarSize(int avatarSize) {
-        this.avatarSize = avatarSize;
-    }
-
-    public String getAvatarName() {
-        return avatarName;
-    }
-
-    public void setAvatarName(String avatarName) {
-        this.avatarName = avatarName;
-    }
-
-    public Boolean getVip() {
-        return isVip;
-    }
-
-    public void setVip(Boolean vip) {
-        isVip = vip;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Boolean getIsVip() {
-        return isVip;
-    }
-
-    public void setIsVip(Boolean isVip) {
-        this.isVip = isVip;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public List<StructItemSticker> getStickers() {
-        return stickers;
-    }
-
-    public void setStickers(List<StructItemSticker> stickers) {
-        this.stickers = stickers;
-    }
-
-    public boolean getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(boolean isFavorite) {
-        this.isFavorite = isFavorite;
+    public void setStickerList(List<StructItemSticker> stickerList) {
+        this.stickerList = stickerList;
     }
 }
