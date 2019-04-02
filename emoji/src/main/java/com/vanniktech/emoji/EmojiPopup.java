@@ -29,7 +29,6 @@ import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
 import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
-import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
 import java.util.ArrayList;
 
@@ -420,7 +419,7 @@ public final class EmojiPopup implements EmojiResultReceiver.Receiver {
     }
   }
 
-  public void updateStickerAdapter(ArrayList<StructGroupSticker> structAllStickers) {
+  public <T> void updateStickerAdapter(T structAllStickers) {
     mainEmojiView.updateSticker(structAllStickers);
   }
 
