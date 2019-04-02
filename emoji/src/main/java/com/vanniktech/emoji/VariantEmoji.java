@@ -1,8 +1,9 @@
 package com.vanniktech.emoji;
 
-import android.support.annotation.NonNull;
 
 import com.vanniktech.emoji.emoji.Emoji;
+
+import androidx.annotation.NonNull;
 
 /**
  * Interface for providing some custom implementation for variant emojis.

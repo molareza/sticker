@@ -1,12 +1,12 @@
 package com.vanniktech.emoji.twitter.category;
 
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.twitter.R;
 import com.vanniktech.emoji.twitter.TwitterEmoji;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class SymbolsCategory implements EmojiCategory {
   private static final TwitterEmoji[] DATA = new TwitterEmoji[] {

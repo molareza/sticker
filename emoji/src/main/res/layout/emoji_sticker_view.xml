@@ -14,7 +14,7 @@
             android:src="@drawable/emoji_smileysandpeople" />
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvTabImageSticker"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -36,7 +36,7 @@
         android:layout_height="1dp"
         android:background="@color/emoji_divider" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/stickerPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

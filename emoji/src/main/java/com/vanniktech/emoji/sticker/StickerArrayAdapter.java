@@ -1,7 +1,6 @@
 package com.vanniktech.emoji.sticker;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {

@@ -1,13 +1,13 @@
 package com.vanniktech.emoji.googlecompat.category;
 
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-
 import com.vanniktech.emoji.emoji.Emoji;
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmoji;
 import com.vanniktech.emoji.googlecompat.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class FoodCategory implements EmojiCategory {
   private static final Emoji[] DATA = new Emoji[] {

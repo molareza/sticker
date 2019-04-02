@@ -1,8 +1,6 @@
 package com.vanniktech.emoji.googlecompat;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.text.emoji.EmojiCompat;
 import android.text.Spannable;
 
 import com.vanniktech.emoji.EmojiProvider;
@@ -16,6 +14,9 @@ import com.vanniktech.emoji.googlecompat.category.ObjectsCategory;
 import com.vanniktech.emoji.googlecompat.category.PeopleCategory;
 import com.vanniktech.emoji.googlecompat.category.SymbolsCategory;
 import com.vanniktech.emoji.googlecompat.category.TravelCategory;
+
+import androidx.annotation.NonNull;
+import androidx.emoji.text.EmojiCompat;
 
 ;
 

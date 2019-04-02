@@ -3,12 +3,13 @@ package com.vanniktech.emoji;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.support.annotation.CallSuper;
-import android.support.annotation.DimenRes;
-import android.support.annotation.Px;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.DimenRes;
+import androidx.annotation.Px;
+import androidx.appcompat.widget.AppCompatTextView;
 
 @SuppressWarnings("CPD-START") public class EmojiTextView extends AppCompatTextView {
   private float emojiSize;
@@ -44,7 +45,8 @@ import android.util.AttributeSet;
     setText(getText());
   }
 
-  @Override @CallSuper public void setText(final CharSequence rawText, final BufferType type) {
+  @Override @CallSuper
+  public void setText(final CharSequence rawText, final BufferType type) {
     if (hasEmoji) {
       final CharSequence text = rawText == null ? "" : rawText;
       final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);

@@ -1,12 +1,12 @@
 package com.vanniktech.emoji.ios.category;
 
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.ios.IosEmoji;
 import com.vanniktech.emoji.ios.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("PMD.MethodReturnsInternalArray") public final class SymbolsCategory implements EmojiCategory {
   private static final IosEmoji[] DATA = new IosEmoji[] {

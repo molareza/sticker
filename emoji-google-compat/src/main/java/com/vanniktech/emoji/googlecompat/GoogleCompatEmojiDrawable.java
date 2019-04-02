@@ -6,12 +6,12 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.text.emoji.EmojiCompat;
-import android.support.text.emoji.EmojiSpan;
 import android.text.Spanned;
 import android.text.TextPaint;
 
+import androidx.annotation.NonNull;
+import androidx.emoji.text.EmojiCompat;
+import androidx.emoji.text.EmojiSpan;
 
 
 /**
