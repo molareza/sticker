@@ -1,11 +1,12 @@
 package com.vanniktech.emoji;
 
 
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.Emoji;
 
 import java.util.Collection;
 
-import androidx.annotation.NonNull;
 
 /**
  * Interface for providing some custom implementation for recent emojis.

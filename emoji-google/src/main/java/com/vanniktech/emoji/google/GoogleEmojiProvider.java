@@ -1,6 +1,8 @@
 package com.vanniktech.emoji.google;
 
 
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.EmojiProvider;
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.google.category.ActivitiesCategory;
@@ -12,7 +14,7 @@ import com.vanniktech.emoji.google.category.SmileysAndPeopleCategory;
 import com.vanniktech.emoji.google.category.SymbolsCategory;
 import com.vanniktech.emoji.google.category.TravelAndPlacesCategory;
 
-import androidx.annotation.NonNull;
+
 
 public final class GoogleEmojiProvider implements EmojiProvider {
   @Override @NonNull

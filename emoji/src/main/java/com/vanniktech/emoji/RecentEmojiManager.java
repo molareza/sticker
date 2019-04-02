@@ -2,6 +2,7 @@ package com.vanniktech.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import com.vanniktech.emoji.emoji.Emoji;
 
@@ -13,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import androidx.annotation.NonNull;
+
 
 public final class RecentEmojiManager implements RecentEmoji {
   private static final String PREFERENCE_NAME = "emoji-recent-manager";
@@ -25,7 +26,8 @@ public final class RecentEmojiManager implements RecentEmoji {
 
   @NonNull
   private final Context context;
-  @NonNull private EmojiList emojiList = new EmojiList(0);
+  @NonNull
+  private EmojiList emojiList = new EmojiList(0);
 
   public RecentEmojiManager(@NonNull final Context context) {
     this.context = context.getApplicationContext();

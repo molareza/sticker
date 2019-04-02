@@ -5,13 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.ArrayList;
-
-import androidx.annotation.Nullable;
-
 
 public class StickerDatabase extends SQLiteOpenHelper {
 

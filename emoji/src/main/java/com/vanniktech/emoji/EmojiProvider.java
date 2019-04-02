@@ -1,9 +1,11 @@
 package com.vanniktech.emoji;
 
 
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.emoji.EmojiCategory;
 
-import androidx.annotation.NonNull;
+
 
 /**
  * Interface for a custom emoji implementation that can be used with {@link EmojiManager}.

@@ -2,6 +2,7 @@ package com.vanniktech.emoji.sticker;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.widget.GridView;
 
 import com.vanniktech.emoji.R;
@@ -9,7 +10,7 @@ import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructGroupSticker;
 
-import androidx.annotation.NonNull;
+
 
 
 final class StickerGridView extends GridView {

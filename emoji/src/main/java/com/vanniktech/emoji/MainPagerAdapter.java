@@ -2,6 +2,8 @@ package com.vanniktech.emoji;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,8 +18,8 @@ import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 
 import java.util.ArrayList;
 
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+
+
 
 
 public final class MainPagerAdapter extends PagerAdapter {

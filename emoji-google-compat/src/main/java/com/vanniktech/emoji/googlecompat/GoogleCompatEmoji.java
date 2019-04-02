@@ -2,10 +2,11 @@ package com.vanniktech.emoji.googlecompat;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 
 import com.vanniktech.emoji.emoji.Emoji;
 
-import androidx.annotation.NonNull;
+
 
 public final class GoogleCompatEmoji extends Emoji {
   public GoogleCompatEmoji(final int[] ints, final Emoji... emojis) {

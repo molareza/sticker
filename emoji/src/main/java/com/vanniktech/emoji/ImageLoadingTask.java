@@ -3,6 +3,7 @@ package com.vanniktech.emoji;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -11,7 +12,7 @@ import com.vanniktech.emoji.emoji.Emoji;
 
 import java.lang.ref.WeakReference;
 
-import androidx.annotation.Nullable;
+
 
 final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
     private final WeakReference<ImageView> imageViewReference;

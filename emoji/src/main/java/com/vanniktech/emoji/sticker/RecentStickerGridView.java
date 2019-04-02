@@ -2,6 +2,7 @@ package com.vanniktech.emoji.sticker;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.widget.GridView;
 
 import com.vanniktech.emoji.R;
@@ -11,7 +12,7 @@ import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
+
 
 
 final class RecentStickerGridView extends GridView {

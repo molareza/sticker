@@ -2,6 +2,10 @@ package com.vanniktech.emoji;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -14,12 +18,6 @@ import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 
 @SuppressLint("ViewConstructor")
 final class MainEmojiView extends LinearLayout implements ViewPager.OnPageChangeListener {

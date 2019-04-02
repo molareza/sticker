@@ -2,6 +2,7 @@ package com.vanniktech.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import com.vanniktech.emoji.emoji.Emoji;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import androidx.annotation.NonNull;
+
 
 @SuppressWarnings("PMD.ForLoopCanBeForeach") public final class VariantEmojiManager implements VariantEmoji {
   private static final String PREFERENCE_NAME = "variant-emoji-manager";

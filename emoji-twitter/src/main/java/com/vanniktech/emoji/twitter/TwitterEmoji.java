@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.LruCache;
 
 import com.vanniktech.emoji.emoji.CacheKey;
@@ -13,7 +14,7 @@ import com.vanniktech.emoji.emoji.Emoji;
 
 import java.lang.ref.SoftReference;
 
-import androidx.annotation.NonNull;
+
 
 public class TwitterEmoji extends Emoji {
   private static final int CACHE_SIZE = 100;

@@ -1,6 +1,7 @@
 package com.vanniktech.emoji.sticker;
 
 import android.app.Activity;
+import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,7 +13,6 @@ import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
 import java.util.ArrayList;
 
-import androidx.viewpager.widget.PagerAdapter;
 
 
 public final class StickerPagerAdapter extends PagerAdapter {

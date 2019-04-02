@@ -1,7 +1,8 @@
 package com.vanniktech.emoji.sample;
 
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import androidx.viewpager.widget.ViewPager;
+
 
 public final class PageTransformer implements ViewPager.PageTransformer {
   private static final float MIN_SCALE = 0.9f;

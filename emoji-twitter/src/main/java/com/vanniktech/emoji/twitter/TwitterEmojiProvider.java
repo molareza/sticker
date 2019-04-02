@@ -1,6 +1,8 @@
 package com.vanniktech.emoji.twitter;
 
 
+import android.support.annotation.NonNull;
+
 import com.vanniktech.emoji.EmojiProvider;
 import com.vanniktech.emoji.emoji.EmojiCategory;
 import com.vanniktech.emoji.twitter.category.ActivitiesCategory;
@@ -12,7 +14,7 @@ import com.vanniktech.emoji.twitter.category.SmileysAndPeopleCategory;
 import com.vanniktech.emoji.twitter.category.SymbolsCategory;
 import com.vanniktech.emoji.twitter.category.TravelAndPlacesCategory;
 
-import androidx.annotation.NonNull;
+
 
 public final class TwitterEmojiProvider implements EmojiProvider {
   @Override @NonNull
