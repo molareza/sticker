@@ -213,17 +213,17 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         // binds the data to the TextView in each row
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-
-            if (position >= mData.size()) {
-                holder.imgSticker.setImageResource(R.drawable.emoji_add);
-                holder.itemView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                if (iconColor != 0) {
-                    holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-                } else {
-                    holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
-                }
-                return;
-            }
+//
+//            if (position >= mData.size()) {
+//                holder.imgSticker.setImageResource(R.drawable.emoji_add);
+//                holder.itemView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//                if (iconColor != 0) {
+//                    holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+//                } else {
+//                    holder.imgSticker.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+//                }
+//                return;
+//            }
 
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
@@ -257,7 +257,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         // total number of rows
         @Override
         public int getItemCount() {
-            return mData.size() + 1;
+            return mData.size();
         }
 
         public void updateStickerAdapter(ArrayList<StructGroupSticker> categoryStickerList) {
