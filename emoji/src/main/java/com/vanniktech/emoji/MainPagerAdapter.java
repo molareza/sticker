@@ -19,9 +19,6 @@ import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import java.util.ArrayList;
 
 
-
-
-
 public final class MainPagerAdapter extends PagerAdapter {
     private static final int RECENT_POSITION = 0;
 
@@ -62,20 +59,19 @@ public final class MainPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 
     @Override
     public Object instantiateItem(final ViewGroup pager, final int position) {
         final View newView;
 
-        if (position == RECENT_POSITION) {
-            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener,onChangeViewPager,pageTransformer);
-        } else {
-            stickerEmojiView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager, onStickerListener,onUpdateStickerListener , onOpenPageStickerListener);
-            newView = stickerEmojiView;
-        }
-
+//        if (position == RECENT_POSITION) {
+//            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener,onChangeViewPager,pageTransformer);
+//        } else {
+        stickerEmojiView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager, onStickerListener, onUpdateStickerListener, onOpenPageStickerListener);
+        newView = stickerEmojiView;
+//        }
         pager.addView(newView);
         return newView;
     }
@@ -90,17 +86,18 @@ public final class MainPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
-    public <T> void updateSticker(final T structAllStickers){
+    public <T> void updateSticker(final T structAllStickers) {
 
-        if (stickerEmojiView ==null){
+        if (stickerEmojiView == null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (stickerEmojiView !=null) stickerEmojiView.updateListStickers(structAllStickers);
+                    if (stickerEmojiView != null)
+                        stickerEmojiView.updateListStickers(structAllStickers);
                 }
-            },2000);
-        }else {
-             stickerEmojiView.updateListStickers(structAllStickers);
+            }, 2000);
+        } else {
+            stickerEmojiView.updateListStickers(structAllStickers);
         }
     }
 

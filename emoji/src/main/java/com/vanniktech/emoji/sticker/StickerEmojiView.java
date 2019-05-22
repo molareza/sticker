@@ -79,32 +79,32 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
             emojiDivider.setBackgroundColor(getResources().getColor(R.color.emoji_divider));
         }
 
-        ImageView setting = findViewById(R.id.imgStickerSetting);
-        if (iconColor != 0) {
-            setting.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-        } else {
-            setting.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
-        }
-        setting.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onOpenPageStickerListener != null)
-                    onOpenPageStickerListener.openSetting(categoryStickerList, getStickerDatabase(context).getRecentlySticker());
-            }
-        });
+//        ImageView setting = findViewById(R.id.imgStickerSetting);
+//        if (iconColor != 0) {
+//            setting.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+//        } else {
+//            setting.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+//        }
+//        setting.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (onOpenPageStickerListener != null)
+//                    onOpenPageStickerListener.openSetting(categoryStickerList, getStickerDatabase(context).getRecentlySticker());
+//            }
+//        });
 
-        ImageView imgSmilePage = findViewById(R.id.imgEmojiPage);
-        if (iconColor != 0) {
-            imgSmilePage.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-        } else {
-            imgSmilePage.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
-        }
-        imgSmilePage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onChangeViewPager != null) onChangeViewPager.changePage();
-            }
-        });
+//        ImageView imgSmilePage = findViewById(R.id.imgEmojiPage);
+//        if (iconColor != 0) {
+//            imgSmilePage.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+//        } else {
+//            imgSmilePage.setColorFilter(R.color.emoji_background_sticker_tab, PorterDuff.Mode.SRC_IN);
+//        }
+//        imgSmilePage.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (onChangeViewPager != null) onChangeViewPager.changePage();
+//            }
+//        });
 
         categoryStickerList = new ArrayList<>();
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgEmojiPage"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:src="@drawable/emoji_smileysandpeople" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcvTabImageSticker"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" />
+
+        <ImageView
+            android:id="@+id/imgStickerSetting"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:src="@drawable/settings" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/emojiDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/emoji_divider" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/stickerPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</merge>
