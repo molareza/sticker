@@ -55,19 +55,19 @@ public final class MianPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 
     @Override
     public Object instantiateItem(final ViewGroup pager, final int position) {
         final View newView;
 
-        if (position == RECENT_POSITION) {
-            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener,onChangeViewPager);
-        } else {
+//        if (position == RECENT_POSITION) {
+//            newView = new EmojiView(context, clickListener, longClickListener, recentEmoji, variantEmoji, backgroundColor, iconColor, dividerColor, onEmojiBackspaceClickListener,onChangeViewPager);
+//        } else {
             stickerEmojiView = new StickerEmojiView(context, backgroundColor, iconColor, dividerColor, onChangeViewPager, onStickerListener,onUpdateStickerListener , onOpenPageStickerListener);
             newView = stickerEmojiView;
-        }
+//        }
 
         pager.addView(newView);
         return newView;

@@ -3,7 +3,7 @@ apply plugin: 'com.vanniktech.code.quality.tools'
 apply plugin: 'com.vanniktech.android.junit.jacoco'
 
 buildscript {
-  ext.kotlinVersion = '1.2.41'
+  ext.kotlinVersion = '1.3.10'
   ext.versions = [
     espresso: '3.0.1',
     testRules: '1.0.1',
@@ -32,7 +32,7 @@ buildscript {
     classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.11.0'
     classpath 'com.vanniktech:gradle-maven-publish-plugin:0.4.0'
 
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath 'com.android.tools.build:gradle:3.4.1'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   }
@@ -105,7 +105,7 @@ ext {
   javaVersion = JavaVersion.VERSION_1_7
 }
 
-task wrapper(type: Wrapper) {
+task (type: Wrapper) {
   gradleVersion = '4.8'
   distributionType = Wrapper.DistributionType.ALL
 }
