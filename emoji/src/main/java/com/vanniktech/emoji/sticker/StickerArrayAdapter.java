@@ -50,7 +50,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
 //        if (image == null) {
             View v = LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
             image = (EmojiImageView) v.findViewById(R.id.emoji_image);
-            prgLoading = v.findViewById(R.id.emoji_image);
+            prgLoading = v.findViewById(R.id.prgLoading);
 //        }
 
         if (mSticker.get(position).getImageUrl() == null) return image;
