@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.sticker.listener.OnOpenPageStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnPageChangeMainViewPager;
@@ -212,7 +219,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         // binds the data to the TextView in each row
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
 //
 //            if (position >= mData.size()) {
 //                holder.imgSticker.setImageResource(R.drawable.emoji_add);
@@ -227,6 +234,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
+                holder.prgLoading.setVisibility(GONE);
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
                 if (iconColor != 0) {
                     holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
@@ -241,9 +249,20 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 Glide.with(context)
                         .load(item.getImageUrl()) // Uri of the picture
                         .apply(new RequestOptions().override(50, 50))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                holder.prgLoading.setVisibility(GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                holder.prgLoading.setVisibility(GONE);
+                                return false;
+                            }
+                        })
                         .into(holder.imgSticker);
-
-
             }
 
             if (indexItemSelect == position) {
@@ -270,10 +289,12 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         // stores and recycles views as they are scrolled off screen
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             ImageButton imgSticker;
+            ProgressBar prgLoading;
 
             ViewHolder(View itemView) {
                 super(itemView);
                 imgSticker = itemView.findViewById(R.id.imgTab);
+                prgLoading = itemView.findViewById(R.id.prgLoading);
                 itemView.setOnClickListener(this);
             }
 
