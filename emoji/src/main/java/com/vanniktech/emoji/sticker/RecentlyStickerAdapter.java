@@ -30,6 +30,7 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructItemSticker> {
     private List<StructItemSticker> mSticker;
     private OnStickerListener onStickerListener;
     private ProgressBar prgLoading;
+    private EmojiImageView image;
     RecentlyStickerAdapter(@NonNull final Context context, OnStickerListener onStickerListener, List<StructItemSticker> mSticker) {
         super(context, 0, mSticker);
         this.mSticker = mSticker;
@@ -39,16 +40,16 @@ final class RecentlyStickerAdapter extends ArrayAdapter<StructItemSticker> {
     @NonNull
     @Override
     public View getView(final int position, final View convertView, @NonNull final ViewGroup parent) {
-        EmojiImageView image = (EmojiImageView) convertView.findViewById(R.id.emoji_image);
-        prgLoading = convertView.findViewById(R.id.prgLoading);
+//        EmojiImageView image = (EmojiImageView) convertView.findViewById(R.id.emoji_image);
+//        prgLoading = convertView.findViewById(R.id.prgLoading);
 
         final Context context = getContext();
 
-        if (image == null) {
+//        if (image == null) {
             View v = LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
             image = (EmojiImageView) v.findViewById(R.id.emoji_image);
             prgLoading = v.findViewById(R.id.emoji_image);
-        }
+//        }
         if (mSticker.get(position).getImageUrl() == null)return image;
 
         Glide.with(context)

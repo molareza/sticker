@@ -30,6 +30,7 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
     private OnStickerListener onStickerListener;
     private OnUpdateStickerListener onUpdateStickerListener;
     private ProgressBar prgLoading;
+    private EmojiImageView image;
 
     StickerArrayAdapter(@NonNull final Context context, @NonNull List<StructItemSticker> mSticker, OnStickerListener onStickerListener, OnUpdateStickerListener onUpdateStickerListener) {
         super(context, 0, mSticker);
@@ -41,16 +42,16 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
     @NonNull
     @Override
     public View getView(final int position, final View convertView, @NonNull final ViewGroup parent) {
-        EmojiImageView image = (EmojiImageView) convertView.findViewById(R.id.emoji_image);
-        prgLoading = convertView.findViewById(R.id.prgLoading);
+//        EmojiImageView image = (EmojiImageView) convertView.findViewById(R.id.emoji_image);
+//        prgLoading = convertView.findViewById(R.id.prgLoading);
 
         final Context context = getContext();
 
-        if (image == null) {
+//        if (image == null) {
             View v = LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
             image = (EmojiImageView) v.findViewById(R.id.emoji_image);
             prgLoading = v.findViewById(R.id.emoji_image);
-        }
+//        }
 
         if (mSticker.get(position).getImageUrl() == null) return image;
 
