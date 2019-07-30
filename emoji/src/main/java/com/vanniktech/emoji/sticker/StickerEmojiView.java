@@ -235,7 +235,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
             StructGroupSticker item = mData.get(position);
             if (position == 0) {
-                holder.prgLoading.setVisibility(GONE);
+//                holder.prgLoading.setVisibility(GONE);
                 holder.imgSticker.setImageResource(R.drawable.emoji_recent);
                 if (iconColor != 0) {
                     holder.imgSticker.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
@@ -254,13 +254,13 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                holder.prgLoading.setVisibility(GONE);
+//                                holder.prgLoading.setVisibility(GONE);
                                 return false;
                             }
 
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                holder.prgLoading.setVisibility(GONE);
+//                                holder.prgLoading.setVisibility(GONE);
                                 return false;
                             }
                         })
@@ -291,12 +291,12 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
         // stores and recycles views as they are scrolled off screen
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             ImageButton imgSticker;
-            ProgressBar prgLoading;
+//            ProgressBar prgLoading;
 
             ViewHolder(View itemView) {
                 super(itemView);
                 imgSticker = itemView.findViewById(R.id.imgTab);
-                prgLoading = itemView.findViewById(R.id.prgLoading);
+//                prgLoading = itemView.findViewById(R.id.prgLoading);
                 itemView.setOnClickListener(this);
             }
 
