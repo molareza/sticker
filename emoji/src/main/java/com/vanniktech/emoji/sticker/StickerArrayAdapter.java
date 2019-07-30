@@ -12,19 +12,17 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.vanniktech.emoji.EmojiImageView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -51,36 +49,32 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
         final Context context = getContext();
 
 //        if (image == null) {
-            View v = LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
-            image = (EmojiImageView) v.findViewById(R.id.emoji_image);
-            prgLoading = v.findViewById(R.id.prgLoading);
+        View v = LayoutInflater.from(context).inflate(R.layout.emoji_item, parent, false);
+        image = (EmojiImageView) v.findViewById(R.id.emoji_image);
+        prgLoading = v.findViewById(R.id.prgLoading);
+        prgLoading.setVisibility(View.VISIBLE);
 //        }
 
         if (mSticker.get(position).getImageUrl() == null) return image;
 
         Glide.with(context)
-                .asFile()
                 .load(mSticker.get(position).getImageUrl()) // Uri of the picture
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .apply(new RequestOptions().override(160, 160))
-                .listener(new RequestListener<File>() {
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
-                        if (prgLoading !=null) prgLoading.setVisibility(View.GONE);
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (prgLoading != null) prgLoading.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
-                        if (prgLoading !=null) prgLoading.setVisibility(View.GONE);
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        if (prgLoading != null) prgLoading.setVisibility(View.GONE);
                         return false;
                     }
                 })
-                .into(new SimpleTarget<File>() {
-                    @Override
-                    public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
-                        Glide.with(context).load(resource).into(image);
-                    }
-                });
+                .into(image);
 
 
         image.setOnClickListener(new View.OnClickListener() {

@@ -7,12 +7,11 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.vanniktech.emoji.emoji.Emoji;
 
 import java.lang.ref.WeakReference;
-
-
 
 final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
     private final WeakReference<ImageView> imageViewReference;
@@ -42,9 +41,9 @@ final class ImageLoadingTask extends AsyncTask<Emoji, Void, Drawable> {
             if (imageView != null) {
                 Glide.with(context)
                         .load(drawable)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .apply(new RequestOptions().override(60, 60))
                         .into(imageView);
-
             }
         }
     }
