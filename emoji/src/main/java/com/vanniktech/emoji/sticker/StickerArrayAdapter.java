@@ -15,13 +15,16 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.vanniktech.emoji.EmojiImageView;
 import com.vanniktech.emoji.R;
 import com.vanniktech.emoji.sticker.listener.OnStickerListener;
 import com.vanniktech.emoji.sticker.listener.OnUpdateStickerListener;
 import com.vanniktech.emoji.sticker.struct.StructItemSticker;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -56,22 +59,28 @@ final class StickerArrayAdapter extends ArrayAdapter<StructItemSticker> {
         if (mSticker.get(position).getImageUrl() == null) return image;
 
         Glide.with(context)
+                .asFile()
                 .load(mSticker.get(position).getImageUrl()) // Uri of the picture
                 .apply(new RequestOptions().override(160, 160))
-                .listener(new RequestListener<Drawable>() {
+                .listener(new RequestListener<File>() {
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
                         if (prgLoading !=null) prgLoading.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if (prgLoading !=null)prgLoading.setVisibility(View.GONE);
+                    public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                        if (prgLoading !=null) prgLoading.setVisibility(View.GONE);
                         return false;
                     }
                 })
-                .into(image);
+                .into(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
+                        Glide.with(context).load(resource).into(image);
+                    }
+                });
 
 
         image.setOnClickListener(new View.OnClickListener() {
