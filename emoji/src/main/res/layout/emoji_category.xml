@@ -4,6 +4,13 @@
     android:layout_width="33dp"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/prgLoading"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerInParent="true"
+        android:padding="4dp"/>
+
     <ImageButton
         android:id="@+id/imgTab"
         android:layout_width="30dp"
@@ -12,12 +19,5 @@
         android:padding="4dp"
         android:scaleType="fitCenter"
         tools:ignore="ContentDescription,Overdraw" />
-
-    <ProgressBar
-        android:id="@+id/prgLoading"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerInParent="true"
-        android:padding="4dp"/>
 
 </RelativeLayout>
