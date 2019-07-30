@@ -92,10 +92,13 @@ public final class MainPagerAdapter extends PagerAdapter {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (stickerEmojiView != null)
+                    if (stickerEmojiView != null){
                         stickerEmojiView.updateListStickers(structAllStickers);
+                    }else {
+                        updateSticker(structAllStickers);
+                    }
                 }
-            }, 2000);
+            }, 50);
         } else {
             stickerEmojiView.updateListStickers(structAllStickers);
         }
