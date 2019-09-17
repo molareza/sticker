@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ImageButton android:id="@+id/imgTab"
-    android:layout_width="52dp"
+    android:layout_width="48dp"
     android:layout_height="match_parent"
     android:background="?attr/selectableItemBackgroundBorderless"
     android:layout_gravity="center_vertical"
