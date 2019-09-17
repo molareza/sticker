@@ -289,7 +289,7 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
 
         // stores and recycles views as they are scrolled off screen
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            ImageButton imgSticker;
+            ImageView imgSticker;
 //            ProgressBar prgLoading;
 
             ViewHolder(View itemView) {
