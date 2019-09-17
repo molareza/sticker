@@ -11,14 +11,12 @@
         <!--android:layout_centerInParent="true"-->
         <!--android:padding="4dp"/>-->
 
-<ImageView android:id="@+id/imgTab"
+<ImageSwitcher android:id="@+id/imgTab"
     android:layout_width="30dp"
     android:layout_height="match_parent"
     android:background="?attr/selectableItemBackgroundBorderless"
-    android:padding="4dp"
     android:layout_gravity="center_vertical"
-    android:scaleType="fitCenter"
-    tools:ignore="ContentDescription,Overdraw"
+    android:scaleType="center"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" />
 
