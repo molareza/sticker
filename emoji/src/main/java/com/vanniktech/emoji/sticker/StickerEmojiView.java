@@ -250,7 +250,6 @@ public final class StickerEmojiView extends LinearLayout implements ViewPager.On
                 Glide.with(context)
                         .load(item.getImageUrl()) // Uri of the picture
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .apply(new RequestOptions().override(50, 50))
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
